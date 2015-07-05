@@ -11,11 +11,20 @@
     "angular-sanitize": "~1.2.0",
     "angular-animate": "~1.2.0",
     "angular-touch": "~1.2.0",
-    "angular-route": "~1.2.0"
+    "angular-route": "~1.2.0",
+    "fontawesome": "~4.3.0",
+    "fontkit-lobster": "*",
+    "bower": "*",
+    "open-sans-fontface": "~1.4.0",
+    "angularjs-google-maps": "~0.4.0",
+    "select2": "~4.0.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
     "angular-scenario": "~1.2.0"
   },
-  "appPath": "app"
+  "appPath": "app",
+  "resolutions": {
+    "angular": "1.2.28"
+  }
 }

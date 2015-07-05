@@ -1,20 +1,20 @@
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
-  padding-left: 15px;
-  padding-right: 15px;
+  /*padding-left: 15px;
+  padding-right: 15px;*/
 }
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
+ /* border-bottom: 1px solid #e5e5e5; */
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -76,4 +76,12 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+.search {
+  cursor: pointer;
+  background-color: buttonface;
+}
+.modal{
+  width: 90%;
 }
