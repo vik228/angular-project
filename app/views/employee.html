@@ -19,6 +19,7 @@
     <th>Employee id</th>
     <th>Roles</th>
     <th>Edit</th>
+    <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="employee in employees">
     
@@ -27,9 +28,17 @@
     <td>{{ employee.email }}</td>
     <td class="text-center">{{ employee.empid }}</td>
     <td>{{ employee.roles }}</td>
-    <td>
-      <button class="btn" ng-click="editEmployee(employee.id);toggleModal();" >
+    <td class="text-center">
+      <button class="btn btn-sm" ng-click="editEmployee(employee.id);toggleModal();" >
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+    <td class="text-center">
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="employee.status" ng-click="statusEmployee(employee.id)" >
+      <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deactivate
+      </button>
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="employee.status" ng-click="statusEmployee(employee.id)" >
+      <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Activate
       </button>
     </td>
   </tr></tbody>

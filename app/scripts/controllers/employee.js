@@ -4,12 +4,12 @@ zopkyFrontendApp.controller('employeeController', function($scope,$http, UtilsFa
 $scope.employeeController = {};
 
 $scope.employees = [
-{id:1, empid:'ZT001', fName:'Binay',  lName:"Verma", contact:9988776655, email:'Binay@zopky.com',   roles:'Developer', reportingManager:'Aprit' },
-{id:2, empid:'ZT002', fName:'Ajay',   lName:"Test",  contact:9988776655, email:'Ajay@zopky.com',    roles:'Developer', reportingManager:'Anshul'  },
-{id:3, empid:'ZT003', fName:'Vikash', lName:"Test",  contact:9988776655, email:'Vikash@zopky.com',  roles:'Developer', reportingManager:'Anshul' },
-{id:4, empid:'ZT004', fName:'Shubham',lName:"Test",  contact:9988772211, email:'Shubham@zopky.com', roles:'Developer', reportingManager:'Aprit' },
-{id:5, empid:'ZT005', fName:'Dummy5', lName:"Test",  contact:9988776644, email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit' },
-{id:6, empid:'ZT006', fName:'Dummy6', lName:"Test",  contact:9988776633, email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit' },
+{id:1, empid:'ZT001', fName:'Binay',  lName:"Verma", contact:9988776655, email:'Binay@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'0' },
+{id:2, empid:'ZT002', fName:'Ajay',   lName:"Test",  contact:9988776655, email:'Ajay@zopky.com',    roles:'Developer', reportingManager:'Anshul', status:'1' },
+{id:3, empid:'ZT003', fName:'Vikash', lName:"Test",  contact:9988776655, email:'Vikash@zopky.com',  roles:'Developer', reportingManager:'Anshul', status:'1' },
+{id:4, empid:'ZT004', fName:'Shubham',lName:"Test",  contact:9988772211, email:'Shubham@zopky.com', roles:'Developer', reportingManager:'Aprit', status:'false' },
+{id:5, empid:'ZT005', fName:'Dummy5', lName:"Test",  contact:9988776644, email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'false' },
+{id:6, empid:'ZT006', fName:'Dummy6', lName:"Test",  contact:9988776633, email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'1' },
 ]; 
 /*
 $http.get("employee.txt")
@@ -71,11 +71,17 @@ $scope.saveEmployee = function() {
 };
 
 /* deleteEmployee function deletes employee information from database*/
-$scope.deleteEmployee = function(id) {
+$scope.statusEmployee = function(id) {
+  if($scope.employees[id-1].status === '0')
+    $scope.stat='1';
+  else
+    $scope.stat='0';
   var employeeDetails = {
-    action:'delete',
-    empid:$scope.employees[id-1].empid
+    action:'status',
+    empid:$scope.employees[id-1].empid,
+    status:$scope.stat
   };
+  console.log(employeeDetails);
   var responsePromise = UtilsFactory.doPostCall ('/user/employees', employeeDetails);
       responsePromise.then (function (response){
 
