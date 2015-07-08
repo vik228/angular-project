@@ -19,6 +19,11 @@ $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
 
+$scope.showModal = false;
+  $scope.toggleModal = function(){
+      $scope.showModal = !$scope.showModal;
+    };
+
 /* editEmployee function updates employee information in the database*/
 $scope.editEmployee = function(id) {
   if (id == 'new') {
@@ -49,7 +54,7 @@ $scope.editEmployee = function(id) {
 $scope.saveEmployee = function() {
   var employeeDetails = {
     action:$scope.act,
-    fname:$scope.employeeController.fname, 
+    fname:$scope.employeeController.fName, 
     lname:$scope.employeeController.lName,
     email:$scope.employeeController.email,
     contact:$scope.employeeController.contact,
@@ -96,10 +101,6 @@ $scope.test = function() {
   }
 };
 */
-$scope.showModal = false;
-  $scope.toggleModal = function(){
-      $scope.showModal = !$scope.showModal;
-    };
 
 });
 

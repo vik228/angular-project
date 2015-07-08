@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('continentController', function($scope) {
+zopkyFrontendApp.controller('continentController', function($scope,$http, UtilsFactory) {
 $scope.formTitle = '';
 $scope.id = '';
 $scope.activityName = '';
@@ -28,7 +28,8 @@ $scope.incomplete = false;
 $scope.editActivity = function(id) {
   if (id == 'new') {
     $scope.formTitle = 'Create New Activity';
-    $scope.incomplete = true;
+  //  $scope.incomplete = true;
+    $scope.act ='save';
     $scope.activityName = '';
     $scope.city = '';
     $scope.country = '';
@@ -40,6 +41,7 @@ $scope.editActivity = function(id) {
     $scope.openTime = '';
     } else {
     $scope.formTitle = 'Edit Activity';
+    $scope.act ='update';
     $scope.activityName = $scope.continents[id-1].activityName;
     $scope.city = $scope.continents[id-1].city; 
     $scope.country = $scope.continents[id-1].country; 
@@ -49,6 +51,7 @@ $scope.editActivity = function(id) {
     $scope.lat = $scope.continents[id-1].lat; 
     $scope.long  = $scope.continents[id-1].long; 
     $scope.openTime  = $scope.continents[id-1].openTime; 
+    $scope.closeTime  = $scope.continents[id-1].closeTime; 
   }
 };
 
@@ -56,6 +59,29 @@ $scope.showModal = false;
   $scope.toggleModal = function(){
       $scope.showModal = !$scope.showModal;
     };
+
+$scope.saveContinent = function() {
+  var continentDetails = {
+    action:$scope.act,
+    activityName:$scope.activityName, 
+    continent:$scope.continent,
+    country:$scope.country,
+    city:$scope.city,
+    state:$scope.state,
+    type:$scope.type,
+    lat: $scope.lat,
+    long: $scope.long, 
+    openTime: $scope.openTime, 
+    closeTime: $scope.closeTime
+  };
+  console.log(continentDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/user/continent', continentDetails);
+      responsePromise.then (function (response){
+
+        console.log (response);
+
+      });
+};
     /*
  var cities = [{city : 'Mumbai', desc : 'This is the best city in the world!', lat : 18.9750,long : 72.8258}];
  var mapOptions = {
