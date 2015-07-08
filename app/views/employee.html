@@ -42,7 +42,7 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.fName.$invalid && !myForm.fName.$pristine }">
   <label class="col-sm-4 control-label">First Name:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="fName" ng-model="fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
+    <input type="text" class="form-control" name="fName" ng-model="employeeController.fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
     <p ng-show="myForm.fName.$error.minlength" class="help-block">First name is too short.</p>
     <p ng-show="myForm.fName.$error.maxlength" class="help-block">First name is too long.</p>
     <p ng-show="myForm.fName.$error.pattern" class="help-block">First letter should be Capital.</p>
@@ -51,20 +51,20 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
   <label class="col-sm-4 control-label">Last Name:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="lName" ng-model="lName" placeholder="Last Name" required>
+    <input type="text" class="form-control" name="lName" ng-model="employeeController.lName" placeholder="Last Name" required>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.email.$invalid && !myForm.email.$pristine }">
   <label class="col-sm-4 control-label">Email:</label>
   <div class="col-sm-6">
-    <input type="email" class="form-control" name="email" ng-model="email" placeholder="Email" required>
+    <input type="email" class="form-control" name="email" ng-model="employeeController.email" placeholder="Email" required>
     <p ng-show="myForm.email.$invalid && !myForm.email.$pristine" class="help-block">Enter a valid email.</p>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.contact.$invalid && !myForm.contact.$pristine }">
   <label class="col-sm-4 control-label">Mobile Number:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="contact "ng-model="contact" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" pattern="^([1-9][0-9]*)$" required>
+    <input type="text" class="form-control" name="contact" ng-model="employeeController.contact" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" pattern="^([1-9][0-9]*)$" required>
     <p ng-show="myForm.contact.$error.minlength" class="help-block">Should be 10 digits</p>
     <p ng-show="myForm.contact.$error.maxlength" class="help-block">Should be 10 digits</p>
     <p ng-show="myForm.contact.$error.pattern" class="help-block">Numbers only and should not start with 0.</p>
@@ -73,14 +73,14 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.role.$invalid && !myForm.role.$pristine }">
   <label class="col-sm-4 control-label">Roles:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="roles" ng-model="roles" placeholder="Roles">
+    <input type="text" class="form-control" name="roles" ng-model="employeeController.roles" placeholder="Roles">
     <p ng-show="myForm.roles.$invalid && !myForm.roles.$pristine" class="help-block">Enter valid roles.</p>
   </div>
 </div>
 <div class="form-group">
   <label class="col-sm-4 control-label">Reporting Manager:</label>
   <div class="col-sm-6">
-    <select class="form-control" ng-model="reportingManager" required>
+    <select class="form-control" ng-model="employeeController.reportingManager" required>
       <option ng-model="Select">Select</option>
       <option ng-model="Myself">Myself</option>
       <option ng-model="Aprit">Aprit</option>
@@ -90,7 +90,7 @@
 </div>
 </form>
 <hr>
- <button class="btn btn-primary" ng-disabled="error || incomplete">
+ <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveEmployee()">
     <span class="glyphicon glyphicon-save"></span> Save Changes
   </button>
 </modal>

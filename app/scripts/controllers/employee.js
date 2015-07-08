@@ -1,6 +1,7 @@
 'use strict';
 
-zopkyFrontendApp.controller('employeeController', function($scope,$http) {
+zopkyFrontendApp.controller('employeeController', function($scope,$http, UtilsFactory) {
+$scope.employeeController = {};
 
 $scope.employees = [
 {id:1, empid:'ZT001', fName:'Binay',  lName:"Verma", contact:9988776655, email:'Binay@zopky.com',   roles:'Developer', reportingManager:'Aprit' },
@@ -18,25 +19,64 @@ $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
 
+/* editEmployee function updates employee information in the database*/
 $scope.editEmployee = function(id) {
   if (id == 'new') {
     $scope.formTitle = 'Create New Employee';
     $scope.edit = true;
+    $scope.act ='save';
   //  $scope.incomplete = true;
-    $scope.fName = '';
-    $scope.lName = '';
-    $scope.email = '';
-    $scope.contact = '';
-    $scope.reportingManager = 'Select'; 
+    $scope.employeeController.fName = '';
+    $scope.employeeController.lName = '';
+    $scope.employeeController.email = '';
+    $scope.employeeController.contact = '';
+    $scope.employeeController.roles = '';
+    $scope.employeeController.reportingManager = 'Select'; 
     } else {
     $scope.formTitle = 'Edit Employee';
     $scope.edit = false;
-    $scope.fName = $scope.employees[id-1].fName;
-    $scope.lName = $scope.employees[id-1].lName; 
-    $scope.email = $scope.employees[id-1].email; 
-    $scope.contact = $scope.employees[id-1].contact; 
-    $scope.reportingManager = $scope.employees[id-1].reportingManager; 
+    $scope.act ='update';
+    $scope.employeeController.fName = $scope.employees[id-1].fName;
+    $scope.employeeController.lName = $scope.employees[id-1].lName; 
+    $scope.employeeController.email = $scope.employees[id-1].email; 
+    $scope.employeeController.contact = $scope.employees[id-1].contact; 
+    $scope.employeeController.roles = $scope.employees[id-1].roles; 
+    $scope.employeeController.reportingManager = $scope.employees[id-1].reportingManager; 
   }
+};
+
+/* saveEmployee function inserts employee information in the database*/
+$scope.saveEmployee = function() {
+  var employeeDetails = {
+    action:$scope.act,
+    fname:$scope.employeeController.fname, 
+    lname:$scope.employeeController.lName,
+    email:$scope.employeeController.email,
+    contact:$scope.employeeController.contact,
+    roles:$scope.employeeController.roles,
+    reportingManager:$scope.employeeController.reportingManager
+  };
+  console.log(employeeDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/user/employees', employeeDetails);
+      responsePromise.then (function (response){
+
+        console.log (response);
+
+      });
+};
+
+/* deleteEmployee function deletes employee information from database*/
+$scope.deleteEmployee = function(id) {
+  var employeeDetails = {
+    action:'delete',
+    empid:$scope.employees[id-1].empid
+  };
+  var responsePromise = UtilsFactory.doPostCall ('/user/employees', employeeDetails);
+      responsePromise.then (function (response){
+
+        console.log (response);
+
+      });
 };
 
 /*
