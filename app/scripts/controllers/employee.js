@@ -70,7 +70,7 @@ $scope.saveEmployee = function() {
       });
 };
 
-/* deleteEmployee function deletes employee information from database*/
+/* statusEmployee function activates or deactivates employee information from database*/
 $scope.statusEmployee = function(id) {
   if($scope.employees[id-1].status === '0')
     $scope.stat='1';

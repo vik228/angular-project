@@ -1,24 +1,15 @@
 'use strict';
 
 zopkyFrontendApp.controller('continentController', function($scope,$http, UtilsFactory) {
-$scope.formTitle = '';
-$scope.id = '';
-$scope.activityName = '';
-$scope.city = '';
-$scope.country = '';
-$scope.type = '';
-$scope.continent = '';
-$scope.state = '';
-$scope.lat = '';
-$scope.long = '';
-$scope.openTime = '';
+$scope.continentController = {};
+
 $scope.continents = [
-{id:1, activityName:'Gateway of India', continent: "Asia", country:"India", state:"Maharashtra", city:'Mumbai',   type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' },
-{id:2, activityName:'Act1', continent: "Asia", country:"Sangapore", state:"Dummy1",  city:'Dummy1', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' },
-{id:3, activityName:'Act2', continent: "Asia", country:'Dummy2',    state:"Dummy2",  city:'Dummy2', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' },
-{id:4, activityName:'Act3', continent: "Asia", country:'Dummy3',    state:"Dummy3",  city:'Dummy3', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' },
-{id:5, activityName:'Act4', continent: "Asia", country:'Dummy4',    state:"Dummy4",  city:'Dummy4', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' },
-{id:6, activityName:'Act5', continent: "Asia", country:'Dummy5',    state:"Dummy5",  city:'Dummy5', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' },
+{id:1, activityName:'Gateway of India', continent: "Asia", country:"India", state:"Maharashtra", city:'Mumbai',   type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm' },
+{id:2, activityName:'Act1', continent: "Asia", country:"Sangapore", state:"Dummy1",  city:'Dummy1', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm' },
+{id:3, activityName:'Act2', continent: "Asia", country:'Dummy2',    state:"Dummy2",  city:'Dummy2', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm' },
+{id:4, activityName:'Act3', continent: "Asia", country:'Dummy3',    state:"Dummy3",  city:'Dummy3', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm' },
+{id:5, activityName:'Act4', continent: "Asia", country:'Dummy4',    state:"Dummy4",  city:'Dummy4', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm' },
+{id:6, activityName:'Act5', continent: "Asia", country:'Dummy5',    state:"Dummy5",  city:'Dummy5', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm' },
 ];
 
 $scope.edit = true;
@@ -27,31 +18,30 @@ $scope.incomplete = false;
 
 $scope.editActivity = function(id) {
   if (id == 'new') {
-    $scope.formTitle = 'Create New Activity';
+    $scope.formTitle = 'Create New Continent';
   //  $scope.incomplete = true;
     $scope.act ='save';
-    $scope.activityName = '';
-    $scope.city = '';
-    $scope.country = '';
-    $scope.type = '';
-    $scope.continent = '';
-    $scope.state = '';
-    $scope.lat = '';
-    $scope.long = '';
-    $scope.openTime = '';
+    $scope.continentController.city = '';
+    $scope.continentController.country = '';
+    $scope.continentController.type = '';
+    $scope.continentController.continent = '';
+    $scope.continentController.state = '';
+    $scope.continentController.lat = '';
+    $scope.continentController.long = '';
+    $scope.continentController.openTime = '';
+    $scope.continentController.closeTime = '';
     } else {
-    $scope.formTitle = 'Edit Activity';
+    $scope.formTitle = 'Edit Continent';
     $scope.act ='update';
-    $scope.activityName = $scope.continents[id-1].activityName;
-    $scope.city = $scope.continents[id-1].city; 
-    $scope.country = $scope.continents[id-1].country; 
-    $scope.type = $scope.continents[id-1].type; 
-    $scope.continent = $scope.continents[id-1].continent;
-    $scope.state = $scope.continents[id-1].state; 
-    $scope.lat = $scope.continents[id-1].lat; 
-    $scope.long  = $scope.continents[id-1].long; 
-    $scope.openTime  = $scope.continents[id-1].openTime; 
-    $scope.closeTime  = $scope.continents[id-1].closeTime; 
+    $scope.continentController.city = $scope.continents[id-1].city; 
+    $scope.continentController.country = $scope.continents[id-1].country; 
+    $scope.continentController.type = $scope.continents[id-1].type; 
+    $scope.continentController.continent = $scope.continents[id-1].continent;
+    $scope.continentController.state = $scope.continents[id-1].state; 
+    $scope.continentController.lat = $scope.continents[id-1].lat; 
+    $scope.continentController.long  = $scope.continents[id-1].long; 
+    $scope.continentController.openTime  = $scope.continents[id-1].openTime; 
+    $scope.continentController.closeTime  = $scope.continents[id-1].closeTime; 
   }
 };
 
@@ -60,28 +50,31 @@ $scope.showModal = false;
       $scope.showModal = !$scope.showModal;
     };
 
+/* saveContinent function inserts continent information in the database*/
 $scope.saveContinent = function() {
   var continentDetails = {
     action:$scope.act,
-    activityName:$scope.activityName, 
-    continent:$scope.continent,
-    country:$scope.country,
-    city:$scope.city,
-    state:$scope.state,
-    type:$scope.type,
-    lat: $scope.lat,
-    long: $scope.long, 
-    openTime: $scope.openTime, 
-    closeTime: $scope.closeTime
+    continent:$scope.continentController.continent,
+    country:$scope.continentController.country,
+    city:$scope.continentController.city,
+    state:$scope.continentController.state,
+    type:$scope.continentController.type,
+    lat: $scope.continentController.lat,
+    long: $scope.continentController.long, 
+    openTime: $scope.continentController.openTime, 
+    closeTime: $scope.continentController.closeTime
   };
+
   console.log(continentDetails);
+
   var responsePromise = UtilsFactory.doPostCall ('/user/continent', continentDetails);
       responsePromise.then (function (response){
 
         console.log (response);
 
       });
-};
+}; /* saveContinent ends here */
+
     /*
  var cities = [{city : 'Mumbai', desc : 'This is the best city in the world!', lat : 18.9750,long : 72.8258}];
  var mapOptions = {
