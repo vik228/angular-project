@@ -24,17 +24,17 @@ var zopkyFrontendApp = angular
     $httpProvider.defaults.withCredentials = true;
     
     $routeProvider
-      .when('/', {
+      /*.when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         equireLogin: false
-      })
+      })*/
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
         requireLogin: false
       })
-      .when('/login', {
+      .when('/', {
         templateUrl: 'views/login.html',
         controller: 'loginController',
         requireLogin: false

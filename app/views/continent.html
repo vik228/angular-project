@@ -13,6 +13,7 @@
     <th>Country</th>
     <th>State</th>
     <th>Edit</th>
+    <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="continent in continents">
     
@@ -23,6 +24,14 @@
     <td>
       <button class="btn" ng-click="editActivity(continent.id);toggleModal();">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+    <td class="text-center">
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="continent.status" ng-click="statusContinent(continent.id)" >
+      <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deactivate
+      </button>
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="continent.status" ng-click="statusContinent(continent.id)" >
+      <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Activate
       </button>
     </td>
   </tr></tbody>

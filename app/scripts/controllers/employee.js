@@ -79,7 +79,7 @@ $scope.statusEmployee = function(id) {
   var employeeDetails = {
     action:'status',
     empid:$scope.employees[id-1].empid,
-    status:$scope.stat
+    active:$scope.stat
   };
   console.log(employeeDetails);
   var responsePromise = UtilsFactory.doPostCall ('/user/employees', employeeDetails);
@@ -88,7 +88,7 @@ $scope.statusEmployee = function(id) {
         console.log (response);
 
       });
-};
+}; /* statusEmployee ends here */
 
 /*
 $scope.$watch('email',function() {$scope.test();});
