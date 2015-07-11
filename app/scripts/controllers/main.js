@@ -19,6 +19,7 @@
     $scope.stateurl = '/views/state.html';
     $scope.cityurl = '/views/city.html';
     $scope.airporturl = '/views/airport.html';
+    $scope.hotelurl = '/views/hotel.html';
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

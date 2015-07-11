@@ -14,91 +14,131 @@
 <table class="table table-striped table-bordered">
   <thead><tr>
     <th>Id</th>
-    <th>Code</th>
-    <th>Airport Name</th>
-    <th>Continent</th>
-    <th>Country</th>
-    <th>State</th>
     <th>City</th>
-    <th>Location</th>
-    <th>Contact</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Address</th>
+    <th>Details</th>
     <th>Edit</th>
+    <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="airport in airports">
-    <td>{{ airport.airportId}}</td>
-    <td>{{ airport.airportCode}}</td>
+    <td>{{ airport.id}}</td>
+    <td>{{ airport.city}}</td>
     <td>{{ airport.airportName }}</td>
-    <td>{{ airport.continent }}</td>
-    <td>{{ airport.country }}</td>
-    <td>{{ airport.state }}</td>
-    <td>{{ airport.city }}</td>
-    <td>{{ airport.lat + ' ' + airport.long }}</td>
-    <td>{{ airport.contact }}</td>
+    <td>{{ airport.airportCode }}</td>
+    <td>{{ airport.address}}</td>
     <td>
-      <button class="btn" ng-click="editAirport(airport.id);toggleModal();" >
+      <button class="btn btn-primary" ng-click="editAirport(airport.id,'show');toggleModal();" >Show
+      </button>
+    </td>
+    <td>
+      <button class="btn" ng-click="editAirport(airport.id,'edit');toggleModal();" >
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+    <td class="text-center">
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="airport.status" ng-click="statusAirport(airport.id)" >
+      <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deactivate
+      </button>
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="airport.status" ng-click="statusAirport(airport.id)" >
+      <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Activate
       </button>
     </td>
   </tr></tbody>
 </table>
 </div>  
 
-<modal title="Airport` Form" visible="showModal">
+<modal title="Airport Form" visible="showModal">
 
 <form class="form-horizontal" name="myForm">
-<div class="form-group" ng-class="{ 'has-error' : myForm.fName.$invalid && !myForm.fName.$pristine }">
-  <label class="col-sm-4 control-label">First Name:</label>
+<div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
+  <label class="col-sm-4 control-label">City:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="fName" ng-model="fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
-    <p ng-show="myForm.fName.$error.minlength" class="help-block">First name is too short.</p>
-    <p ng-show="myForm.fName.$error.maxlength" class="help-block">First name is too long.</p>
-    <p ng-show="myForm.fName.$error.pattern" class="help-block">First letter should be Capital.</p>
+    <input type="text" class="form-control" name="city" ng-model="airportController.city" placeholder="City" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
+    <p ng-show="myForm.city.$error.minlength" class="help-block">City is too short.</p>
+    <p ng-show="myForm.city.$error.maxlength" class="help-block">City is too long.</p>
+    <p ng-show="myForm.city.$error.pattern" class="help-block">City should be Capital.</p>
   </div>
 </div> 
-<div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
-  <label class="col-sm-4 control-label">Last Name:</label>
+<div class="form-group" ng-class="{ 'has-error' : myForm.airportName.$invalid && !myForm.airportName.$pristine }">
+  <label class="col-sm-4 control-label">Airport Name:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="lName" ng-model="lName" placeholder="Last Name" required>
+    <input type="text" class="form-control" name="airportName" ng-model="airportController.airportName" placeholder="Airport Name" ng-disabled="info" required>
   </div>
 </div>
-<div class="form-group" ng-class="{ 'has-error' : myForm.email.$invalid && !myForm.email.$pristine }">
-  <label class="col-sm-4 control-label">Email:</label>
+<div class="form-group" ng-class="{ 'has-error' : myForm.airportCode.$invalid && !myForm.airportCode.$pristine }">
+  <label class="col-sm-4 control-label">Airport Code:</label>
   <div class="col-sm-6">
-    <input type="email" class="form-control" name="email" ng-model="email" placeholder="Email" required>
-    <p ng-show="myForm.email.$invalid && !myForm.email.$pristine" class="help-block">Enter a valid email.</p>
-  </div>
-</div>
-<div class="form-group" ng-class="{ 'has-error' : myForm.contact.$invalid && !myForm.contact.$pristine }">
-  <label class="col-sm-4 control-label">Mobile Number:</label>
-  <div class="col-sm-6">
-    <input type="text" class="form-control" name="contact "ng-model="contact" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" pattern="^([1-9][0-9]*)$" required>
-    <p ng-show="myForm.contact.$error.minlength" class="help-block">Should be 10 digits</p>
-    <p ng-show="myForm.contact.$error.maxlength" class="help-block">Should be 10 digits</p>
-    <p ng-show="myForm.contact.$error.pattern" class="help-block">Numbers only and should not start with 0.</p>
-  </div>
-</div>
-<div class="form-group" ng-class="{ 'has-error' : myForm.role.$invalid && !myForm.role.$pristine }">
-  <label class="col-sm-4 control-label">Roles:</label>
-  <div class="col-sm-6">
-    <input type="text" class="form-control" name="roles" ng-model="roles" placeholder="Roles">
-    <p ng-show="myForm.roles.$invalid && !myForm.roles.$pristine" class="help-block">Enter valid roles.</p>
+    <input type="text" class="form-control" name="airportCode" ng-model="airportController.airportCode" placeholder="Airport Code" ng-disabled="info" required>
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">Reporting Manager:</label>
+  <label class="col-sm-4 control-label">International:</label>
   <div class="col-sm-6">
-    <select class="form-control" ng-model="reportingManager" required>
-      <option ng-model="Select">Select</option>
-      <option ng-model="Myself">Myself</option>
-      <option ng-model="Aprit">Aprit</option>
-      <option ng-model="Anshul">Anshul</option>
+    <select class="form-control" ng-model="airportController.international" ng-disabled="info" required>
+      <option ng-model="select">Select</option>
+      <option ng-model="yes">Yes</option>
+      <option ng-model="no">No</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Location:</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control" ng-model="airportController.lat" placeholder="Latitude" ng-disabled="info">
+    <input type="text" class="form-control" ng-model="airportController.long" placeholder="Longitute" ng-disabled="info">
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Address:</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control" ng-model="airportController.address" placeholder="Address" ng-disabled="info">
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">GMT Offset:</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control" ng-model="airportController.GMToffset" placeholder="GMT Offset" ng-disabled="info">
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Bus Connectivity:</label>
+  <div class="col-sm-6">
+    <select class="form-control" ng-model="airportController.busConnectivity" ng-disabled="info" required>
+      <option ng-model="select">Select</option>
+      <option ng-model="yes">Yes</option>
+      <option ng-model="no">No</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Metro Connectivity:</label>
+  <div class="col-sm-6">
+    <select class="form-control" ng-model="airportController.metroConnectivity" ng-disabled="info" required>
+      <option ng-model="select">Select</option>
+      <option ng-model="yes">Yes</option>
+      <option ng-model="no">No</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-4 control-label">Taxi Connectivity:</label>
+  <div class="col-sm-6">
+    <select class="form-control" ng-model="airportController.taxiConnectivity" ng-disabled="info" required>
+      <option ng-model="select">Select</option>
+      <option ng-model="yes">Yes</option>
+      <option ng-model="no">No</option>
     </select>
   </div>
 </div>
 </form>
 <hr>
- <button class="btn btn-primary" ng-disabled="error || incomplete">
+ <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveAirport()" ng-hide="info">
     <span class="glyphicon glyphicon-save"></span> Save Changes
   </button>
+  <button class="btn" ng-click="editAirport(airport.id,'edit');toggleModal();" ng-show="info">
+      <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
 </modal>
 </div>
