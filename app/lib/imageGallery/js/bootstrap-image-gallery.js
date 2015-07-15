@@ -28,7 +28,7 @@
     'use strict';
 
     $.extend(Gallery.prototype.options, {
-        useBootstrapModal: true
+        useBootstrapModal: false
     });
 
     var close = Gallery.prototype.close,

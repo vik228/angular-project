@@ -84,6 +84,11 @@ var zopkyFrontendApp = angular
         controller: 'hotelController',
      //   requireLogin: true
       })
+      .when('/slider', {
+        templateUrl: 'views/imgSlider.html',
+        controller: 'imgSliderController',
+     //   requireLogin: true
+      })
       .otherwise({
         redirectTo: '/'
       });

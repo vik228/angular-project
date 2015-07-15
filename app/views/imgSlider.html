@@ -1,0 +1,21 @@
+<div ng-controller="imgSliderController">
+ <h3 class="text-center">Activity Images</h3>
+<div class="tn col-lg-7" id="links"></div>
+<div class="col-lg-5 slider pull-right">
+    <img ng-repeat="slide in slides" class="slide s slide-animation nonDraggableImage"
+        ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
+        ng-hide="!isCurrentSlideIndex($index)" ng-src="{{slide.image}}">
+
+    <a class="arrow prev" href="#/slider" ng-click="nextSlide()"></a>
+    <a class="arrow next" href="#/slider" ng-click="prevSlide()"></a>
+    <!-- <nav class="nav">
+        <div class="wrapper">
+            <ul class="dots">
+                <li class="dot" ng-repeat="slide in slides">
+                    <a href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
+                      ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a></li>
+            </ul>
+        </div>
+    </nav> -->
+</div>
+</div>
