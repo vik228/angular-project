@@ -110,7 +110,11 @@ $scope.statusActivity = function(id) {
         console.log (response);
 
       });
-}; /* statusContinent ends here */    
+}; /* statusContinent ends here */   
+
+$scope.redirect = function(){
+  window.location.href= "#/slider";
+} 
 /*
  var cities = [{city : 'Mumbai', desc : 'This is the best city in the world!', lat : 18.9750,long : 72.8258}];
  var mapOptions = {

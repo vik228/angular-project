@@ -53,8 +53,8 @@
 
 <form class="form-horizontal" name="myForm">
 <div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
-  <label class="col-sm-4 control-label">City:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">City:</label>
+  <div class="col-sm-4">
     <input type="text" class="form-control" name="city" ng-model="airportController.city" placeholder="City" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
     <p ng-show="myForm.city.$error.minlength" class="help-block">City is too short.</p>
     <p ng-show="myForm.city.$error.maxlength" class="help-block">City is too long.</p>
@@ -62,20 +62,20 @@
   </div>
 </div> 
 <div class="form-group" ng-class="{ 'has-error' : myForm.airportName.$invalid && !myForm.airportName.$pristine }">
-  <label class="col-sm-4 control-label">Airport Name:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Airport Name:</label>
+  <div class="col-sm-4">
     <input type="text" class="form-control" name="airportName" ng-model="airportController.airportName" placeholder="Airport Name" ng-disabled="info" required>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.airportCode.$invalid && !myForm.airportCode.$pristine }">
-  <label class="col-sm-4 control-label">Airport Code:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Airport Code:</label>
+  <div class="col-sm-4">
     <input type="text" class="form-control" name="airportCode" ng-model="airportController.airportCode" placeholder="Airport Code" ng-disabled="info" required>
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">International:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">International:</label>
+  <div class="col-sm-4">
     <select class="form-control" ng-model="airportController.international" ng-disabled="info" required>
       <option ng-model="select">Select</option>
       <option ng-model="yes">Yes</option>
@@ -84,27 +84,27 @@
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">Location:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Location:</label>
+  <div class="col-sm-4">
     <input type="text" class="form-control" ng-model="airportController.lat" placeholder="Latitude" ng-disabled="info">
     <input type="text" class="form-control" ng-model="airportController.long" placeholder="Longitute" ng-disabled="info">
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">Address:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Address:</label>
+  <div class="col-sm-4">
     <input type="text" class="form-control" ng-model="airportController.address" placeholder="Address" ng-disabled="info">
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">GMT Offset:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">GMT Offset:</label>
+  <div class="col-sm-4">
     <input type="text" class="form-control" ng-model="airportController.GMToffset" placeholder="GMT Offset" ng-disabled="info">
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">Bus Connectivity:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Bus Connectivity:</label>
+  <div class="col-sm-4">
     <select class="form-control" ng-model="airportController.busConnectivity" ng-disabled="info" required>
       <option ng-model="select">Select</option>
       <option ng-model="yes">Yes</option>
@@ -113,8 +113,8 @@
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">Metro Connectivity:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Metro Connectivity:</label>
+  <div class="col-sm-4">
     <select class="form-control" ng-model="airportController.metroConnectivity" ng-disabled="info" required>
       <option ng-model="select">Select</option>
       <option ng-model="yes">Yes</option>
@@ -123,8 +123,8 @@
   </div>
 </div>
 <div class="form-group">
-  <label class="col-sm-4 control-label">Taxi Connectivity:</label>
-  <div class="col-sm-6">
+  <label class="col-sm-3 control-label">Taxi Connectivity:</label>
+  <div class="col-sm-4">
     <select class="form-control" ng-model="airportController.taxiConnectivity" ng-disabled="info" required>
       <option ng-model="select">Select</option>
       <option ng-model="yes">Yes</option>

@@ -84,6 +84,11 @@ var zopkyFrontendApp = angular
         controller: 'hotelController',
      //   requireLogin: true
       })
+      .when('/roomType', {
+        templateUrl: 'views/roomType.html',
+        controller: 'roomController',
+     //   requireLogin: true
+      })
       .when('/slider', {
         templateUrl: 'views/imgSlider.html',
         controller: 'imgSliderController',
@@ -97,7 +102,7 @@ var zopkyFrontendApp = angular
 zopkyFrontendApp.directive('modal', function () {
     return {
       template: '<div class="modal fade">' + 
-          '<div class="modal-dialog">' + 
+          '<div class="modal-dialog" style="width:80%;">' + 
             '<div class="modal-content">' + 
               '<div class="modal-header">' + 
                 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 

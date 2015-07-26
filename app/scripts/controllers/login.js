@@ -10,6 +10,15 @@ $scope.loginController = {};
     	responsePromise.then (function (response){
 
     		console.log (response);
+    		if (response['responseCode']==200) {
+    			var authToken = response['auth_token'];
+    			//save in cookie
+    			//post login process
+    		}else{
+    			//show login error
+    			var message = response['message'];
+    			console.log(message);
+    		}
 
     	});
     };

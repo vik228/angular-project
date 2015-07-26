@@ -9,6 +9,8 @@
 	    <li><a href=".city" role="tab" data-toggle="tab">City</a></li>   
 	    <li><a href=".airport" role="tab" data-toggle="tab">Airport</a></li> 
 	    <li><a href=".hotel" role="tab" data-toggle="tab">Hotel</a></li> 
+	    <li><a href=".roomType" role="tab" data-toggle="tab">Room Type</a></li> 
+
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active employee">
@@ -36,9 +38,12 @@
 		</div><!--End of tab-pane  city -->	
 		<div class="tab-pane airport">
 			<div ng-include="airporturl"></div>
-		</div><!--End of tab-pane  city -->	
+		</div><!--End of tab-pane  airport -->	
 		<div class="tab-pane hotel">
 			<div ng-include="hotelurl"></div>
-		</div><!--End of tab-pane  city -->	
+		</div><!--End of tab-pane  hotel -->	
+		<div class="tab-pane roomType">
+			<div ng-include="roomtypeurl"></div>
+		</div><!--End of tab-pane  room type -->	
 	</div>
 </div>     		

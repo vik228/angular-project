@@ -4,12 +4,12 @@ zopkyFrontendApp.controller('employeeController', function($scope,$http, UtilsFa
 $scope.employeeController = {};
 
 $scope.employees = [
-{id:1, empid:'ZT001', fName:'Binay',  lName:"Verma", contact:9988776655, email:'Binay@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'0' },
-{id:2, empid:'ZT002', fName:'Ajay',   lName:"Test",  contact:9988776655, email:'Ajay@zopky.com',    roles:'Developer', reportingManager:'Anshul', status:'1' },
-{id:3, empid:'ZT003', fName:'Vikash', lName:"Test",  contact:9988776655, email:'Vikash@zopky.com',  roles:'Developer', reportingManager:'Anshul', status:'1' },
-{id:4, empid:'ZT004', fName:'Shubham',lName:"Test",  contact:9988772211, email:'Shubham@zopky.com', roles:'Developer', reportingManager:'Aprit', status:'false' },
-{id:5, empid:'ZT005', fName:'Dummy5', lName:"Test",  contact:9988776644, email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'false' },
-{id:6, empid:'ZT006', fName:'Dummy6', lName:"Test",  contact:9988776633, email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'1' },
+{id:1, empid:'ZT001', fName:'Binay',  lName:"Verma", contact:'9988776655', email:'Binay@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'false' },
+{id:2, empid:'ZT002', fName:'Ajay',   lName:"Test",  contact:'9988776655', email:'Ajay@zopky.com',    roles:'Developer', reportingManager:'Anshul', status:'true' },
+{id:3, empid:'ZT003', fName:'Vikash', lName:"Test",  contact:'9988776655', email:'Vikash@zopky.com',  roles:'Developer', reportingManager:'Anshul', status:'true' },
+{id:4, empid:'ZT004', fName:'Shubham',lName:"Test",  contact:'9988772211', email:'Shubham@zopky.com', roles:'Developer', reportingManager:'Aprit', status:'false' },
+{id:5, empid:'ZT005', fName:'Dummy5', lName:"Test",  contact:'9988776644', email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'false' },
+{id:6, empid:'ZT006', fName:'Dummy6', lName:"Test",  contact:'9988776633', email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'true' }
 ]; 
 /*
 $http.get("employee.txt")
@@ -29,7 +29,7 @@ $scope.editEmployee = function(id) {
   if (id == 'new') {
     $scope.formTitle = 'Create New Employee';
     $scope.edit = true;
-    $scope.act ='save';
+    $scope.act ='add';
   //  $scope.incomplete = true;
     $scope.employeeController.fName = '';
     $scope.employeeController.lName = '';
@@ -53,36 +53,40 @@ $scope.editEmployee = function(id) {
 /* saveEmployee function inserts employee information in the database*/
 $scope.saveEmployee = function() {
   var employeeDetails = {
-    action:$scope.act,
     fname:$scope.employeeController.fName, 
     lname:$scope.employeeController.lName,
     email:$scope.employeeController.email,
     contact:$scope.employeeController.contact,
     roles:$scope.employeeController.roles,
-    reportingManager:$scope.employeeController.reportingManager
+    reporting_manager:$scope.employeeController.reportingManager
   };
   console.log(employeeDetails);
-  var responsePromise = UtilsFactory.doPostCall ('/user/employees', employeeDetails);
-      responsePromise.then (function (response){
+  if($scope.act === 'add')
+    var responsePromise = UtilsFactory.doPostCall ('/user/add', employeeDetails);
+  else if($scope.act === 'update')
+    var responsePromise = UtilsFactory.doPostCall ('/user/update', employeeDetails);
 
-        console.log (response);
+    responsePromise.then (function (response){
 
-      });
+      console.log (response);
+      // response : responseCode, message
+      var message = response['message'];
+      console.log (message);
+
+    });
 };
 
 /* statusEmployee function activates or deactivates employee information from database*/
 $scope.statusEmployee = function(id) {
-  if($scope.employees[id-1].status === '0')
-    $scope.stat='1';
-  else
-    $scope.stat='0';
+  
+  $scope.employees[id-1].status = !$scope.employees[id-1].status ;
+  
   var employeeDetails = {
-    action:'status',
-    empid:$scope.employees[id-1].empid,
-    active:$scope.stat
+    id:$scope.employees[id-1].id,
+    active:$scope.employees[id-1].status
   };
   console.log(employeeDetails);
-  var responsePromise = UtilsFactory.doPostCall ('/user/employees', employeeDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/user/update', employeeDetails);
       responsePromise.then (function (response){
 
         console.log (response);

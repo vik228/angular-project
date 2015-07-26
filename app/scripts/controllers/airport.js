@@ -28,7 +28,7 @@ $scope.editAirport = function(id,edit) {
   if (id == 'new') {
     $scope.formTitle = 'Create New Airport';
   //  $scope.incomplete = true;
-    $scope.act ='save';
+    $scope.act ='add';
     $scope.airportController.city = '';
     $scope.airportController.airportCode = '';
     $scope.airportController.airportName = '';
@@ -83,8 +83,12 @@ $scope.showModal = false;
 
 /* saveActivities function inserts activities information in the database*/
 $scope.saveAirport = function() {
+  var connectivity = {
+    busConnectivity: $scope.airportController.busConnectivity === 'Yes'? 'true' : 'false', 
+    metroConnectivity: $scope.airportController.metroConnectivity === 'Yes'? 'true' : 'false', 
+    taxiConnectivity: $scope.airportController.taxiConnectivity === 'Yes'? 'true' : 'false'
+  }
   var airportDetails = {
-    action:$scope.act,
     city:$scope.airportController.city,
     airportName:$scope.airportController.airportName,
     airportCode:$scope.airportController.airportCode,
@@ -93,14 +97,14 @@ $scope.saveAirport = function() {
     address:$scope.airportController.address,
     lat: $scope.airportController.lat,
     long: $scope.airportController.long, 
-    busConnectivity: $scope.airportController.busConnectivity === 'Yes'? 'true' : 'false', 
-    metroConnectivity: $scope.airportController.metroConnectivity === 'Yes'? 'true' : 'false', 
-    taxiConnectivity: $scope.airportController.taxiConnectivity === 'Yes'? 'true' : 'false'
+    connectivity: connectivity
   };
 
   console.log(airportDetails);
-
-  var responsePromise = UtilsFactory.doPostCall ('/user/airport', airportDetails);
+  if($scope.act === 'add')
+    var responsePromise = UtilsFactory.doPostCall ('/airport/add', airportDetails);
+  else if($scope.act === 'update')
+    var responsePromise = UtilsFactory.doPostCall ('/airport/update', airportDetails);
       responsePromise.then (function (response){
 
         console.log (response);
@@ -110,17 +114,13 @@ $scope.saveAirport = function() {
 
 /* statusActivity function activates or deactivates Continent information from database*/
 $scope.statusAirport = function(id) {
-  if($scope.airports[id-1].status === '0')
-    $scope.stat='1';
-  else
-    $scope.stat='0';
+  $scope.airports[id-1].status = !$scope.airports[id-1].status ;
   var airportDetails = {
-    action:'status',
     id:$scope.airports[id-1].id,
-    active:$scope.stat
+    active:$scope.airports[id-1].status
   };
   console.log(airportDetails);
-  var responsePromise = UtilsFactory.doPostCall ('/user/airport', airportDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/airport/update', airportDetails);
       responsePromise.then (function (response){
 
         console.log (response);

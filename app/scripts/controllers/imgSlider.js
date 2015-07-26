@@ -1,6 +1,7 @@
 'use strict';
 
-zopkyFrontendApp.controller('imgSliderController', function ($scope) {
+zopkyFrontendApp.controller('imgSliderController', function($scope, $http, UtilsFactory) {
+    
         $scope.slides = [
             {image: 'http://farm1.static.flickr.com/260/18577849653_f310e0f6f7_b.jpg', description: 'Image 00'},
             {image: 'http://farm1.static.flickr.com/494/19453268090_cf9a87188a_b.jpg', description: 'Image 01'},
@@ -65,10 +66,8 @@ zopkyFrontendApp.controller('imgSliderController', function ($scope) {
                 }
             }
         };
-    });
-
+ });
 $(function () {
-    'use strict';
 
     // Load demo images from flickr:
     $.ajax({
@@ -94,10 +93,14 @@ $(function () {
                 photo.server + '/' + photo.id + '_' + photo.secret;
             $('<a/>')
                 .append($('<img>').prop('src', baseUrl + '_s.jpg'))
-                .prop('href', baseUrl + '_b.jpg')
                 .prop('title', photo.title)
+                .prop('href','#/slider')
+                .prop('id', index)
+                .on('click', function(){$scope.currentSliderImg(index);
+                    console.log("inside onclick"+index);})
                 .attr('data-gallery', '')
                 .appendTo(linksContainer);
         });
     });
 });
+

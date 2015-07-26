@@ -1,15 +1,14 @@
 .s {
   margin:auto;
-  width: 580px;
+  width: 100%;
   height: 400px;
 }
 
-.tn{
+.leftthumbnails{
     margin-top:20px;
 }
 
 .slider {
-    width: 580px;
     height: 400px;
     overflow: hidden;
     position: relative;

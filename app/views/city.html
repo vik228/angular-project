@@ -1,7 +1,7 @@
 <div class="col-lg-12 col-md-12" ng-controller="cityController">
 <h3 class="text-center">Cities</h3>
 
-<button class="btn btn-success" ng-click="editActivity('new');toggleModal();">
+<button class="btn btn-success" ng-click="editCity('new');toggleModal();">
   <span class="glyphicon glyphicon-"></span> Create New City
 </button>
 </br></br>
@@ -9,20 +9,29 @@
 <table class="table table-striped table-bordered">
   <thead><tr>
     <th>Id</th>
+    <th>State</th>
     <th>City</th>
-    <th>Country</th>
     <th>Location</th>
     <th>Edit</th>
+    <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="city in cities">
     
     <td>{{ city.id }}</td>
+    <td>{{ city.state }}</td>
     <td>{{ city.city }}</td>
-    <td>{{ city.country }}</td>
     <td>{{ city.lat + ' ' + city.long }}</td>
     <td>
-      <button class="btn" ng-click="editActivity(city.id);toggleModal();">
+      <button class="btn" ng-click="editCity(city.id);toggleModal();">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+    <td class="text-center">
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="city.status" ng-click="statusCity(city.id)" >
+      Deactivate
+      </button>
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="city.status" ng-click="statusCity(city.id)" >
+      Activate
       </button>
     </td>
   </tr></tbody>
@@ -32,18 +41,6 @@
 <modal title="City Form" visible="showModal">
 
 <form class="form-horizontal">
-  <div class="form-group">
-  <label class="col-sm-3 control-label">Continent:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="cityController.continent" placeholder="Continent">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Country:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="cityController.country" placeholder="Country">
-  </div>
-</div>
   <div class="form-group">
   <label class="col-sm-3 control-label">State:</label>
   <div class="col-sm-4">
@@ -63,24 +60,6 @@
     <input type="text" class="form-control" ng-model="cityController.long" placeholder="longitute">
   </div>
 </div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Type:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="cityController.type" placeholder="Type">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Open Time:</label>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" ng-model="cityController.openTime" placeholder="Open Time">
-  </div>
-</div> <!-- End Open time -->
-<div class="form-group">
-  <label class="col-sm-3 control-label">Close Time:</label>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" ng-model="cityController.closeTime" placeholder="Close Time">
-  </div>
-</div> <!-- End Close time -->
 </form> <!-- End Form -->
 <hr>
 <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveCity()">

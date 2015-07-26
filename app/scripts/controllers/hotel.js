@@ -4,12 +4,12 @@ zopkyFrontendApp.controller('hotelController', function($scope,$http,UtilsFactor
 $scope.hotelController = {};
 
 $scope.hotels = [
-{id:1,  hotelName:'Taj Hotel', city:'New Delhi', address:'address 1', star:'5', swimmingPool:'true', freeWifi:'true', gym:'false', restaurant:'true', lat: '19.2302', long:'72.409202', status:'0'},
-{id:2,  hotelName:'Marriott', city:'Hyderabad',  address:'address 1',star:'4', swimmingPool:'true', freeWifi:'false', gym:'true', restaurant:'true',lat: '19.2302', long:'72.409202', status:'1'},
-{id:3,  hotelName:'Giner', city:'Kolkata',  address:'address 1', star:'5', swimmingPool:'false', freeWifi:'true', gym:'false',restaurant:'false', lat: '19.2302', long:'72.409202', status:'0'},
-{id:4,  hotelName:'Hayatt', city:'London', address:'address 1', star:'5', swimmingPool:'false', freeWifi:'false', gym:'true', restaurant:'true', lat: '19.2302', long:'72.409202', status:'0'},
-{id:5,  hotelName:'Sai Palace', city:'Germany', address:'address 1', star:'3', swimmingPool:'true', freeWifi:'true', gym:'true', restaurant:'false', lat: '19.2302', long:'72.409202', status:'1'},
-{id:6,  hotelName:'Oberoi hotel', city:'China', address:'address 1', star:'4', swimmingPool:'true', freeWifi:'true', gym:'true', restaurant:'false', lat: '19.2302', long:'72.409202', status:'0'},
+{id:1,  hotelName:'Taj Hotel', city:'New Delhi', address:'address 1', star:'5', swimmingPool:'true', freeWifi:'true', gym:'false', restaurant:'true', lat: '19.2302', long:'72.409202', status:'0', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
+{id:2,  hotelName:'Marriott', city:'Hyderabad',  address:'address 1',star:'4', swimmingPool:'true', freeWifi:'false', gym:'true', restaurant:'true',lat: '19.2302', long:'72.409202', status:'1', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
+{id:3,  hotelName:'Giner', city:'Kolkata',  address:'address 1', star:'5', swimmingPool:'false', freeWifi:'true', gym:'false',restaurant:'false', lat: '19.2302', long:'72.409202', status:'0', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
+{id:4,  hotelName:'Hayatt', city:'London', address:'address 1', star:'5', swimmingPool:'false', freeWifi:'false', gym:'true', restaurant:'true', lat: '19.2302', long:'72.409202', status:'0', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
+{id:5,  hotelName:'Sai Palace', city:'Germany', address:'address 1', star:'3', swimmingPool:'true', freeWifi:'true', gym:'true', restaurant:'false', lat: '19.2302', long:'72.409202', status:'1', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
+{id:6,  hotelName:'Oberoi hotel', city:'China', address:'address 1', star:'4', swimmingPool:'true', freeWifi:'true', gym:'true', restaurant:'false', lat: '19.2302', long:'72.409202', status:'0', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
 ]; 
 
 $scope.edit = true;
@@ -28,7 +28,7 @@ $scope.editHotel = function(id,edit) {
   if (id == 'new') {
     $scope.formTitle = 'Create New Hotel';
   //  $scope.incomplete = true;
-    $scope.act ='save';
+    $scope.act ='add';
     $scope.hotelController.hotelName = '';
     $scope.hotelController.city = '';
     $scope.hotelController.address = '';
@@ -81,23 +81,35 @@ $scope.showModal = false;
 
 /* saveHotel function inserts hotel information in the database*/
 $scope.saveHotel = function() {
-  var hotelDetails = {
-    action:$scope.act,
-    hotelName:$scope.hotelController.hotelName,
-    city:$scope.hotelController.city,
-    address:$scope.hotelController.address,
-    star:$scope.hotelController.star,
+  var location = {
     lat: $scope.hotelController.lat,
-    long: $scope.hotelController.long, 
+    lon: $scope.hotelController.long
+  }
+  var amenities = {
     swimmingPool:$scope.hotelController.swimmingPool === 'Yes'? 'true' : 'false', 
     freeWifi: $scope.hotelController.freeWifi === 'Yes'? 'true' : 'false', 
     gym: $scope.hotelController.gym === 'Yes'? 'true' : 'false', 
     restaurant: $scope.hotelController.restaurant === 'Yes'? 'true' : 'false'
+  }
+  var hotelDetails = {
+    name:$scope.hotelController.hotelName,
+    city:$scope.hotelController.city,
+    //pincode
+    address:$scope.hotelController.address,
+    star:$scope.hotelController.star,
+    location: location, 
+    //price
+    //checkin_time
+    //checkout_time
+    //amenities will have swimmingPool,freeWifi,gym, restaurant
+    amenities: amenities
   };
 
   console.log(hotelDetails);
-
-  var responsePromise = UtilsFactory.doPostCall ('/user/hotel', hotelDetails);
+  if($scope.act === 'add')
+    var responsePromise = UtilsFactory.doPostCall ('/hotel/add', hotelDetails);
+  else if($scope.act === 'update')
+    var responsePromise = UtilsFactory.doPostCall ('/hotel/update', hotelDetails);
       responsePromise.then (function (response){
 
         console.log (response);
@@ -107,17 +119,13 @@ $scope.saveHotel = function() {
 
 /* statusHotel function activates or deactivates Continent information from database*/
 $scope.statusHotel = function(id) {
-  if($scope.hotels[id-1].status === '0')
-    $scope.stat='1';
-  else
-    $scope.stat='0';
+  $scope.hotels[id-1].status = !$scope.hotels[id-1].status ;
   var hotelDetails = {
-    action:'status',
     id:$scope.hotels[id-1].id,
-    active:$scope.stat
+    active:$scope.hotels[id-1].status
   };
   console.log(hotelDetails);
-  var responsePromise = UtilsFactory.doPostCall ('/user/hotel', hotelDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/hotel/update', hotelDetails);
       responsePromise.then (function (response){
 
         console.log (response);
