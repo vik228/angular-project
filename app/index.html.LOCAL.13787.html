@@ -26,7 +26,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-  <!--   <div class="container-fluid"> -->
+    <div class="container-fluid">
       <div class="header">
         <!--
         <ul class="nav nav-pills pull-right">
@@ -45,7 +45,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#/">
+              <a class="navbar-brand" href="index.html">
               <!--  <img src="img/logo/logo.png" alt="Logo"> -->
                 <p style="font-family: Lobster; font-size:24px;">Zopky</p>
               </a>
@@ -64,7 +64,6 @@
                     <li><a ng-href="#/city">City</a></li>
                     <li><a ng-href="#/airport">Airport</a></li>
                     <li><a ng-href="#/hotel">Hotel</a></li>
-                    <li><a ng-href="#/roomType">Room Type</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#/navtab">All</a></li>
                   </ul>
@@ -74,26 +73,12 @@
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
-      </div><!-- header ends -->
-
+      </div>
+      
       <div ng-view></div>
-    <div class="container-fluid"> 
+    
       <div class="footer col-lg-12">
-        Site Map
-        <ul class="list-inline">
-          <li><a ng-href="#/">Home</a></li>
-          <li><a href="#/navtab">All</a></li>
-          <li><a ng-href="#/employee">Employees</a></li>
-          <li><a ng-href="#/activities">Activities</a></li>
-          <li><a ng-href="#/continent">Continent</a></li>
-          <li><a ng-href="#/country">Country</a></li>
-          <li><a ng-href="#/state">State</a></li>
-          <li><a ng-href="#/city">City</a></li>
-          <li><a ng-href="#/airport">Airport</a></li>
-          <li><a ng-href="#/hotel">Hotel</a></li>
-          <li><a ng-href="#/roomType">Room Type</a></li>
-        </ul>
-        <p class="pull-right">by team <span style="font-family: Lobster;">Zopky</span></p>
+        <p><span class="glyphicon glyphicon-travel"></span>by team <span style="font-family: Lobster;">Zopky</span></p>
       </div>
     </div>
 
@@ -147,7 +132,6 @@
         <script src="scripts/controllers/navtab.js"></script>
         <script src="scripts/controllers/airport.js"></script>
         <script src="scripts/controllers/hotel.js"></script>
-        <script src="scripts/controllers/roomType.js"></script>
         <script src="scripts/controllers/imgSlider.js"></script>
 
         <script src="scripts/services/Utils.js"></script>
@@ -155,6 +139,7 @@
 
 
         <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.3/TweenMax.min.js"></script>
-
+        
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
 </body>
 </html>

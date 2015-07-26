@@ -12,6 +12,7 @@
     <th>Continent</th>
     <th>Country</th>
     <th>Edit</th>
+    <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="country in countries">
     
@@ -23,6 +24,14 @@
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
+    <td class="text-center">
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="country.status" ng-click="statusCountry(country.id)" >
+      Deactivate
+      </button>
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="country.status" ng-click="statusCountry(country.id)" >
+      Activate
+      </button>
+    </td>
   </tr></tbody>
 </table>
 </div>  <!-- End table-responsive -->
@@ -30,7 +39,7 @@
 <modal title="City Form" visible="showModal">
 
 <form class="form-horizontal">
-  <div class="form-group">
+<div class="form-group">
   <label class="col-sm-3 control-label">Continent:</label>
   <div class="col-sm-4">
     <input type="text" class="form-control" ng-model="countryController.continent" placeholder="Continent">
@@ -42,43 +51,6 @@
     <input type="text" class="form-control" ng-model="countryController.country" placeholder="Country">
   </div>
 </div>
-  <div class="form-group">
-  <label class="col-sm-3 control-label">State:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="countryController.state" placeholder="State">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">City:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="countryController.city" placeholder="City">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Location:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="countryController.lat" placeholder="Latitude">
-    <input type="text" class="form-control" ng-model="countryController.long" placeholder="longitute">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Type:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="countryController.type" placeholder="Type">
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Open Time:</label>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" ng-model="countryController.openTime" placeholder="Open Time">
-  </div>
-</div> <!-- End Open time -->
-<div class="form-group">
-  <label class="col-sm-3 control-label">Close Time:</label>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" ng-model="countryController.closeTime" placeholder="Close Time">
-  </div>
-</div> <!-- End Close time -->
 </form> <!-- End Form -->
 <hr>
 <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveCountry()">

@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('imgSliderController', function ($scope) {
+zopkyFrontendApp.controller('imgSliderController', function($scope) {
 
         var links = [];
         $.ajax({
@@ -10,14 +10,10 @@ zopkyFrontendApp.controller('imgSliderController', function ($scope) {
                 method: 'flickr.photos.search',
                 api_key: '7617adae70159d09ba78cfec73c13be3',
                 tags: 'Taj Mahal',
-                privacy_filter:1,
-            //    lat: '27.175',
-            //  lon: '78.042',
-            //    radius: '1', 
+                privacy_filter:1
             },
             dataType: 'jsonp',
-            jsonp: 'jsoncallback',
-            limit: 20
+            jsonp: 'jsoncallback'
         }).done(function (result) {
             var linksContainer = $('#links'),
                 baseUrl;
@@ -36,7 +32,8 @@ zopkyFrontendApp.controller('imgSliderController', function ($scope) {
                     var imgObject = {image: baseUrl+ '_b.jpg', description: imageDes};
                     links.push(imgObject);
 
-                $('<img>').prop('src', baseUrl + '_s.jpg')
+                $('<img>')
+                    .prop('src', baseUrl + '_s.jpg')
                     // .append($('<img>').prop('src', baseUrl + '_s.jpg'))
                     // .prop('href', baseUrl + '_b.jpg')
                     // .attr('onclick', function(){ $scope.currentIndex = index; console.log("inside onclick"); })
@@ -129,10 +126,8 @@ zopkyFrontendApp.controller('imgSliderController', function ($scope) {
                 }
             }
         };
-    });
-
-$(function () {
-    'use strict';
+ });
+// $(function () {
 
     // Load demo images from flickr:
     // $.ajax({
@@ -164,4 +159,5 @@ $(function () {
     //             .appendTo(linksContainer);
     //     });
     // });
-});
+// });
+

@@ -21,6 +21,7 @@
     $scope.airporturl = '/views/airport.html';
     $scope.hotelurl = '/views/hotel.html';
     $scope.sliderurl = '/views/imgSlider.html';
+    $scope.roomtypeurl = '/views/roomType.html';
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
