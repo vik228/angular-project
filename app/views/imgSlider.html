@@ -1,5 +1,6 @@
 <div ng-controller="imgSliderController">
  <h3 class="text-center">Activity Images</h3>
+
 <div class="leftthumbnails col-lg-7 col-md-5" id="links"></div> <!-- Flickr image container-->
 <div class="col-lg-5"> 
     <div class="slider">
@@ -10,8 +11,8 @@
         <a class="arrow prev" href="#/slider" ng-click="nextSlide()"></a>
         <a class="arrow next" href="#/slider" ng-click="prevSlide()"></a>
 
-        <a href="#/slider" ng-class="{'active':isCurrentSlideIndex($index)}"
-                          ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a>
+        <!-- <a href="#/slider" ng-class="{'active':isCurrentSlideIndex($index)}"
+                          ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a> -->
 
        <!-- <nav class="nav">
             <div class="wrapper">
