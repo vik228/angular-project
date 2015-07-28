@@ -94,6 +94,11 @@ var zopkyFrontendApp = angular
         controller: 'imgSliderController',
      //   requireLogin: true
       })
+      .when('/minitour', {
+        templateUrl: 'views/miniTour.html',
+        controller: 'minitourController',
+     //   requireLogin: true
+      })
       .otherwise({
         redirectTo: '/'
       });

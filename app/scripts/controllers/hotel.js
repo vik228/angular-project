@@ -12,12 +12,21 @@ $scope.hotels = [
 {id:6,  hotelName:'Oberoi hotel', city:'China', address:'address 1', star:'4', swimmingPool:'true', freeWifi:'true', gym:'true', restaurant:'false', lat: '19.2302', long:'72.409202', status:'0', pincode:'110001', price:'2200', currency:'INR', checkin_time:'1200',checkout_time:'1100'},
 ]; 
 
+$scope.rooms = [
+{id:1, type:'Deluxe AC', capacity: '2', status:'false', price:'2000'},
+{id:2, type:'Luxary AC', capacity: '3', status:'true', price:'2000'},
+{id:3, type:'Single AC', capacity: '1', status:'false', price:'2000'},
+{id:4, type:'Deluxe Non-AC', capacity: '2', status:'true', price:'2000'},
+{id:5, type:'Regular AC', capacity: '1', status:'true', price:'2000'},
+{id:6, type:'Regular Non-AC', capacity: '2', status:'false', price:'2000'}
+]; 
+
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
 $scope.info= false;
 
-/* To edit airport */
+/* To edit hotel */
 
 $scope.editHotel = function(id,edit) {
   if(edit ==='show')
@@ -39,6 +48,7 @@ $scope.editHotel = function(id,edit) {
     $scope.hotelController.freeWifi = 'Select';
     $scope.hotelController.gym = 'Select';
     $scope.hotelController.restaurant = 'Select';
+
     } 
   else {
       if(edit ==='show')
@@ -91,18 +101,25 @@ $scope.saveHotel = function() {
     gym: $scope.hotelController.gym === 'Yes'? 'true' : 'false', 
     restaurant: $scope.hotelController.restaurant === 'Yes'? 'true' : 'false'
   }
+
+  var prices =[];
+  angular.forEach($scope.rooms, function(value, key){
+    var price={type: value.type, price:value.price};
+    prices.push(price);
+  });
   var hotelDetails = {
     name:$scope.hotelController.hotelName,
     city:$scope.hotelController.city,
     //pincode
     address:$scope.hotelController.address,
     star:$scope.hotelController.star,
-    location: location, 
+    location: JSON.stringify(location), 
     //price
     //checkin_time
     //checkout_time
     //amenities will have swimmingPool,freeWifi,gym, restaurant
-    amenities: amenities
+    amenities: JSON.stringify(amenities),
+    prices: JSON.stringify(prices)
   };
 
   console.log(hotelDetails);
