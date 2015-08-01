@@ -99,6 +99,11 @@ var zopkyFrontendApp = angular
         controller: 'minitourController',
      //   requireLogin: true
       })
+      .when('/airportTransfer', {
+        templateUrl: 'views/airportTransfer.html',
+        controller: 'airportTransferController',
+     //   requireLogin: true
+      })
       .otherwise({
         redirectTo: '/'
       });
