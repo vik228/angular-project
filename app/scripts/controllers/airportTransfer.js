@@ -12,6 +12,15 @@ $scope.airportTransfers = [
 {id:6,  airportCode:'IGI', airportName:'IGI Airport', city:'New Delhi', tag:'1', currency:'INR',status:'false'},
 ];
 
+$scope.seats = [
+{id:1, size: '3', status:'false', airportPrice:'200', cityPrice: '300'},
+{id:2, size: '5', status:'true', airportPrice:'200', cityPrice: '400'},
+{id:3, size: '9', status:'false', airportPrice:'200', cityPrice: '100'},
+{id:4, size: '15', status:'true', airportPrice:'200', cityPrice: '340'},
+{id:5, size: '45', status:'false', airportPrice:'200', cityPrice: '370'},
+{id:6, size: '54', status:'true', airportPrice:'200', cityPrice: '230'},
+]; 
+
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
@@ -34,6 +43,15 @@ $scope.editAirportTransfer = function(id,edit) {
     $scope.airportTransferController.airportName = '';
     $scope.airportTransferController.tag = 'Select';
     $scope.airportTransferController.currency = '';
+    //call seats api here and make prices null
+    $scope.seats = [
+      {id:1, size: '3', status:'false', airportPrice:'', cityPrice: ''},
+      {id:2, size: '5', status:'true', airportPrice:'', cityPrice: ''},
+      {id:3, size: '9', status:'false', airportPrice:'', cityPrice: ''},
+      {id:4, size: '15', status:'true', airportPrice:'', cityPrice: ''},
+      {id:5, size: '45', status:'false', airportPrice:'', cityPrice: ''},
+      {id:6, size: '54', status:'true', airportPrice:'', cityPrice: ''},
+      ]; 
     } 
   else {
       if(edit ==='show')
@@ -55,22 +73,18 @@ $scope.showModal = false;
     };
 
 /* saveActivities function inserts activities information in the database*/
-$scope.saveairportTransfer = function() {
-  var connectivity = {
-    busConnectivity: $scope.airportTransferController.busConnectivity === 'Yes'? 'true' : 'false', 
-    metroConnectivity: $scope.airportTransferController.metroConnectivity === 'Yes'? 'true' : 'false', 
-    taxiConnectivity: $scope.airportTransferController.taxiConnectivity === 'Yes'? 'true' : 'false'
-  }
+$scope.saveAirportTransfer = function() {
+   var prices =[];
+    angular.forEach($scope.seats, function(value, key){
+    var price={seater: value.size, airportPrice:value.airportPrice, cityPrice:value.cityPrice};
+    prices.push(price);
+  });
+
   var airportTransferDetails = {
     city:$scope.airportTransferController.city,
-    airportTransferName:$scope.airportTransferController.airportTransferName,
-    airportTransferCode:$scope.airportTransferController.airportTransferCode,
-    international:$scope.airportTransferController.international === 'Yes'? 'true' : 'false', 
-    GMToffset:$scope.airportTransferController.GMToffset,
-    address:$scope.airportTransferController.address,
-    lat: $scope.airportTransferController.lat,
-    long: $scope.airportTransferController.long, 
-    connectivity: connectivity
+    airportName:$scope.airportTransferController.airportName,
+    airportCode:$scope.airportTransferController.airportCode,
+    prices: JSON.stringify(prices)
   };
 
   console.log(airportTransferDetails);
@@ -85,8 +99,8 @@ $scope.saveairportTransfer = function() {
       });
 }; /* saveContinent ends here */
 
-/* statusActivity function activates or deactivates Continent information from database*/
-$scope.statusairportTransfer = function(id) {
+/* statusAirportTransfer function activates or deactivates airportTransfers information from database*/
+$scope.statusAirportTransfer = function(id) {
   $scope.airportTransfers[id-1].status = !$scope.airportTransfers[id-1].status ;
   var airportTransferDetails = {
     id:$scope.airportTransfers[id-1].id,
@@ -99,7 +113,7 @@ $scope.statusairportTransfer = function(id) {
         console.log (response);
 
       });
-}; /* statusContinent ends here */ 
+}; /* statusAirportTransfer ends here */ 
 
 $scope.toggleEnabled = function(){
   $scope.info = !$scope.info;
