@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var baseUrl = "http://192.168.0.110:1337/api/v0";
+var baseUrl = "http://localhost:1337/api/v0";
 var zopkyFrontendApp = angular
   .module('zopkyFrontendApp', [
     'ngAnimate',
