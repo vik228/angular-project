@@ -48,7 +48,6 @@ $scope.editEmployee = function(id) {
     $scope.employeeController.roles = $scope.employees[id-1].roles; 
     $scope.employeeController.reportingManager = $scope.employees[id-1].reportingManager; 
   }
-//  loadMap();
 };
 
 /* saveEmployee function inserts employee information in the database*/
@@ -95,32 +94,5 @@ $scope.statusEmployee = function(id) {
       });
 }; /* statusEmployee ends here */
 
-$scope.loadMap = function()
-{
-    $scope.maplat='27.175';
-    $scope.maplong='78.042';
-    var myLatlng = new google.maps.LatLng($scope.maplat,$scope.maplong);
-    var myOptions = {
-      zoom: 11,
-      center: myLatlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    // var map1 = new google.maps.Map(document.getElementById("map_canvas1"), myOptions);
-    
-    var marker = new google.maps.Marker({
-        position: myLatlng, 
-        map: map,
-        draggable:true
-    });
-    google.maps.event.addListener(
-        marker,
-        'drag',
-        function() {
-            document.getElementById('lat').value = marker.position.lat();
-            document.getElementById('lng').value = marker.position.lng();
-        }
-    );
-};
 
 });

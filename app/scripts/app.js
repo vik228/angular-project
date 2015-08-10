@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var baseUrl = "http://192.168.0.110:1337/api/v0";
+var baseUrl = "http://192.168.0.114:1337/api/v0";
 var zopkyFrontendApp = angular
   .module('zopkyFrontendApp', [
     'ngAnimate',
@@ -19,6 +19,7 @@ var zopkyFrontendApp = angular
     'ngSanitize',
     'ngTouch'
   ]);
+  
   zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
 
     $httpProvider.defaults.withCredentials = true;

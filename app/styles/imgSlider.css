@@ -1,3 +1,15 @@
+.map_canvas {
+    height:200px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #eee;
+}
+.infoWindowContent {
+    font-size:  14px !important;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
 .s {
   margin:auto;
   width: 100%;

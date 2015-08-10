@@ -1,12 +1,12 @@
-<div class="col-lg-12 col-md-12" ng-controller="employeeController">
-<h3 class="text-center">Employees</h3>
+<div class="col-lg-12 col-md-12" ng-controller="agentController">
+<h3 class="text-center">Agents</h3>
 
-<button class="btn btn-success" ng-click="editEmployee('new');toggleModal();">
-  <span class="glyphicon glyphicon-user"></span> Create New employee
+<button class="btn btn-success" ng-click="editagent('new');toggleModal();">
+  <span class="glyphicon glyphicon-user"></span> Create New Agent
 </button>
 <div class="input-group pull-right col-md-3 col-sm-4 col-xs-5">
     <input type="text" class="form-control" name="search" ng-model="search" placeholder="Search by name, email, phone, empid">
-     <span class="input-group-addon search" ng-click="searchEmployee()"><span class="glyphicon glyphicon-search"></span> </span>
+     <span class="input-group-addon search" ng-click="searchagent()"><span class="glyphicon glyphicon-search"></span> </span>
 </div>
 
 </br></br>
@@ -14,31 +14,31 @@
 <table class="table table-striped table-bordered">
   <thead><tr>
     <th>Id</th>
-    <th>Name</th>
+    <th>Agent Name</th>
     <th>Contact No</th>
     <th>Email id</th>
-    <th>Employee id</th>
-    <th>Roles</th>
+    <th>Agent id</th>
+    <th>Agency Name</th>
     <th>Edit</th>
     <th>Status</th>
   </tr></thead>
-  <tbody><tr ng-repeat="employee in employees">
-    <td>{{ employee.id }}</td>
-    <td>{{ employee.fName + ' ' + employee.lName}}</td>
-    <td>{{ employee.contact }}</td>
-    <td>{{ employee.email }}</td>
-    <td class="text-center">{{ employee.empid }}</td>
-    <td>{{ employee.roles }}</td>
+  <tbody><tr ng-repeat="agent in agents">
+    <td>{{ agent.id }}</td>
+    <td>{{ agent.fName + ' ' + agent.lName}}</td>
+    <td>{{ agent.contact }}</td>
+    <td>{{ agent.email }}</td>
+    <td class="text-center">{{ agent.agentid }}</td>
+    <td>{{ agent.agency }}</td>
     <td class="text-center">
-      <button class="btn btn-sm" ng-click="editEmployee(employee.id);toggleModal();" >
+      <button class="btn btn-sm" ng-click="editagent(agent.id);toggleModal();" >
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="employee.status" ng-click="statusEmployee(employee.id)" >
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="agent.status" ng-click="statusagent(agent.id)" >
         Deactivate
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="employee.status" ng-click="statusEmployee(employee.id)" >
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="agent.status" ng-click="statusagent(agent.id)" >
         Activate
       </button>
     </td>
@@ -46,19 +46,12 @@
 </table>
 </div>  
 
-<modal title="Employee Form" visible="showModal">
+<modal title="agent Form" visible="showModal">
 <form class="form-horizontal" name="myForm">
-  <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
-    <div class="map_canvas" id="map_canvas"></div>
-    <div> 
-      <input type="text" class="form-control" id="lat" ng-model="maplat" placeholder="Latitude">  
-      <input type="text" class="form-control" id="lng" ng-model="maplong" placeholder="Longitude">
-    </div>
-</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.fName.$invalid && !myForm.fName.$pristine }">
   <label class="col-sm-3 control-label">First Name:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="fName" ng-model="employeeController.fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
+    <input type="text" class="form-control" name="fName" ng-model="agentController.fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
     <p ng-show="myForm.fName.$error.minlength" class="help-block">First name is too short.</p>
     <p ng-show="myForm.fName.$error.maxlength" class="help-block">First name is too long.</p>
     <p ng-show="myForm.fName.$error.pattern" class="help-block">First letter should be Capital.</p>
@@ -67,20 +60,20 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
   <label class="col-sm-3 control-label">Last Name:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="lName" ng-model="employeeController.lName" placeholder="Last Name" required>
+    <input type="text" class="form-control" name="lName" ng-model="agentController.lName" placeholder="Last Name" required>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.email.$invalid && !myForm.email.$pristine }">
   <label class="col-sm-3 control-label">Email:</label>
   <div class="col-sm-4">
-    <input type="email" class="form-control" name="email" ng-model="employeeController.email" placeholder="Email" required>
+    <input type="email" class="form-control" name="email" ng-model="agentController.email" placeholder="Email" required>
     <p ng-show="myForm.email.$invalid && !myForm.email.$pristine" class="help-block">Enter a valid email.</p>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.contact.$invalid && !myForm.contact.$pristine }">
   <label class="col-sm-3 control-label">Mobile Number:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="contact" ng-model="employeeController.contact" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" pattern="^([1-9][0-9]*)$" required>
+    <input type="text" class="form-control" name="contact" ng-model="agentController.contact" placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" pattern="^([1-9][0-9]*)$" required>
     <p ng-show="myForm.contact.$error.minlength" class="help-block">Should be 10 digits</p>
     <p ng-show="myForm.contact.$error.maxlength" class="help-block">Should be 10 digits</p>
     <p ng-show="myForm.contact.$error.pattern" class="help-block">Numbers only and should not start with 0.</p>
@@ -89,14 +82,14 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.role.$invalid && !myForm.role.$pristine }">
   <label class="col-sm-3 control-label">Roles:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="roles" ng-model="employeeController.roles" placeholder="Roles">
+    <input type="text" class="form-control" name="roles" ng-model="agentController.roles" placeholder="Roles">
     <p ng-show="myForm.roles.$invalid && !myForm.roles.$pristine" class="help-block">Enter valid roles.</p>
   </div>
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label">Reporting Manager:</label>
   <div class="col-sm-4">
-    <select class="form-control" ng-model="employeeController.reportingManager" required>
+    <select class="form-control" ng-model="agentController.reportingManager" required>
       <option ng-model="Select">Select</option>
       <option ng-model="Myself">Myself</option>
       <option ng-model="Aprit">Aprit</option>
@@ -106,7 +99,7 @@
 </div>
 </form>
 <hr>
- <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveEmployee()">
+ <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveagent()">
     <span class="glyphicon glyphicon-save"></span> Save Changes
   </button>
 </modal>
