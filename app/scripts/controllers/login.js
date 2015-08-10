@@ -1,18 +1,18 @@
 'use strict';
 zopkyFrontendApp.controller('loginController', ['$scope', '$http','UtilsFactory', '$cookieStore',function($scope, $http,UtilsFactory, $cookieStore) {
 
-if($cookieStore.get('zopkyAuth') !=null){
-                    $("#user").hide();
-                    $("#pass").hide();
-                    $("#button").hide();
-                    $("#loggedIn").show();
-}else{
+// if($cookieStore.get('zopkyAuth') !=null){
+//                     $("#user").hide();
+//                     $("#pass").hide();
+//                     $("#button").hide();
+//                     $("#loggedIn").show();
+// }else{
 $scope.responseError= 'NO Connection';
 $scope.loginController = {};
     $scope.login = function() {
     	var loginDetails = {login_id:$scope.loginController.username, passwd:$scope.loginController.password};
     	//console.log(loginDetails);
-    	var responsePromise = UtilsFactory.doPostCall ('/user/login', loginDetails);
+    	var responsePromise = UtilsFactory.doPostCall ('/employee/login', loginDetails);
     	responsePromise.then (function (response){
 
         		//console.log (response['response']);
@@ -39,5 +39,5 @@ $scope.loginController = {};
                 window.alert(message);
         });
     };
-}
+// }
 }]);

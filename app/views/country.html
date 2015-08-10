@@ -17,7 +17,7 @@
   <tbody><tr ng-repeat="country in countries">
     
     <td>{{ country.id }}</td>
-    <td>{{ country.continent }}</td>
+    <td>{{ country.continent.name }}</td>
     <td>{{ country.country }}</td>
     <td>
       <button class="btn" ng-click="editActivity(country.id);toggleModal();">
