@@ -13,10 +13,14 @@ zopkyFrontendApp.factory ('UtilsFactory',['$http', '$q',function ($http, $q){
 			data:$.param({'data':jsonData})
 		});
 		dataPromise.success(function (data){
-
 			defered.resolve(data);
+			
 
 		});
+		dataPromise.error(function (rejection) {
+			console.log(rejection);
+            defered.resolve(rejection);
+        });
 		return dataPromise;
 
 	}

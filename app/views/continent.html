@@ -24,17 +24,17 @@
     </td>
     <td class="text-center">
       <button class="btn btn-danger btn-sm statusBtn" ng-show="continent.status" ng-click="statusContinent(continent.id)" >
-      Deactivate
+      Deactive
       </button>
       <button class="btn btn-success btn-sm statusBtn" ng-hide="continent.status" ng-click="statusContinent(continent.id)" >
-      Activate
+      Active
       </button>
     </td>
   </tr></tbody>
 </table>
 </div>  <!-- End table-responsive -->
 
-<modal title="City Form" visible="showModal">
+<modal title="City Form" visible="showModal" >
 
 <form class="form-horizontal">
   <div class="form-group">
@@ -44,7 +44,7 @@
   </div>
 </div>
 </form> <!-- End Form -->
-<hr>
+<div>
 <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveContinent()">
   <span class="glyphicon glyphicon-save"></span> Save Changes
 </button>
