@@ -5,10 +5,10 @@ $scope.countryController = {};
 
 $scope.countries = [
 {id:1, continent: "Asia", country:"India", status:'false' },
-{id:2, continent: "Asia", country:"Sangapore", status:'true' },
+{id:2, continent: "Europe", country:"Sangapore", status:'true' },
 {id:3, continent: "Asia", country:'Dummy2',  status:'true' },
-{id:4, continent: "Asia", country:'Dummy3',  status:'false' },
-{id:5, continent: "Asia", country:'Dummy4',  status:'true' },
+{id:4, continent: "Australia", country:'Dummy3',  status:'false' },
+{id:5, continent: "Russia", country:'Dummy4',  status:'true' },
 {id:6, continent: "Asia", country:'Dummy5',  status:'false' },
 ];
 

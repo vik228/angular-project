@@ -52,16 +52,19 @@
   <div class="form-group" ng-class="{ 'has-error' : activityForm.continent.$invalid && !activityForm.continent.$pristine }">
   <label class="col-sm-3 control-label">Continent:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name='continent' ng-model="activitiesController.continent" placeholder="Continent" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
-    <p ng-show="activityForm.continent.$error.minlength" class="help-block">Continent name is too short.</p>
-    <p ng-show="activityForm.continent.$error.maxlength" class="help-block">Continent name is too long.</p>
-    <p ng-show="activityForm.continent.$error.pattern" class="help-block">Continent letter should be Capital.</p>
+    <!-- <input type="text" class="form-control" name='continent' ng-model="activitiesController.continent" placeholder="Continent" required> -->
+    <select class="form-control" ng-model="activitiesController.continent" ng-options="item.id as item.continent for item in activities">
+      <option value="">Select Continent</option>
+    </select>
   </div>
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label">Country:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="activitiesController.country" placeholder="Country">
+    <!-- <input type="text" class="form-control" ng-model="activitiesController.country" placeholder="Country"> -->
+    <select class="form-control" ng-model="activitiesController.country" ng-options="item.id as item.country for item in activities">
+      <option value="">Select Country</option>
+    </select>
   </div>
 </div>
   <div class="form-group">
@@ -73,7 +76,10 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">City:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="activitiesController.city" placeholder="City">
+    <!-- <input type="text" class="form-control" ng-model="activitiesController.city" placeholder="City"> -->
+    <select class="form-control" ng-model="activitiesController.city" ng-options="item.id as item.city for item in activities">
+      <option value="">Select City</option>
+    </select>
   </div>
 </div>
 <div class="form-group">

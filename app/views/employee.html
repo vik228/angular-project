@@ -89,18 +89,24 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.role.$invalid && !myForm.role.$pristine }">
   <label class="col-sm-3 control-label">Roles:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="roles" ng-model="employeeController.roles" placeholder="Roles">
+    <!-- <input type="text" class="form-control" name="roles" ng-model="employeeController.roles" placeholder="Roles"> -->
+    <select class="form-control" name='roles' ng-model="employeeController.roles" ng-options="item.id as item.roles for item in employees" multiple>
+      <option value="">Select Roles</option>
+    </select>
     <p ng-show="myForm.roles.$invalid && !myForm.roles.$pristine" class="help-block">Enter valid roles.</p>
   </div>
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label">Reporting Manager:</label>
   <div class="col-sm-4">
-    <select class="form-control" ng-model="employeeController.reportingManager" required>
+    <!-- <select class="form-control" ng-model="employeeController.reportingManager" required>
       <option ng-model="Select">Select</option>
       <option ng-model="Myself">Myself</option>
       <option ng-model="Aprit">Aprit</option>
       <option ng-model="Anshul">Anshul</option>
+    </select> -->
+    <select class="form-control" ng-model="employeeController.reportingManager" ng-options="item.id as item.fName for item in employees" multiple>
+      <option value="">Select Reporting Manager</option>
     </select>
   </div>
 </div>

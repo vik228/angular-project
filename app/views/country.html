@@ -42,7 +42,13 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Continent:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="countryController.continent" placeholder="Continent">
+    <!-- <input type="text" class="form-control" ng-model="countryController.continent" placeholder="Continent"> -->
+    <select class="form-control" ng-model="countryController.continent" ng-options="item.id as item.continent for item in countries">
+      <option value="">Select Continent</option>
+    </select>
+   <!--  <select class="form-control" name="continent" ng-model="countryController.continent">
+         <option ng:repeat="country in countries" value="">{{country.continent}}</option>
+     </select>  -->
   </div>
 </div>
 <div class="form-group">
