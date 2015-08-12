@@ -16,25 +16,29 @@
   </tr></thead>
   <tbody><tr ng-repeat="country in countries">
     
-    <td>{{ country.id }}</td>
+    <td>{{ country.sequence }}</td>
     <td>{{ country.continent }}</td>
     <td>{{ country.country }}</td>
     <td>
-      <button class="btn" ng-click="editActivity(country.id);toggleModal();">
+      <button class="btn" ng-click="editActivity(country.sequence);toggleModal();">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="country.status" ng-click="statusCountry(country.id)" >
-      Deactivate
+      <button class="btn btn-success btn-sm statusBtn" ng-show="country.status" ng-click="statusCountry(country.sequence)" >
+      Active
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="country.status" ng-click="statusCountry(country.id)" >
-      Activate
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="country.status" ng-click="statusCountry(country.sequence)" >
+      Deactive
       </button>
     </td>
   </tr></tbody>
 </table>
 </div>  <!-- End table-responsive -->
+
+<button class="btn btn-success" ng-click="getMoreCountries();">
+  <span class="glyphicon glyphicon-"></span> Get More
+</button>
 
 <modal title="City Form" visible="showModal">
 
@@ -43,7 +47,7 @@
   <label class="col-sm-3 control-label">Continent:</label>
   <div class="col-sm-4">
     <!-- <input type="text" class="form-control" ng-model="countryController.continent" placeholder="Continent"> -->
-    <select class="form-control" ng-model="countryController.continent" ng-options="item.id as item.continent for item in countries">
+    <select class="form-control" ng-model="countryController.continent" ng-options="item.id as item.continent for item in continents">
       <option value="">Select Continent</option>
     </select>
    <!--  <select class="form-control" name="continent" ng-model="countryController.continent">
@@ -58,6 +62,7 @@
   </div>
 </div>
 </form> <!-- End Form -->
+
 <hr>
 <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveCountry()">
   <span class="glyphicon glyphicon-save"></span> Save Changes

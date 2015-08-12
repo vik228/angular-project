@@ -15,24 +15,28 @@
   </tr></thead>
   <tbody><tr ng-repeat="continent in continents">
     
-    <td>{{ continent.id }}</td>
+    <td>{{ continent.sequence }}</td>
     <td>{{ continent.continent }}</td>
     <td>
-      <button class="btn" ng-click="editActivity(continent.id);toggleModal();">
+      <button class="btn" ng-click="editActivity(continent.sequence);toggleModal();">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="continent.status" ng-click="statusContinent(continent.id)" >
-      Deactive
-      </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="continent.status" ng-click="statusContinent(continent.id)" >
+      <button class="btn btn-success btn-sm statusBtn" ng-show="continent.status" ng-click="statusContinent(continent.sequence)" >
       Active
+      </button>
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="continent.status" ng-click="statusContinent(continent.sequence)" >
+      Deactive
       </button>
     </td>
   </tr></tbody>
 </table>
 </div>  <!-- End table-responsive -->
+
+<button class="btn btn-success" ng-click="getMoreContinents();">
+  <span class="glyphicon glyphicon-"></span> Get More
+</button>
 
 <modal title="City Form" visible="showModal" >
 

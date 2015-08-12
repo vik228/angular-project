@@ -2,21 +2,68 @@
 
 zopkyFrontendApp.controller('continentController', function($scope,$http, UtilsFactory) {
 $scope.continentController = {};
+$scope.continents = [];
 
-$scope.continents = [
+$scope.limit=2;
+$scope.skip=0;
 
-//TODO: get list from api
-{id:1, continent: "Asia", status:'false'},
-{id:2, continent: "Europe", status:'true'},
-{id:3, continent: "America", status:'true'},
-{id:4, continent: "Australia", status:'false'},
-{id:5, continent: "Russia", status:'false'},
-{id:6, continent: "Africa", status:'true'},
-];
+
+// //TODO: get list from api
+// {id:1, continent: "Asia", status:'false'},
+// {id:2, continent: "Europe", status:'true'},
+// {id:3, continent: "America", status:'true'},
+// {id:4, continent: "Australia", status:'false'},
+// {id:5, continent: "Russia", status:'false'},
+// {id:6, continent: "Africa", status:'true'},
+// ];
 
 $scope.edit = true;
 $scope.error = false;
-$scope.incomplete = false; 
+$scope.incomplete = false;
+
+$scope.numRows=0; 
+
+$scope.getContinents = function(){
+  var continents = [];
+    var getUrl = "/continent/get/?limit="+$scope.limit+"&skip="+$scope.skip;
+    var responsePromise = UtilsFactory.doGetCall (getUrl);
+      responsePromise.then (function (response){
+                
+            if (response.status==200) {
+              var data = response.data.response.message;
+              
+              for(var i=0; i<data.length; i++){
+                $scope.numRows++;
+                var row = {};
+                row['sequence']=$scope.numRows;
+                row['continent']=data[i].continent;
+                row['id']=data[i].id;
+                row['status']=data[i].status;
+                continents.push(row);
+
+              }
+
+              if(data.length==0){
+                window.alert("No more continents available")
+              }
+              console.log(continents);
+              $scope.continents = $scope.continents.concat(continents);
+            }
+
+      }, function(error){
+                var message = error.data.response.message.name[0].message;
+                console.log(message);
+               // window.alert(message);
+        });
+  
+};
+
+$scope.getContinents();
+
+$scope.getMoreContinents = function(){
+    $scope.skip=$scope.continents.length;
+    $scope.getContinents();
+};
 
 $scope.editActivity = function(id) {
   if (id == 'new') {
@@ -92,7 +139,9 @@ $scope.saveContinent = function() {
 /* statusContinent function activates or deactivates Continent information from database*/
 $scope.statusContinent = function(id) {
 
-  $scope.oldName = $scope.continents[id-1].continent;
+console.log(id);
+  var oldName = $scope.continents[id-1].continent;
+  console.log(oldName);
   var continentDetails = {
     id:$scope.continents[id-1].id,
     active:$scope.continents[id-1].status 
@@ -100,7 +149,7 @@ $scope.statusContinent = function(id) {
 
   var continentDetails ={
       findCriteria:{"name":$scope.continents[id-1].continent}, 
-      recordsToUpdate:{"name":$scope.continents[id-1].continent, "active": $scope.continents[id-1].status}
+      recordsToUpdate:{"name":$scope.continents[id-1].continent, "active": !$scope.continents[id-1].status}
     };
 
 $scope.continents[id-1].status = !$scope.continents[id-1].status ;

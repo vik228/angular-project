@@ -11,6 +11,7 @@
 
 
 var baseUrl = "http://localhost:1337/api/v0";
+var basePath = "http://localhost:9000/?";
 var zopkyFrontendApp = angular
   .module('zopkyFrontendApp', [
     'ngAnimate',
@@ -18,6 +19,7 @@ var zopkyFrontendApp = angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
+    'ngStorage', 
     'ngTouch'
   ]);
   

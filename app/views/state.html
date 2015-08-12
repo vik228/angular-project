@@ -16,25 +16,29 @@
   </tr></thead>
   <tbody><tr ng-repeat="state in states">
     
-    <td>{{ state.id }}</td>
+    <td>{{ state.sequence }}</td>
     <td>{{ state.country }}</td>
     <td>{{ state.state }}</td>
     <td>
-      <button class="btn" ng-click="editState(state.id);toggleModal();">
+      <button class="btn" ng-click="editState(state.sequence);toggleModal();">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="state.status" ng-click="statusState(state.id)" >
-      Deactivate
+      <button class="btn btn-success btn-sm statusBtn" ng-show="state.status" ng-click="statusState(state.sequence)" >
+      Active
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="state.status" ng-click="statusState(state.id)" >
-      Activate
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="state.status" ng-click="statusState(state.sequence)" >
+      Deactive
       </button>
     </td>
   </tr></tbody>
 </table>
 </div>  <!-- End table-responsive -->
+
+<button class="btn btn-success" ng-click="getMoreStates();">
+  <span class="glyphicon glyphicon-"></span> Get More
+</button>
 
 <modal title="City Form" visible="showModal">
 
@@ -43,7 +47,7 @@
   <label class="col-sm-3 control-label">Country:</label>
   <div class="col-sm-4">
     <!-- <input type="text" class="form-control" ng-model="stateController.country" placeholder="Country"> -->
-    <select class="form-control" ng-model="stateController.country" ng-options="item.id as item.country for item in states">
+    <select class="form-control" ng-model="stateController.country" ng-options="item.id as item.country for item in countries">
       <option value="">Select Country</option>
     </select>
   </div>
@@ -51,13 +55,15 @@
   <div class="form-group">
   <label class="col-sm-3 control-label">State:</label>
   <div class="col-sm-4">
-    <!-- <input type="text" class="form-control" ng-model="stateController.state" placeholder="State"> -->
-    <select class="form-control" ng-model="stateController.state" ng-options="item.id as item.state for item in states">
-      <option value="">Select State</option>
-    </select>
-  </div>
+    <input type="text" class="form-control" ng-model="stateController.state" placeholder="State">
+    <!-- <select class="form-control" ng-model="stateController.state" ng-options="item.id as item.state for item in states"> -->
+      <!-- <option value="">Select State</option> -->
+    <!-- </select> -->
+  <!-- </div> -->
+</div>
 </div>
 </form> <!-- End Form -->
+
 <hr>
 <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveState()">
   <span class="glyphicon glyphicon-save"></span> Save Changes
