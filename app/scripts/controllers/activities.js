@@ -157,16 +157,17 @@ $scope.redirect = function(){
     }
 */
 
-$scope.selects = {
-        'continent': ['Asia', 'America', 'Africa', 'Australia', 'Europe'],
-        'country': ['India', 'CA', 'Poland', 'Sydney'],
-        'city': ['Mumbai', 'Delhi', 'Bangalore']
-    };
+// $scope.selects = {
+//   'city': ['Mumbai', 'Delhi', 'Bangalore'],
+//   'continent': ['Asia', 'America', 'Africa', 'Australia', 'Europe'],
+//   'country': ['India', 'CA', 'Poland', 'Sydney']
+        
+//     };
 
-    $scope.selecteds = {};
-    angular.forEach($scope.selects, function (value, key) {
-        $scope.selecteds[key] = value[0];
-    });
+//     $scope.selecteds = {};
+//     angular.forEach($scope.selects, function (value, key) {
+//         $scope.selecteds[key] = value[0];
+//     });
 
     
 });

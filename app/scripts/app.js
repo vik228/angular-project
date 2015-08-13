@@ -106,6 +106,16 @@ var zopkyFrontendApp = angular
         controller: 'airportTransferController',
      //   requireLogin: true
       })
+      .when('/agent', {
+        templateUrl: 'views/agent.html',
+        controller: 'agentController',
+     //   requireLogin: true
+      })
+      .when('/agentprofile', {
+        templateUrl: 'views/agentProfile.html',
+        controller: 'agentProfileController',
+     //   requireLogin: true
+      })
       .otherwise({
         redirectTo: '/'
       });

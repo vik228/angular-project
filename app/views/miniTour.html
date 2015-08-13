@@ -65,16 +65,18 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
   <label class="col-sm-3 control-label">City:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="city" ng-model="minitourController.city" placeholder="City" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
-    <p ng-show="myForm.city.$error.minlength" class="help-block">City is too short.</p>
-    <p ng-show="myForm.city.$error.maxlength" class="help-block">City is too long.</p>
-    <p ng-show="myForm.city.$error.pattern" class="help-block">City should be Capital.</p>
+    <select class="form-control" ng-model="minitourController.city" ng-options="item.id as item.city for item in minitours" ng-disabled="info">
+      <option value="">Select City</option>
+    </select>
   </div>
 </div> 
 <div class="form-group" ng-class="{ 'has-error' : myForm.activitiesInvolved.$invalid && !myForm.activitiesInvolved.$pristine }">
   <label class="col-sm-3 control-label">Activities Involved</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="activitiesInvolved" ng-model="minitourController.activitiesInvolved" placeholder="minitour Name" ng-disabled="info" required>
+    <!-- <input type="text" class="form-control" name="activitiesInvolved" ng-model="minitourController.activitiesInvolved" placeholder="minitour Name" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="minitourController.activitiesInvolved" ng-options="item.id as item.activitiesInvolved for item in minitours" ng-disabled="info" multiple>
+      <option value="">Select Activities Involved</option>
+    </select>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.minitourCode.$invalid && !myForm.minitourCode.$pristine }">
@@ -92,13 +94,25 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.duration.$invalid && !myForm.duration.$pristine }">
   <label class="col-sm-3 control-label">Duration:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="duration" ng-model="minitourController.duration" placeholder="Description" ng-disabled="info" required>
+    <input type="number" max="24" min="1" class="form-control" name="duration" ng-model="minitourController.duration" placeholder="Duration" ng-disabled="info" required>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.type.$invalid && !myForm.type.$pristine }">
   <label class="col-sm-3 control-label">Type:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="type" ng-model="minitourController.type" placeholder="Type" ng-disabled="info" required>
+    <!-- <input type="text" class="form-control" name="type" ng-model="minitourController.type" placeholder="Type" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="minitourController.type" ng-options="item.id as item.type for item in minitours" ng-disabled="info">
+      <option value="">Select Activity Type</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-3 control-label">Currency:</label>
+  <div class="col-sm-4">
+    <!-- <input type="text" class="form-control" ng-model="minitourController.currency" placeholder="Currency" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="minitourController.currency" ng-options="item.id as item.currency for item in minitours">
+      <option value="">Select Currency</option>
+    </select>
   </div>
 </div>
 <div class="form-group">

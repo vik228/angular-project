@@ -4,12 +4,21 @@
 <button class="btn btn-success" ng-click="editActivity('new');toggleModal();">
   <span class="glyphicon glyphicon-"></span> Create New Activity
 </button>
-<!-- <form class="form-horizontal">
-  <div class="form-group col-sm-3 col-lg-2 col-md-3 col-xs-12">
-    <select class="form-control"  ng-repeat="(name, values) in selects" ng-model="selecteds[name]" ng-options="v for v in values">
+<form class="form-inline pull-right" role="form">
+  <div class="form-group">
+    <!-- <select class="form-control"  ng-repeat="(name, values) in selects" ng-model="selecteds[name]" ng-options="v for v in values">
+    </select> -->
+    <select class="form-control" ng-model="activitiesController.scountry" ng-options="item.id as item.country for item in activities">
+      <option value="">Select Country</option>
+    </select>
+    <select class="form-control" ng-model="activitiesController.sstate" ng-options="item.id as item.state for item in activities">
+      <option value="">Select State</option>
+    </select>
+    <select class="form-control" ng-model="activitiesController.scity" ng-options="item.id as item.city for item in activities">
+      <option value="">Select City</option>
     </select>
   </div>
-</form> -->
+</form> 
 </br></br>
 <div class="table-responsive">
 <table class="table table-striped table-bordered">
