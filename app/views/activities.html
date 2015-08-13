@@ -24,31 +24,77 @@
   </tr></thead>
   <tbody><tr ng-repeat="activity in activities">
     
-    <td>{{ activity.id }}</td>
+    <td>{{ activity.sequence }}</td>
     <td>{{ activity.activityName }}</td>
     <td>{{ activity.city }}</td>
     <td>{{ activity.country }}</td>
     <td>{{ activity.type }}</td>
     <td>
-      <button class="btn" ng-click="editActivity(activity.id);toggleModal();">
+      <button class="btn" ng-click="editActivity(activity.sequence);toggleModal();">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="activity.status" ng-click="statusContinent(activity.id)" >
+     <!--  <button class="btn btn-danger btn-sm statusBtn" ng-show="activity.status" ng-click="statusActivity(activity.id)" >
       <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deactivate
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="activity.status" ng-click="statusContinent(activity.id)" >
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="activity.status" ng-click="statusActivity(activity.id)" >
       <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Activate
+      </button> -->
+      <button class="btn btn-success btn-sm statusBtn" ng-show="activity.status" ng-click="statusActivity(activity.sequence)" >
+      Active
+      </button>
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="activity.status" ng-click="statusActivity(activity.sequence)" >
+      Deactive
       </button>
     </td>
   </tr></tbody>
 </table>
 </div>  <!-- End table-responsive -->
 
+<button class="btn btn-success" ng-click="getMoreActivities();">
+  <span class="glyphicon glyphicon-"></span> Get More
+</button>
+
+
+
 <modal title="Activity Form" visible="showModal" class="container-fluid">
 
 <form class="form-horizontal" name='activityForm'>
+
+ <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
+    <div class="map_canvas" id="map_canvas">
+
+      <map zoom="4" center="activitiesController.markerLocation" on-center-changed="centerChanged()">
+        <marker position="activitiesController.markerLocation" on-click="click()" title="Click to zoom"></marker> 
+      </map>
+      <!-- <map center="[activitiesController.lat, activitiesController.long]" zoom="11" 
+        disable-default-u-i="false"
+        disable-double-click-zoom="true"
+        draggable="true"
+        draggable-cursor="help"
+        dragging-cursor="move"
+        keyboard-shortcuts="false"
+        max-zoom="14"
+        min-zoom="4"
+        tilt="45"
+        map-type-id="TERRAIN"
+        zoom-to-include-markers="auto"
+        on-center-changed="centerChanged()">
+        <marker
+            position="[activitiesController.lat, activitiesController.long]"
+            title="Location on map"
+            draggable="true"
+            visible="true"
+          
+            on-click="click()"></marker>
+      </map> -->
+
+      <input type="text" class="form-control" id="latitude" ng-model="activitiesController.lat" placeholder="Latitude">  
+      <input type="text" class="form-control" id="longitude" ng-model="activitiesController.long" placeholder="Longitude">
+    </div>
+</div>
+
   <div class="form-group" ng-class="{ 'has-error' : activityForm.continent.$invalid && !activityForm.continent.$pristine }">
   <label class="col-sm-3 control-label">Continent:</label>
   <div class="col-sm-4">

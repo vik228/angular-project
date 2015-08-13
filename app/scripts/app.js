@@ -20,7 +20,8 @@ var zopkyFrontendApp = angular
     'ngRoute',
     'ngSanitize',
     'ngStorage', 
-    'ngTouch'
+    'ngTouch',
+    'ngMap'
   ]);
   
   zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
@@ -42,6 +43,11 @@ var zopkyFrontendApp = angular
         templateUrl: 'views/login.html',
         controller: 'loginController',
         requireLogin: false
+      })
+      .when('/logout', {
+        templateUrl: 'views/logout.html',
+        controller: 'logoutController',
+        // requireLogin: true
       })
       .when('/employee', {
         templateUrl: 'views/employee.html',

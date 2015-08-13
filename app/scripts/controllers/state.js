@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('stateController', function($scope, $http, UtilsFactory) {
+zopkyFrontendApp.controller('stateController', function($scope, $http, UtilsFactory, CommonMethods) {
 $scope.stateController = {};
 $scope.states = [];
  $scope.countries = [];
@@ -11,39 +11,9 @@ $scope.numRows=0;
 $scope.numCountries=0;
 
 $scope.getStates = function(){
-  var states = [];
-    var getUrl = "/state/get/?limit="+$scope.limit+"&skip="+$scope.skip;
-    var responsePromise = UtilsFactory.doGetCall (getUrl);
-      responsePromise.then (function (response){              
-            if (response.status==200) {
-              var data = response.data.response.message;
-              
-              for(var i=0; i<data.length; i++){
-                $scope.numRows++;
-                var row = {};
-                row['sequence']=$scope.numRows;
-                row['countryId']=data[i].countryId;
-                row['country']=data[i].country;
-                row['id']=data[i].id;
-                row['status']=data[i].status;
-                row['state']=data[i].name;
-                states.push(row);
-
-              }
-
-              if(data.length==0){
-                window.alert("No more continents available")
-              }
-              console.log(states);
-              $scope.states = $scope.states.concat(states);
-            }
-
-      }, function(error){
-                var message = error.data.response.message.name[0].message;
-                console.log(message);
-               // window.alert(message);
-        });
-  
+  CommonMethods.getAllStates($scope.limit, $scope.skip, $scope.states.length, "states", function(data){
+    $scope.states = $scope.states.concat(data);
+  });
 };
 
 $scope.getStates();
@@ -53,50 +23,14 @@ $scope.getMoreStates = function(){
     $scope.getStates();
 };
 
-// $scope.states = [
-// {id:1, activityName:'Gateway of India', continent: "Asia", country:"India", state:"Maharashtra", city:'Mumbai',   type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm', status:'1' },
-// {id:2, activityName:'Act1', continent: "Asia", country:"Sangapore", state:"Dummy1",  city:'Dummy1', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm', status:'0' },
-// {id:3, activityName:'Act2', continent: "Asia", country:'Dummy2',    state:"Dummy2",  city:'Dummy2', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm', status:'1' },
-// {id:4, activityName:'Act3', continent: "Asia", country:'Dummy3',    state:"Dummy3",  city:'Dummy3', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm', closeTime: '5 pm', status:'1' },
-// {id:5, activityName:'Act4', continent: "Asia", country:'Dummy4',    state:"Dummy4",  city:'Dummy4', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' , closeTime: '5 pm', status:'0' },
-// {id:6, activityName:'Act5', continent: "Asia", country:'Dummy5',    state:"Dummy5",  city:'Dummy5', type:"Place", lat: '19.2302', long:'72.409202', openTime: '2 pm' , closeTime: '5 pm', status:'0' },
-// ];
-
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
 
 $scope.getActiveCountries = function(){
-  var countries = [];
-    var getUrl = "/country/get/?limit=100&skip=0&active=true";
-    var responsePromise = UtilsFactory.doGetCall (getUrl);
-      responsePromise.then (function (response){
-                
-            if (response.status==200) {
-              var data = response.data.response.message;
-              
-              for(var i=0; i<data.length; i++){
-                $scope.numCountries++;
-                var row = {};
-                row['sequence']=$scope.numCountries;
-                row['id']=data[i].id;
-                row['country']=data[i].name;
-                countries.push(row);
-              }
-
-              // if(data.length==0){
-              //   window.alert("No more countries available")
-              // }
-              console.log(countries);
-              $scope.countries = $scope.countries.concat(countries);
-            }
-
-      }, function(error){
-                var message = error.data.response.message.name[0].message;
-                console.log(message);
-               // window.alert(message);
-        });
-  
+  CommonMethods.getActiveCountries($scope.countries.length, "countries", function(data){
+    $scope.countries = $scope.countries.concat(data);
+  });
 };
 
 $scope.getActiveCountries();
