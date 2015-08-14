@@ -33,10 +33,10 @@
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="agentProfile.status" ng-click="statusagentProfile(agentProfile.id)" >
+      <button class="btn btn-danger btn-sm statusBtn" ng-show="agentProfile.status" ng-click="statusAgentProfile(agentProfile.id)" >
         Deactivate
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="agentProfile.status" ng-click="statusagentProfile(agentProfile.id)" >
+      <button class="btn btn-success btn-sm statusBtn" ng-hide="agentProfile.status" ng-click="statusAgentProfile(agentProfile.id)" >
         Activate
       </button>
     </td>
@@ -46,26 +46,52 @@
 
 <modal title="agentProfile Form" visible="showModal">
 <form class="form-horizontal" name="myForm">
+<div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
+  <label class="col-sm-3 control-label">City:</label>
+  <div class="col-sm-4">
+    <!-- <input type="text" class="form-control" name="city" ng-model="hotelController.city" placeholder="City" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="agentProfileController.city" ng-options="item.id as item.city for item in agentProfiles">
+      <option value="">Select City</option>
+    </select>
+  </div>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : myForm.agencyName.$invalid && !myForm.agencyName.$pristine }">
+  <label class="col-sm-3 control-label">Agency Name:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" name="agencyName" ng-model="agentProfileController.agencyName" placeholder="Agency Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="20" required>
+  </div>
+</div> 
+<div class="form-group">
+  <label class="col-sm-3 control-label">Address:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" ng-model="agentProfileController.address" placeholder="Address" ng-disabled="info">
+  </div>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : myForm.pincode.$invalid && !myForm.pincode.$pristine }">
+  <label class="col-sm-3 control-label">Pincode:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" name="pincode" ng-model="agentProfileController.pincode" placeholder="Pincode" ng-minlength="6" ng-maxlength="6" pattern="^([1-9][0-9]*)$" required>
+    <p ng-show="myForm.pincode.$error.minlength" class="help-block">Should be 6 digits</p>
+    <p ng-show="myForm.pincode.$error.maxlength" class="help-block">Should be 6 digits</p>
+    <p ng-show="myForm.pincode.$error.pattern" class="help-block">Pincode only and should not start with 0.</p>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-3 control-label">Locality:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" ng-model="agentProfileController.locality" placeholder="Locality" ng-disabled="info">
+  </div>
+</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.fName.$invalid && !myForm.fName.$pristine }">
   <label class="col-sm-3 control-label">First Name:</label>
   <div class="col-sm-4">
     <input type="text" class="form-control" name="fName" ng-model="agentProfileController.fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
-    <p ng-show="myForm.fName.$error.minlength" class="help-block">First name is too short.</p>
-    <p ng-show="myForm.fName.$error.maxlength" class="help-block">First name is too long.</p>
-    <p ng-show="myForm.fName.$error.pattern" class="help-block">First letter should be Capital.</p>
   </div>
 </div> 
 <div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
   <label class="col-sm-3 control-label">Last Name:</label>
   <div class="col-sm-4">
     <input type="text" class="form-control" name="lName" ng-model="agentProfileController.lName" placeholder="Last Name" required>
-  </div>
-</div>
-<div class="form-group" ng-class="{ 'has-error' : myForm.email.$invalid && !myForm.email.$pristine }">
-  <label class="col-sm-3 control-label">Email:</label>
-  <div class="col-sm-4">
-    <input type="email" class="form-control" name="email" ng-model="agentProfileController.email" placeholder="Email" required>
-    <p ng-show="myForm.email.$invalid && !myForm.email.$pristine" class="help-block">Enter a valid email.</p>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.contact.$invalid && !myForm.contact.$pristine }">
@@ -77,17 +103,59 @@
     <p ng-show="myForm.contact.$error.pattern" class="help-block">Numbers only and should not start with 0.</p>
   </div>
 </div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Address:</label>
+<div class="form-group" ng-class="{ 'has-error' : myForm.countriesOffered.$invalid && !myForm.countriesOffered.$pristine }">
+  <label class="col-sm-3 control-label">Countries Offered:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="agentProfileController.address" placeholder="Address" ng-disabled="info">
+    <select class="form-control" ng-model="agentProfileController.countriesOffered" ng-options="item.id as item.countriesOffered for item in agentProfiles">
+      <option value="">Select Countries Offered</option>
+    </select>
   </div>
 </div>
-<div class="form-group" ng-class="{ 'has-error' : myForm.agencyName.$invalid && !myForm.agencyName.$pristine }">
-  <label class="col-sm-3 control-label">Agency Name:</label>
+<div class="form-group" ng-class="{ 'has-error' : myForm.staffSize.$invalid && !myForm.staffSize.$pristine }">
+  <label class="col-sm-3 control-label">Staff Size:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="agencyName" ng-model="agentProfileController.agencyName" placeholder="Agency Name">
-    <p ng-show="myForm.agencyName.$invalid && !myForm.agencyName.$pristine" class="help-block">Enter valid Agency Name.</p>
+    <input type="number" min='0' class="form-control" name="staffSize" ng-model="agentProfileController.staffSize" placeholder="Staff Size">
+    <p ng-show="myForm.staffSize.$invalid && !myForm.staffSize.$pristine" class="help-block">Enter valid staff Size.</p>
+  </div>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : myForm.businessSince.$invalid && !myForm.businessSince.$pristine }">
+  <label class="col-sm-3 control-label">In Business Since:</label>
+  <div class="col-sm-4">
+    <input type="number" min='1900' max='2015' class="form-control" name="businessSince" ng-model="agentProfileController.businessSince" placeholder="Business Since">
+    <p ng-show="myForm.businessSince.$invalid && !myForm.businessSince.$pristine" class="help-block">Enter valid business date.</p>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-3 control-label">Opening Time</label>
+  <div class="col-sm-2">
+  <input type="text" class="form-control" ng-model="agentProfileController.openTime" placeholder="open Time" ng-disabled="info">
+  </div>
+  <div class="col-sm-2">
+  <input type="text" class="form-control" ng-model="agentProfileController.closeTime" placeholder="Close Time" ng-disabled="info">
+  </div>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : myForm.businessSince.$invalid && !myForm.businessSince.$pristine }">
+  <label class="col-sm-3 control-label">Opening Days:</label>
+  <div class="col-sm-4">
+    <label class="checkbox-inline"><input type="checkbox" value="">M</label>
+    <label class="checkbox-inline"><input type="checkbox" value="">T</label>
+    <label class="checkbox-inline"><input type="checkbox" value="">W</label> 
+    <label class="checkbox-inline"><input type="checkbox" value="">T</label>
+    <label class="checkbox-inline"><input type="checkbox" value="">F</label>
+    <label class="checkbox-inline"><input type="checkbox" value="">S</label>  
+    <label class="checkbox-inline"><input type="checkbox" value="">S</label>  
+  </div>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : myForm.web.$invalid && !myForm.web.$pristine }">
+  <label class="col-sm-3 control-label">Web Link:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" name="web" ng-model="agentProfileController.web" placeholder="Web Link">
+  </div>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : myForm.otherSite.$invalid && !myForm.otherSite.$pristine }">
+  <label class="col-sm-3 control-label">Other Merchant:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" name="otherSite" ng-model="agentProfileController.otherSite" placeholder="Other Merchant">
   </div>
 </div>
 </form>
