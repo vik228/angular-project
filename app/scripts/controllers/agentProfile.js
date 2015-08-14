@@ -24,37 +24,67 @@ $scope.showModal = false;
 /* editagentProfile function updates agentProfile information in the database*/
 $scope.editAgentProfile = function(id) {
   if (id == 'new') {
-    $scope.formTitle = 'Create New agentProfile';
+    $scope.formTitle = 'Create New Agent Profile';
     $scope.edit = true;
     $scope.act ='add';
+    $scope.agentProfileController.city = '';
+    $scope.agentProfileController.agencyName = '';
+    $scope.agentProfileController.address = '';
+    $scope.agentProfileController.pincode = '';
+    $scope.agentProfileController.locality = '';
     $scope.agentProfileController.fName = '';
     $scope.agentProfileController.lName = '';
-    $scope.agentProfileController.email = '';
     $scope.agentProfileController.contact = '';
-    $scope.agentProfileController.address = '';
-    $scope.agentProfileController.agencyName = '';
+    $scope.agentProfileController.countriesOffered = '';
+    $scope.agentProfileController.staffSize = '';
+    $scope.agentProfileController.businessSince = '';
+    $scope.agentProfileController.openTime = '';
+    $scope.agentProfileController.closeTime = '';
+    $scope.agentProfileController.openDays = '';
+    $scope.agentProfileController.web = '';
+    $scope.agentProfileController.otherSite = '';
     } else {
-    $scope.formTitle = 'Edit agentProfile';
+    $scope.formTitle = 'Edit Agent Profile';
     $scope.edit = false;
     $scope.act ='update';
+    $scope.agentProfileController.city = $scope.agentProfiles[id-1].city;
+    $scope.agentProfileController.agencyName = $scope.agentProfiles[id-1].agencyName; 
+    $scope.agentProfileController.address = $scope.agentProfiles[id-1].address; 
+    $scope.agentProfileController.pincode = $scope.agentProfiles[id-1].pincode; 
+    $scope.agentProfileController.locality = $scope.agentProfiles[id-1].locality;
     $scope.agentProfileController.fName = $scope.agentProfiles[id-1].fName;
-    $scope.agentProfileController.lName = $scope.agentProfiles[id-1].lName; 
-    $scope.agentProfileController.email = $scope.agentProfiles[id-1].email; 
+    $scope.agentProfileController.lName = $scope.agentProfiles[id-1].lName;
     $scope.agentProfileController.contact = $scope.agentProfiles[id-1].contact; 
-    $scope.agentProfileController.address = $scope.agentProfiles[id-1].address;
-    $scope.agentProfileController.agencyName = $scope.agentProfiles[id-1].agencyName;
+    $scope.agentProfileController.countriesOffered = $scope.agentProfiles[id-1].countriesOffered; 
+    $scope.agentProfileController.staffSize = $scope.agentProfiles[id-1].staffSize; 
+    $scope.agentProfileController.businessSince = $scope.agentProfiles[id-1].businessSince;
+    $scope.agentProfileController.openTime = $scope.agentProfiles[id-1].openTime; 
+    $scope.agentProfileController.closeTime = $scope.agentProfiles[id-1].closeTime;
+    $scope.agentProfileController.openDays = $scope.agentProfiles[id-1].openDays; 
+    $scope.agentProfileController.web = $scope.agentProfiles[id-1].web;
+    $scope.agentProfileController.otherSite = $scope.agentProfiles[id-1].otherSite;
   }
 };
 
 /* saveagentProfile function inserts agentProfile information in the database*/
 $scope.saveAgentProfile = function() {
   var agentProfileDetails = {
-    fname:$scope.agentProfileController.fName, 
-    lname:$scope.agentProfileController.lName,
-    email:$scope.agentProfileController.email,
-    contact:$scope.agentProfileController.contact,
+    city:$scope.agentProfileController.city, 
+    agencyName:$scope.agentProfileController.agencyName,
     address:$scope.agentProfileController.address,
-    agencyName:$scope.agentProfileController.agencyName
+    pincode:$scope.agentProfileController.pincode,
+    locality:$scope.agentProfileController.locality,
+    fName:$scope.agentProfileController.fName,
+    lName:$scope.agentProfileController.lName, 
+    contact:$scope.agentProfileController.contact,
+    countriesOffered:$scope.agentProfileController.countriesOffered,
+    staffSize:$scope.agentProfileController.staffSize,
+    businessSince:$scope.agentProfileController.businessSince, 
+    openTime:$scope.agentProfileController.openTime,
+    closeTime:$scope.agentProfileController.closeTime,
+    openDays:$scope.agentProfileController.openDays,
+    web:$scope.agentProfileController.web,
+    otherSite:$scope.agentProfileController.otherSite
   };
   console.log(agentProfileDetails);
   if($scope.act === 'add')
@@ -82,7 +112,7 @@ $scope.statusagentProfile = function(id) {
     active:$scope.agentProfiles[id-1].status
   };
   console.log(agentProfileDetails);
-  var responsePromise = UtilsFactory.doPostCall ('/user/update', agentProfileDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/agentProfile/update', agentProfileDetails);
       responsePromise.then (function (response){
 
         console.log (response);
