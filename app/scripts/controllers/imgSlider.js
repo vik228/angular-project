@@ -1,13 +1,17 @@
 'use strict';
 
-zopkyFrontendApp.controller('imgSliderController', function($scope) {
+zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStorage, $window) {
         $scope.slides = [];
+        $scope.selectedImages = [];
+        $scope.imgSliderController = {};
+        $scope.imgSliderController.caption = '';
+        $scope.imgSliderController.isChecked = false;
 
         $scope.getFlickrImages = function() {
             //TODO: define $scope.criteria
             CommonMethods.getFlickrImages($scope.tags, $scope.latitude, $scope.longitude, function(data) {
                 $scope.activities = $scope.activities.concat(data);
-                // Add the demo images as links with thumbnails to the page:
+
                 $.each(data.photos.photo, function(index, photo) {
                     var baseUrl = 'http://farm' + photo.farm + '.static.flickr.com/' +
                         photo.server + '/' + photo.id + '_' + photo.secret;
@@ -21,12 +25,6 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
 
                     $scope.slides.push(image);
 
-                    // var imgObject = {
-                    //     image: baseUrl + '_b.jpg',
-                    //     description: imageDes
-                    // };
-                    // links.push(imgObject);
-
                     $('<img>')
                         .prop('src', baseUrl + '_s.jpg')
                         .prop('title', photo.title)
@@ -36,6 +34,7 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
             });
         };
 
+//TODO: replace withabove get method
         var links = [];
         $.ajax({
             url: 'https://api.flickr.com/services/rest/',
@@ -79,26 +78,56 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
         $scope.slides = links;
 
         $('#links').bind('click', function(event) {
-            var index = event.target.id;
-            console.log("index: " + index);
-            $scope.currentIndex = index;
-            $('.arrow').click();
-        });
+            if ($scope.imgSliderController.isChecked) {
+                if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
+                    //TODO: change image
+                    //$('*[id=' + $scope.currentIndex + ']').prop('src') = 'favicon.ico';
 
-        // $scope.slides = [
-        //     {image: 'http://farm1.static.flickr.com/260/18577849653_f310e0f6f7_b.jpg', description: 'Image 00'},
-        //     {image: 'http://farm1.static.flickr.com/494/19453268090_cf9a87188a_b.jpg', description: 'Image 01'},
-        //     {image: 'http://farm4.static.flickr.com/3765/19348071698_64b2311f9f_b.jpg', description: 'Image 02'},
-        //     {image: 'http://farm1.static.flickr.com/272/19333133012_3235653356_b.jpg', description: 'Image 03'},
-        //     {image: 'http://farm1.static.flickr.com/342/19058778119_40bc075676_b.jpg', description: 'Image 04'}
-        // ];
+                    var data = $scope.slides[$scope.currentIndex];
+                    data.caption = $scope.imgSliderController.caption;
+                    $scope.selectedImages.push(data);
+                    $scope.imgSliderController.isChecked = !$scope.imgSliderController.isChecked;
+
+                    var index = event.target.id;
+                    $scope.imgSliderController.caption = event.target.title;
+                    $scope.currentIndex = index;
+                    $('.arrow').click();
+                } else {
+                    $window.alert("please insert caption");
+                }
+            } else {
+                var index = event.target.id;
+                $scope.imgSliderController.caption = event.target.title;
+                $scope.currentIndex = index;
+                $('.arrow').click();
+            }
+        });
 
         $scope.direction = 'left';
         $scope.currentIndex = 0;
 
-        $scope.setCurrentSlideIndex = function(index) {
-            $scope.direction = (index > $scope.currentIndex) ? 'left' : 'right';
-            $scope.currentIndex = index;
+        $scope.onImageSelected = function() {
+            $scope.selectedImage = "favicon.ico";
+
+            if ($scope.imgSliderController.isChecked) {
+                if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
+                    //TODO: change image
+                    var data = $scope.slides[$scope.currentIndex];
+                    data.caption = $scope.imgSliderController.caption;
+                    $scope.selectedImages.push(data);
+                    $scope.imgSliderController.caption = "";
+                    $scope.imgSliderController.isChecked = false;
+                } else {
+                    $window.alert("please insert caption");
+                }
+            }
+
+            //TODO: save in local storage, go to activity page
+            $localStorage.selectedImages = $scope.selectedImages;
+            console.log($scope.selectedImages);
+
+            //TODO:  go to activity and continue
+            $window.location.href = '#/navtab';
         };
 
         $scope.isCurrentSlideIndex = function(index) {
@@ -106,13 +135,47 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
         };
 
         $scope.prevSlide = function() {
-            $scope.direction = 'left';
-            $scope.currentIndex = ($scope.currentIndex < $scope.slides.length - 1) ? ++$scope.currentIndex : 0;
+            if ($scope.imgSliderController.isChecked) {
+                if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
+                    //TODO: change image
+                    console.log($scope.imgSliderController.caption);
+                    var data = $scope.slides[$scope.currentIndex];
+                    data.caption = $scope.imgSliderController.caption;
+                    $scope.selectedImages.push(data);
+
+                    $scope.imgSliderController.caption = "";
+                    $scope.direction = 'right';
+                    $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : 0;
+                } else {
+                    $window.alert("please insert caption");
+                }
+            } else {
+                $scope.imgSliderController.caption = "";
+                $scope.direction = 'right';
+                $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : 0;
+            }
         };
 
         $scope.nextSlide = function() {
-            $scope.direction = 'right';
-            $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.slides.length - 1;
+            if ($scope.imgSliderController.isChecked) {
+                if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
+                    //TODO: change image
+                    console.log($scope.imgSliderController.caption);
+                    var data = $scope.slides[$scope.currentIndex];
+                    data.caption = $scope.imgSliderController.caption;
+                    $scope.selectedImages.push(data);
+
+                    $scope.imgSliderController.caption = "";
+                    $scope.direction = 'left';
+                    $scope.currentIndex = ($scope.currentIndex < $scope.slides.length - 1) ? ++$scope.currentIndex : $scope.slides.length - 1;
+                } else {
+                    $window.alert("please insert caption");
+                }
+            } else {
+                $scope.imgSliderController.caption = "";
+                $scope.direction = 'left';
+                $scope.currentIndex = ($scope.currentIndex < $scope.slides.length - 1) ? ++$scope.currentIndex : $scope.slides.length - 1;
+            }
         };
 
     })

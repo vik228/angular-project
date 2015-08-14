@@ -8,8 +8,8 @@
             ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
             ng-hide="!isCurrentSlideIndex($index)" ng-src="{{slide.image}}">
 
-        <a class="arrow prev" href="#/slider" ng-click="nextSlide()"></a>
-        <a class="arrow next" href="#/slider" ng-click="prevSlide()"></a>
+        <a class="arrow prev" href="#/slider" ng-click="prevSlide()"></a>
+        <a class="arrow next" href="#/slider" ng-click="nextSlide()"></a>
 
         <!-- <a href="#/slider" ng-class="{'active':isCurrentSlideIndex($index)}"
                           ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a> -->
@@ -27,13 +27,13 @@
     </div><!--slider ends --> 
     <div class="well col-lg-12 col-md-7 col-sm-12 col-xs-12 pull-right">
         <form name="myForm" >
-            <input type="checkbox" ng-model="imgSliderController.value1"> Select 
+            <input type="checkbox" ng-model="imgSliderController.isChecked" ng-checked= ""> Select 
              <br><br/>
-             <input type="text" class="form-control block-center" ng-model="caption" placeholder="Enter Caption" ng-show="imgSliderController.value1"> 
+             <input type="text" class="form-control block-center" ng-model="imgSliderController.caption" placeholder="Enter Caption" ng-show="imgSliderController.isChecked"> 
             <br/>
 
          
-          <button class="btn btn-success" ng-click="">Submit</button>&nbsp;
+          <button class="btn btn-success" ng-click="onImageSelected()">Submit</button>&nbsp;
           <button class="btn" ng-click="">Cancel</button>
          </form>
     </div>
