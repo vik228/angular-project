@@ -1,20 +1,17 @@
 'use strict';
 
-zopkyFrontendApp.controller('employeeController', function($scope,$http, UtilsFactory) {
-$scope.employeeController = {};
+zopkyFrontendApp.controller('agentController', function($scope,$http, UtilsFactory) {
+$scope.agentController = {};
 
-$scope.employees = [
-{id:1, empid:'ZT001', fName:'Binay',  lName:"Verma", contact:'9988776655', email:'Binay@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'false' },
-{id:2, empid:'ZT002', fName:'Ajay',   lName:"Test",  contact:'9988776655', email:'Ajay@zopky.com',    roles:'Developer', reportingManager:'Anshul', status:'true' },
-{id:3, empid:'ZT003', fName:'Vikash', lName:"Test",  contact:'9988776655', email:'Vikash@zopky.com',  roles:'Developer', reportingManager:'Anshul', status:'true' },
-{id:4, empid:'ZT004', fName:'Shubham',lName:"Test",  contact:'9988772211', email:'Shubham@zopky.com', roles:'Developer', reportingManager:'Aprit', status:'false' },
-{id:5, empid:'ZT005', fName:'Dummy5', lName:"Test",  contact:'9988776644', email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'false' },
-{id:6, empid:'ZT006', fName:'Dummy6', lName:"Test",  contact:'9988776633', email:'fname@zopky.com',   roles:'Developer', reportingManager:'Aprit', status:'true' }
+$scope.agents = [
+{id:1, agentid:'AG001', fName:'Binay',  lName:"Verma", contact:'9988776655', email:'Binay@zopky.com',   address:'Andheri', agencyName:'ASAP', status:'false' },
+{id:2, agentid:'AG001', fName:'Ajay',   lName:"Test",  contact:'9988776655', email:'Ajay@zopky.com',    address:'Andheri', agencyName:'ASAP', status:'true' },
+{id:3, agentid:'AG001', fName:'Vikash', lName:"Test",  contact:'9988776655', email:'Vikash@zopky.com',  address:'Andheri', agencyName:'ASAP', status:'true' },
+{id:4, agentid:'AG001', fName:'Shubham',lName:"Test",  contact:'9988772211', email:'Shubham@zopky.com', address:'Andheri', agencyName:'ASAP', status:'false' },
+{id:5, agentid:'AG001', fName:'Dummy5', lName:"Test",  contact:'9988776644', email:'fname@zopky.com',   address:'Andheri', agencyName:'ASAP', status:'false' },
+{id:6, agentid:'AG001', fName:'Dummy6', lName:"Test",  contact:'9988776633', email:'fname@zopky.com',   address:'Andheri', agencyName:'ASAP', status:'true' }
 ]; 
-/*
-$http.get("employee.txt")
-    .success(function(response) {$scope.employees = response.records;});
-    */
+
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
@@ -24,47 +21,46 @@ $scope.showModal = false;
       $scope.showModal = !$scope.showModal;
     };
 
-/* editEmployee function updates employee information in the database*/
-$scope.editEmployee = function(id) {
+/* editagent function updates agent information in the database*/
+$scope.editAgent = function(id) {
   if (id == 'new') {
-    $scope.formTitle = 'Create New Employee';
+    $scope.formTitle = 'Create New agent';
     $scope.edit = true;
     $scope.act ='add';
-  //  $scope.incomplete = true;
-    $scope.employeeController.fName = '';
-    $scope.employeeController.lName = '';
-    $scope.employeeController.email = '';
-    $scope.employeeController.contact = '';
-    $scope.employeeController.roles = '';
-    $scope.employeeController.reportingManager = 'Select'; 
+    $scope.agentController.fName = '';
+    $scope.agentController.lName = '';
+    $scope.agentController.email = '';
+    $scope.agentController.contact = '';
+    $scope.agentController.address = '';
+    $scope.agentController.agencyName = '';
     } else {
-    $scope.formTitle = 'Edit Employee';
+    $scope.formTitle = 'Edit agent';
     $scope.edit = false;
     $scope.act ='update';
-    $scope.employeeController.fName = $scope.employees[id-1].fName;
-    $scope.employeeController.lName = $scope.employees[id-1].lName; 
-    $scope.employeeController.email = $scope.employees[id-1].email; 
-    $scope.employeeController.contact = $scope.employees[id-1].contact; 
-    $scope.employeeController.roles = $scope.employees[id-1].roles; 
-    $scope.employeeController.reportingManager = $scope.employees[id-1].reportingManager; 
+    $scope.agentController.fName = $scope.agents[id-1].fName;
+    $scope.agentController.lName = $scope.agents[id-1].lName; 
+    $scope.agentController.email = $scope.agents[id-1].email; 
+    $scope.agentController.contact = $scope.agents[id-1].contact; 
+    $scope.agentController.address = $scope.agents[id-1].address;
+    $scope.agentController.agencyName = $scope.agents[id-1].agencyName;
   }
 };
 
-/* saveEmployee function inserts employee information in the database*/
-$scope.saveEmployee = function() {
-  var employeeDetails = {
-    fname:$scope.employeeController.fName, 
-    lname:$scope.employeeController.lName,
-    email:$scope.employeeController.email,
-    contact:$scope.employeeController.contact,
-    roles:$scope.employeeController.roles,
-    reporting_manager:$scope.employeeController.reportingManager
+/* saveagent function inserts agent information in the database*/
+$scope.saveAgent = function() {
+  var agentDetails = {
+    fname:$scope.agentController.fName, 
+    lname:$scope.agentController.lName,
+    email:$scope.agentController.email,
+    contact:$scope.agentController.contact,
+    address:$scope.agentController.address,
+    agencyName:$scope.agentController.agencyName
   };
-  console.log(employeeDetails);
+  console.log(agentDetails);
   if($scope.act === 'add')
-    var responsePromise = UtilsFactory.doPostCall ('/user/add', employeeDetails);
+    var responsePromise = UtilsFactory.doPostCall ('/agent/add', agentDetails);
   else if($scope.act === 'update')
-    var responsePromise = UtilsFactory.doPostCall ('/user/update', employeeDetails);
+    var responsePromise = UtilsFactory.doPostCall ('/agent/update', agentDetails);
 
     responsePromise.then (function (response){
 
@@ -76,23 +72,23 @@ $scope.saveEmployee = function() {
     });
 };
 
-/* statusEmployee function activates or deactivates employee information from database*/
-$scope.statusEmployee = function(id) {
+/* statusagent function activates or deactivates agent information from database*/
+$scope.statusAgent = function(id) {
   
-  $scope.employees[id-1].status = !$scope.employees[id-1].status ;
+  $scope.agents[id-1].status = !$scope.agents[id-1].status ;
   
-  var employeeDetails = {
-    id:$scope.employees[id-1].id,
-    active:$scope.employees[id-1].status
+  var agentDetails = {
+    id:$scope.agents[id-1].id,
+    active:$scope.agents[id-1].status
   };
-  console.log(employeeDetails);
-  var responsePromise = UtilsFactory.doPostCall ('/user/update', employeeDetails);
+  console.log(agentDetails);
+  var responsePromise = UtilsFactory.doPostCall ('/user/update', agentDetails);
       responsePromise.then (function (response){
 
         console.log (response);
 
       });
-}; /* statusEmployee ends here */
+}; /* statusagent ends here */
 
 
 });

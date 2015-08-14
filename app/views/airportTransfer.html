@@ -55,10 +55,10 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
   <label class="col-sm-3 control-label">City:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="city" ng-model="airportTransferController.city" placeholder="City" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
-    <p ng-show="myForm.city.$error.minlength" class="help-block">City is too short.</p>
-    <p ng-show="myForm.city.$error.maxlength" class="help-block">City is too long.</p>
-    <p ng-show="myForm.city.$error.pattern" class="help-block">City should be Capital.</p>
+    <!-- <input type="text" class="form-control" name="city" ng-model="airportTransferController.city" placeholder="City" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="airportTransferController.city" ng-options="item.id as item.city for item in airportTransfers">
+      <option value="">Select City</option>
+    </select>
   </div>
 </div> 
 <div class="form-group" ng-class="{ 'has-error' : myForm.airportName.$invalid && !myForm.airportName.$pristine }">
@@ -76,7 +76,10 @@
 <div class="form-group">
   <label class="col-sm-3 control-label">Currency:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="airportTransferController.currency" placeholder="Currency" ng-disabled="info">
+    <!-- <input type="text" class="form-control" ng-model="airportTransferController.currency" placeholder="Currency" ng-disabled="info"> -->
+    <select class="form-control" ng-model="airportTransferController.currency" ng-options="item.id as item.currency for item in airportTransfers">
+      <option value="">Select Currency</option>
+    </select>
   </div>
 </div>
 <div ng-repeat="seat in seats">

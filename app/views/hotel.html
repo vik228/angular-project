@@ -56,15 +56,15 @@
   <label class="col-sm-3 control-label">Hotel Name:</label>
   <div class="col-sm-4">
     <input type="text" class="form-control" name="hotelName" ng-model="hotelController.hotelName" placeholder="Hotel Name" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
-    <p ng-show="myForm.hotelName.$error.minlength" class="help-block">Hotel Name is too short.</p>
-    <p ng-show="myForm.hotelName.$error.maxlength" class="help-block">Hotel Name is too long.</p>
-    <p ng-show="myForm.hotelName.$error.pattern" class="help-block">Hotel Name should be Capital.</p>
   </div>
 </div> 
 <div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
   <label class="col-sm-3 control-label">City:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" name="city" ng-model="hotelController.city" placeholder="City" ng-disabled="info" required>
+    <!-- <input type="text" class="form-control" name="city" ng-model="hotelController.city" placeholder="City" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="hotelController.city" ng-options="item.id as item.city for item in hotels">
+      <option value="">Select City</option>
+    </select>
   </div>
 </div>
 <div class="form-group">

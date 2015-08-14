@@ -4,12 +4,12 @@ zopkyFrontendApp.controller('roomController', function($scope,$http,UtilsFactory
 $scope.roomController = {};
 
 $scope.rooms = [
-{id:1, roomType:'Deluxe AC', capacity: '2', status:'0'},
-{id:2, roomType:'Luxary AC', capacity: '3', status:'1'},
+{id:1, roomType:'Deluxe AC', capacity: '1', status:'0'},
+{id:2, roomType:'Luxary AC', capacity: '2', status:'1'},
 {id:3, roomType:'Single AC', capacity: '1', status:'0'},
-{id:4, roomType:'Deluxe Non-AC', capacity: '2', status:'1'},
-{id:5, roomType:'Regular AC', capacity: '1', status:'1'},
-{id:6, roomType:'Regular Non-AC', capacity: '2', status:'0'}
+{id:4, roomType:'Deluxe Non-AC', capacity: '4', status:'1'},
+{id:5, roomType:'Regular AC', capacity: '5', status:'1'},
+{id:6, roomType:'Regular Non-AC', capacity: '3', status:'0'}
 ]; 
 
 $scope.edit = true;

@@ -1,6 +1,40 @@
 'use strict';
 
 zopkyFrontendApp.controller('imgSliderController', function($scope) {
+        $scope.slides = [];
+
+        $scope.getFlickrImages = function() {
+            //TODO: define $scope.criteria
+            CommonMethods.getFlickrImages($scope.tags, $scope.latitude, $scope.longitude, function(data) {
+                $scope.activities = $scope.activities.concat(data);
+                // Add the demo images as links with thumbnails to the page:
+                $.each(data.photos.photo, function(index, photo) {
+                    var baseUrl = 'http://farm' + photo.farm + '.static.flickr.com/' +
+                        photo.server + '/' + photo.id + '_' + photo.secret;
+
+                    var image = {};
+                    image.url = baseUrl + '_b.jpg';
+                    image.index = index;
+                    image.ownerId = photo.owner;
+                    image.photoId = photo.id;
+                    image.flickrTitle = photo.title;
+
+                    $scope.slides.push(image);
+
+                    // var imgObject = {
+                    //     image: baseUrl + '_b.jpg',
+                    //     description: imageDes
+                    // };
+                    // links.push(imgObject);
+
+                    $('<img>')
+                        .prop('src', baseUrl + '_s.jpg')
+                        .prop('title', photo.title)
+                        .attr('id', index)
+                        .appendTo(linksContainer);
+                });
+            });
+        };
 
         var links = [];
         $.ajax({
@@ -37,9 +71,6 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
 
                 $('<img>')
                     .prop('src', baseUrl + '_s.jpg')
-                    // .append($('<img>').prop('src', baseUrl + '_s.jpg'))
-                    // .prop('href', baseUrl + '_b.jpg')
-                    // .attr('onclick', function(){ $scope.currentIndex = index; console.log("inside onclick"); })
                     .prop('title', photo.title)
                     .attr('id', index)
                     .appendTo(linksContainer);
@@ -47,20 +78,12 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
         });
         $scope.slides = links;
 
-        // $('a.img').click(function() {
-        //     var index = $(this).attr('id');
-        //     console.log(""+index);
-        //     $scope.currentIndex = index;
-        // });
-
         $('#links').bind('click', function(event) {
-            // alert(event.target.id);
             var index = event.target.id;
             console.log("index: " + index);
             $scope.currentIndex = index;
             $('.arrow').click();
         });
-
 
         // $scope.slides = [
         //     {image: 'http://farm1.static.flickr.com/260/18577849653_f310e0f6f7_b.jpg', description: 'Image 00'},
@@ -69,8 +92,6 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
         //     {image: 'http://farm1.static.flickr.com/272/19333133012_3235653356_b.jpg', description: 'Image 03'},
         //     {image: 'http://farm1.static.flickr.com/342/19058778119_40bc075676_b.jpg', description: 'Image 04'}
         // ];
-
-
 
         $scope.direction = 'left';
         $scope.currentIndex = 0;
@@ -136,36 +157,3 @@ zopkyFrontendApp.controller('imgSliderController', function($scope) {
             }
         };
     });
-// $(function () {
-
-// Load demo images from flickr:
-// $.ajax({
-//     url: 'https://api.flickr.com/services/rest/',
-//     data: {
-//         format: 'json',
-//         method: 'flickr.photos.search',
-//         api_key: '7617adae70159d09ba78cfec73c13be3',
-//         tags: 'Taj Mahal',
-//         privacy_filter:1,
-//     //    lat: '27.175',
-//     //  lon: '78.042',
-//     //    radius: '1', 
-//     },
-//     dataType: 'jsonp',
-//     jsonp: 'jsoncallback'
-// }).done(function (result) {
-//     var linksContainer = $('#links'),
-//         baseUrl;
-//     // Add the demo images as links with thumbnails to the page:
-//     $.each(result.photos.photo, function (index, photo) {
-//         baseUrl = 'http://farm' + photo.farm + '.static.flickr.com/' +
-//             photo.server + '/' + photo.id + '_' + photo.secret;
-//         $('<a/>')
-//             .append($('<img>').prop('src', baseUrl + '_s.jpg'))
-//             .prop('href', baseUrl + '_b.jpg')
-//             .prop('title', photo.title)
-//             .attr('data-gallery', '')
-//             .appendTo(linksContainer);
-//     });
-// });
-// });

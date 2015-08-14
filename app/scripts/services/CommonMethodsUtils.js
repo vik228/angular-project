@@ -285,6 +285,75 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
 
     }
 
+    commonMethodsObj.getActiveRecordeByCriteria = function(url, limit, page, criteria, numRows, callback) {
+      var records = [];
+      var getUrl = url + "?limit=" + limit + "&page=" + page + "&criteria=" + criteria;
+      var responsePromise = UtilsFactory.doGetCall(getUrl);
+      responsePromise.then(function(response) {
+        if (response.status == 200) {
+          var data = response.data.response.message;
+          for (var i = 0; i < data.length; i++) {
+            numRows++;
+            var row = {};
+            row['sequence'] = numRows;
+            row['name'] = data[i].name;
+            row['id'] = data[i].id;
+            records.push(row);
+          }
+          if (data.length == 0) {
+            window.alert("No more data available")
+          }
+          console.log(records);
+          return (callback(records));
+        }
+      }, function(error) {
+        var message = error.data.response.message.name[0].message;
+        console.log(message);
+      });
+    }
+
+    commonMethodsObj.getGoogleLocation = function(address, callback) {
+      var records = [];
+      var getUrl = "/location/get/?loc_string=" + address;
+      var responsePromise = UtilsFactory.doGetCall(getUrl);
+      responsePromise.then(function(response) {
+        if (response.status == 200) {
+          var data = response.data.response.message;
+          
+          if (data.length == 0) {
+            window.alert("Can't fetch google location")
+          }
+          console.log(data);
+          return (callback(data));
+        }
+      }, function(error) {
+        var message = error.data.response.message.name[0].message;
+        console.log(message);
+      });
+    }
+
+    commonMethodsObj.getFlickrImages = function(tag, latitude, longitude, callback) {
+      var records = [];
+
+      var details = {
+        tags:tag,
+        latitude:latitude,
+        longitude:longitude
+      };
+      var responsePromise = UtilsFactory.doPostCall('/flicker/getphotos', details);
+      responsePromise.then(function(response) {
+        if (response.status == 200) {
+          var data = response.data['response'];
+          
+          console.log(data);
+          return (callback(data));
+        }
+      }, function(error) {
+        var message = error.data.response.message.name[0].message;
+        console.log(message);
+      });
+    }
+
     return commonMethodsObj;
   }
 ]);

@@ -46,16 +46,19 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.roomType.$invalid && !myForm.roomType.$pristine }">
   <label class="col-sm-4 control-label">Room Type:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="roomType" ng-model="roomController.roomType" placeholder="Room Type Name" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
-    <p ng-show="myForm.roomType.$error.minlength" class="help-block">Room Type is too short.</p>
-    <p ng-show="myForm.roomType.$error.maxlength" class="help-block">Room Type is too long.</p>
-    <p ng-show="myForm.roomType.$error.pattern" class="help-block">Room Name should be Capital.</p>
+    <!-- <input type="text" class="form-control" name="roomType" ng-model="roomController.roomType" placeholder="Room Type Name" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="roomController.roomType" ng-options="item.id as item.roomType for item in rooms">
+      <option value="">Select Room Type</option>
+    </select>
   </div>
 </div> 
 <div class="form-group" ng-class="{ 'has-error' : myForm.capacity.$invalid && !myForm.capacity.$pristine }">
   <label class="col-sm-4 control-label">Capacity:</label>
   <div class="col-sm-6">
-    <input type="text" class="form-control" name="capacity" ng-model="roomController.capacity" placeholder="Capacity" ng-disabled="info" required>
+    <!-- <input type="text" class="form-control" name="capacity" ng-model="roomController.capacity" placeholder="Capacity" ng-disabled="info" required> -->
+    <select class="form-control" ng-model="roomController.capacity" ng-options="item.id as item.capacity for item in rooms">
+      <option value="">Select Capacity</option>
+    </select>
   </div>
 </div>
 </form>
