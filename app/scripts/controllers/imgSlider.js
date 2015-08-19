@@ -124,7 +124,7 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
 
             //TODO: save in local storage, go to activity page
             $localStorage.selectedImages = $scope.selectedImages;
-            console.log($scope.selectedImages);
+            console.log($scope.selectedImages);                     
 
             //TODO:  go to activity and continue
             $window.location.href = '#/navtab';
