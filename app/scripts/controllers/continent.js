@@ -4,14 +4,14 @@ zopkyFrontendApp.controller('continentController', function($scope,$http, UtilsF
 $scope.continentController = {};
 $scope.continents = [];
 
-$scope.limit=2;
+$scope.limit=10;
 $scope.skip=0;
 
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false;
 
-$scope.numRows=0; 
+$scope.numRows=0;
 
 $scope.getContinents = function(){
   CommonMethods.getAllContinents($scope.limit, $scope.skip, $scope.continents.length, "continents", function(data){
@@ -49,7 +49,7 @@ $scope.showModal = false;
 
 /* saveContinent function inserts continent information in the database*/
 $scope.saveContinent = function() {
-  
+
   if($scope.act === 'add'){
     var continentDetails =[ {
       name:$scope.continentController.continent
@@ -72,9 +72,14 @@ $scope.saveContinent = function() {
                 window.alert(message);
         });
   }else if($scope.act === 'update'){
-    var continentDetails ={
-      findCriteria:{"name":$scope.oldName}, 
-      recordsToUpdate:{"name":$scope.continentController.continent}
+
+    var continentDetails = {
+      findCriteria: {
+        name: $scope.oldName
+      },
+      recordsToUpdate: {
+        name: $scope.continentController.continent
+      }
     };
     console.log(continentDetails);
 
@@ -99,27 +104,27 @@ $scope.saveContinent = function() {
 
 /* statusContinent function activates or deactivates Continent information from database*/
 $scope.statusContinent = function(id) {
+  console.log(id);
 
-console.log(id);
-  var oldName = $scope.continents[id-1].continent;
-  console.log(oldName);
   var continentDetails = {
-    id:$scope.continents[id-1].id,
-    active:$scope.continents[id-1].status 
+    findCriteria: {
+      id: $scope.continents[id - 1].id,
+      name: $scope.continents[id - 1].continent
+    },
+    recordsToUpdate: {
+      id: $scope.continents[id - 1].id,
+      name: $scope.continents[id - 1].continent,
+      "active": !$scope.continents[id - 1].status
+    }
   };
 
-  var continentDetails ={
-      findCriteria:{"name":$scope.continents[id-1].continent}, 
-      recordsToUpdate:{"name":$scope.continents[id-1].continent, "active": !$scope.continents[id-1].status}
-    };
-
-$scope.continents[id-1].status = !$scope.continents[id-1].status ;
   console.log(continentDetails);
   var responsePromise = UtilsFactory.doPostCall ('/continent/update', continentDetails);
       responsePromise.then (function (response){
                 var data = response.data['response'];
                 //console.log(data);
             if (response.status==200) {
+              $scope.continents[id-1].status = !$scope.continents[id-1].status ;
               var message = data['message'];
               window.alert(message);
             }
@@ -129,47 +134,6 @@ $scope.continents[id-1].status = !$scope.continents[id-1].status ;
                 console.log(message);
                 window.alert(message);
         });
-}; /* statusContinent ends here */
-    /*
- var cities = [{city : 'Mumbai', desc : 'This is the best city in the world!', lat : 18.9750,long : 72.8258}];
- var mapOptions = {
-        zoom: 7,
-        center: new google.maps.LatLng(18.9750, 72.8258),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-
-    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    $scope.markers = [];
-    
-    var infoWindow = new google.maps.InfoWindow();
-    
-    var createMarker = function (info){
-        
-        var marker = new google.maps.Marker({
-            map: $scope.map,
-            position: new google.maps.LatLng(info.lat, info.long),
-            title: info.city
-        });
-        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
-        
-        google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-            infoWindow.open($scope.map, marker);
-        });
-        
-        $scope.markers.push(marker);
-        
-    }  
-    
-    for (i = 0; i < cities.length; i++){
-        createMarker(cities[i]);
-    }
-
-    $scope.openInfoWindow = function(e, selectedMarker){
-        e.preventDefault();
-        google.maps.event.trigger(selectedMarker, 'click');
-    }
-*/
+};
 
 });

@@ -6,80 +6,148 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
       $scope.activitiesController.lat = '19.1100753';
       $scope.activitiesController.long = '72.8940055';
       $scope.activitiesController.markerLocation = '19.1100753, 72.8940055';
+      $scope.activitiesController.hideTA = true;
 
       $scope.limit = 10;
-      $scope.page = 0;
+      $scope.page = 1;
       $scope.continents = [];
       $scope.countries = [];
       $scope.states = [];
       $scope.cities = [];
+      $scope.scountries = [];
+      $scope.sstates = [];
+      $scope.scities = [];
       $scope.activities = [];
       $scope.googleLocations = [];
+      $scope.taLocations=[];
 
-      //TODO: implement flow, call this after selecting city
-      $scope.getActivitiesByCriteria = function() {
-        //TODO: define $scope.criteria
-        CommonMethods.getActivitiesByCriteria($scope.limit, $scope.page, $scope.activities.length, $scope.activityCriteria, function(data) {
+      $scope.themes = [
+        {id:1, name:"Cultural"},
+        {id:2, name:"Adventurous"},
+        {id:3, name:"Romantic"},
+        {id:4, name:"Nature"},
+        {id:5, name:"Chilled Out"}
+      ]
+
+      $scope.getCityName = function( array, value) {
+        for(var i=0; i<array.length; i++){
+          if(array[i].id == value){
+            console.log(array[i]);
+            return array[i].city;
+          }
+        }
+      };
+
+      $scope.searchActivities = function(type) {
+        if(type==0){
+          $scope.activities=[];
+        }
+        var criteria= "active=true&city="+$scope.activitiesController.scity;
+        CommonMethods.searchActivities($scope.limit, $scope.page, criteria, $scope.activities.length, function(data) {
           $scope.activities = $scope.activities.concat(data);
         });
       };
 
       $scope.getMoreActivities = function() {
         $scope.page++;
-        $scope.getActivitiesByCriteria();
+        $scope.searchActivities(1);
       };
 
-      $scope.getActiveContinents = function() {
-        CommonMethods.getActiveContinents($scope.continents.length, "continents", function(data) {
-          $scope.continents = data;
-          $scope.activitiesController.country = "";
-          $scope.activitiesController.state = "";
-          $scope.activitiesController.city = "";
-        });
-      };
+      //$scope.getActiveContinents = function() {
+      //  var criteria = "active=true";
+      //  CommonMethods.searchContinents(100, 0,criteria, 0, "continents", function(data) {
+      //  CommonMethods.searchContinents(100, 0,criteria, 0, "continents", function(data) {
+      //    $scope.continents = data;
+      //    $scope.activitiesController.country = "";
+      //    $scope.activitiesController.state = "";
+      //    $scope.activitiesController.city = "";
+      //  });
+      //};
 
-      $scope.getActiveCountriesByContinents = function() {
+  $scope.getActiveCountries = function(){
+    var criteria ="active=true";
+    CommonMethods.searchCountries(100, 1, criteria, 0, "countries", function(data){
+      $scope.countries =data;
+      $scope.activitiesController.state = "";
+      $scope.activitiesController.city = "";
+      $scope.activitiesController.sstate = "";
+      $scope.activitiesController.scity = "";
+    });
+  };
 
-        //TODO: define countryCriteria
+  $scope.getActiveStatesByCountries = function(type){
+    if(type==0) {
+      var criteria = "active=true&country="+$scope.activitiesController.scountry;
+    }else{
+      var criteria = "active=true&country="+$scope.activitiesController.country;
+    }
+    CommonMethods.searchStates(100,1,criteria, 0, "cities", function(data){
+      if(type==0) {
+        $scope.sstates = data;
+        $scope.activities=[];
+        $scope.activitiesController.scity = "";
+      }else{
+        $scope.states=data;
+        $scope.activitiesController.city = "";
+      }
+    });
+  };
 
-        CommonMethods.getActiveRecordeByCriteria("/country/searchbycriteria/", "100", "0", $scope.countryCriteria, $scope.countries.length, function(data) {
-          $scope.countries = data;
-          $scope.activitiesController.state = "";
-          $scope.activitiesController.city = "";
-        });
-      };
+  $scope.getActiveCitiesByStates = function(type){
+    if(type==0) {
+      var criteria = "active=true&state="+$scope.activitiesController.sstate;
+    }else{
+      var criteria = "active=true&state="+$scope.activitiesController.state;
+    }
+    CommonMethods.searchCities(100,1,criteria, $scope.cities.length, "cities", function(data){
+      if(type==0) {
+        $scope.scities = data;
+        $scope.activities=[];
+      }else{
+        $scope.cities=data;
+      }
+    });
+  };
 
-      $scope.getActiveStatesByCountries = function() {
-        CommonMethods.getActiveRecordeByCriteria("/state/searchbycriteria/", "100", "0", $scope.stateCriteria, $scope.states.length, function(data) {
-          $scope.states = data;
-          $scope.activitiesController.city = "";
-        });
-      };
-
-      $scope.getActiveCitiesByStates = function() {
-        CommonMethods.getActiveRecordeByCriteria("/city/searchbycriteria/", "100", "0", $scope.cityCriteria, $scope.cities.length, function(data) {
-          $scope.cities = data;
-        });
-      };
-
-      $scope.getActiveContinents();
+  $scope.getActiveCountries();
 
       $scope.getGoogleLocation = function(address) {
-        CommonMethods.getGoogleLocation(($scope.activitiesController.activityName + ", " + $scope.activitiesController.city).replace(" ", "%20"), function(data) {
-            for (var i = 0; i < data.length; i++) {
+        CommonMethods.getGoogleLocation(($scope.activitiesController.activityName + ", " + $scope.getCityName($scope.cities, $scope.activitiesController.city)).replace(" ", "%20"), function(data) {
+          $scope.googleLocations = [];
+          for (var i = 0; i < data.length; i++) {
               var response = {};
               response.name = data[i].formatted_address;
               response.location = data[i].geometry.location;
               $scope.googleLocations.push(response);
             }
+
           });
         };
 
-        $scope.onLocationSelected = function() {
-          var data = $scope.googleLocations[$scope.activitiesController.location];
+        $scope.onLocationSelected = function(data) {
+          console.log(data);
+
           $scope.activitiesController.lat = data.location.lat;
           $scope.activitiesController.long = data.location.lng;
+
+          $scope.getTALocation();
+
         };
+
+      $scope.getTALocation = function(){
+        var address = ($scope.activitiesController.activityName).replace(" ", "%20");
+        CommonMethods.getTALocations(address, $scope.activitiesController.lat, $scope.activitiesController.long, function(data){
+          $scope.taLocations=[];
+          for(var i=0; i<data.length; i++){
+            var taLocation={};
+            taLocation.location_id=data[i].location_id;
+            taLocation.name=data[i].name;
+            $scope.taLocations.push(taLocation);
+          }
+
+          $scope.activitiesController.hideTA=false;
+        });
+      };
 
         var marker, map;
         $scope.$on('mapInitialized', function(evt, evtMap) {
@@ -101,86 +169,6 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
           window.alert(marker.getPosition());
         }
 
-        $scope.activities = [{
-          id: 1,
-          activityName: 'Gateway of India',
-          continent: "Asia",
-          country: "India",
-          state: "Maharashtra",
-          city: 'Mumbai',
-          type: "Place",
-          lat: '19.2302',
-          long: '72.409202',
-          openTime: '2 pm',
-          closeTime: '5 pm',
-          status: '0'
-        }, {
-          id: 2,
-          activityName: 'Act1',
-          continent: "Asia",
-          country: "Sangapore",
-          state: "Dummy1",
-          city: 'Dummy1',
-          type: "Place",
-          lat: '19.2302',
-          long: '72.409202',
-          openTime: '2 pm',
-          closeTime: '5 pm',
-          status: '1'
-        }, {
-          id: 3,
-          activityName: 'Act2',
-          continent: "Asia",
-          country: 'Dummy2',
-          state: "Dummy2",
-          city: 'Dummy2',
-          type: "Place",
-          lat: '19.2302',
-          long: '72.409202',
-          openTime: '2 pm',
-          closeTime: '5 pm',
-          status: '1'
-        }, {
-          id: 4,
-          activityName: 'Act3',
-          continent: "Asia",
-          country: 'Dummy3',
-          state: "Dummy3",
-          city: 'Dummy3',
-          type: "Place",
-          lat: '19.2302',
-          long: '72.409202',
-          openTime: '2 pm',
-          closeTime: '5 pm',
-          status: '0'
-        }, {
-          id: 5,
-          activityName: 'Act4',
-          continent: "Asia",
-          country: 'Dummy4',
-          state: "Dummy4",
-          city: 'Dummy4',
-          type: "Place",
-          lat: '19.2302',
-          long: '72.409202',
-          openTime: '2 pm',
-          closeTime: '5 pm',
-          status: '1'
-        }, {
-          id: 6,
-          activityName: 'Act5',
-          continent: "Asia",
-          country: 'Dummy5',
-          state: "Dummy5",
-          city: 'Dummy5',
-          type: "Place",
-          lat: '19.2302',
-          long: '72.409202',
-          openTime: '2 pm',
-          closeTime: '5 pm',
-          status: '0'
-        }, ];
-
         $scope.edit = true;
         $scope.error = false;
         $scope.incomplete = false;
@@ -191,28 +179,40 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
           if (id == 'new') {
             $scope.formTitle = 'Create New Activity';
              $scope.incomplete = true;
-            $scope.act = 'save';
+            $scope.act = 'add';
             $scope.activitiesController.city = '';
-            $scope.activitiesController.country = '';
-            $scope.activitiesController.type = '';
-            $scope.activitiesController.continent = '';
+            $scope.activitiesController.country = $scope.activitiesController.scountry;
+            $scope.activitiesController.theme = '';
             $scope.activitiesController.state = '';
             $scope.activitiesController.lat = '';
             $scope.activitiesController.long = '';
             $scope.activitiesController.openTime = '';
             $scope.activitiesController.closeTime = '';
+            $scope.activitiesController.activityName='';
+            $scope.activitiesController.price='';
+            $scope.activitiesController.currency='';
+            $scope.activitiesController.duration='';
+            $scope.activitiesController.talocation='';
           } else {
             $scope.formTitle = 'Edit Activity';
             $scope.act = 'update';
-            // $scope.activitiesController.city = $scope.activities[id - 1].city;
-            // $scope.activitiesController.country = $scope.activities[id - 1].country;
-            // $scope.activitiesController.type = $scope.activities[id - 1].type;
-            // $scope.activitiesController.continent = $scope.activities[id - 1].continent;
-            // $scope.activitiesController.state = $scope.activities[id - 1].state;
-            // $scope.activitiesController.lat = $scope.activities[id - 1].lat;
-            // $scope.activitiesController.long = $scope.activities[id - 1].long;
-            // $scope.activitiesController.openTime = $scope.activities[id - 1].openTime;
-            // $scope.activitiesController.closeTime = $scope.activities[id - 1].closeTime;
+
+            $scope.oldname = $scope.activities[id-1].name;
+            $scope.oldcity = $scope.activities[id-1].cityId;
+            $scope.oldId = $scope.activities[id-1].id;
+
+             $scope.activitiesController.city = $scope.activitiesController.scity;
+             $scope.activitiesController.country = $scope.activitiesController.scountry;
+             $scope.activitiesController.theme = $scope.activities[id - 1].theme;
+             $scope.activitiesController.state = $scope.activitiesController.sstate;
+             $scope.activitiesController.lat = $scope.activities[id - 1].lat;
+             $scope.activitiesController.long = $scope.activities[id - 1].lon;
+             $scope.activitiesController.openTime = $scope.activities[id - 1].openTime;
+             $scope.activitiesController.closeTime = $scope.activities[id - 1].closeTime;
+            $scope.activitiesController.activityName=$scope.activities[id-1].name;
+            $scope.activitiesController.price=$scope.activities[id-1].price;
+            $scope.activitiesController.currency=$scope.activities[id-1].currency;
+            $scope.activitiesController.duration=$scope.activities[id-1].duration;
           }
         };
 
@@ -242,62 +242,109 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
         };
 
         $scope.saveActivity = function() {
-          var activitiesDetails = {
-            action: $scope.act,
-            continent: $scope.activitiesController.continent,
-            country: $scope.activitiesController.country,
-            city: $scope.activitiesController.city,
-            state: $scope.activitiesController.state,
-            type: $scope.activitiesController.type,
-            lat: $scope.activitiesController.lat,
-            long: $scope.activitiesController.long,
-            openTime: $scope.activitiesController.openTime,
-            closeTime: $scope.activitiesController.closeTime
-          };
+            var priceObject = {}, location = {}, theme = [], themeObject = {};
 
-          console.log(activitiesDetails);
+            priceObject.price = $scope.activitiesController.price;
+            priceObject.currency = $scope.activitiesController.currency;
 
-          var responsePromise = UtilsFactory.doPostCall('/user/activities', activitiesDetails);
-          responsePromise.then(function(response) {
+            location.lat = $scope.activitiesController.lat;
+            location.long = $scope.activitiesController.long;
 
-            console.log(response);
+            for (var i = 0; i < $scope.activitiesController.theme.length; i++) {
+              themeObject.id = $scope.activitiesController.theme[i];
+              theme.push(themeObject);
+            }
 
-          });
-        }; /* saveContinent ends here */
+          if($scope.act === 'add') {
+            var activitiesDetails = [{
+              //action: $scope.act,
+              city: $scope.activitiesController.city,
+              theme: theme,
+              location: location,
+              duration: $scope.activitiesController.duration,
+              openTime: $scope.activitiesController.openTime,
+              closeTime: $scope.activitiesController.closeTime,
+              name: $scope.activitiesController.activityName,
+              price: priceObject,
+              location_id: $scope.activitiesController.talocation
+            }];
+
+            console.log(activitiesDetails);
+
+            var responsePromise = UtilsFactory.doPostCall('/activity/add', activitiesDetails);
+            responsePromise.then(function (response) {
+
+              var data = response.data['response'];
+              if (response.status == 200) {
+                $scope.toggleModal();
+                var message = data['message'];
+                window.alert(message);
+              }
+
+            }, function (error) {
+              $scope.toggleModal();
+              var message = error.data.response.message.name[0].message;
+              console.log(message);
+              window.alert(message);
+            });
+          }else if($scope.act === 'update'){
+            var hotelDetails ={
+              findCriteria:{
+                name:$scope.oldname,
+                city:$scope.oldcity,
+                id:$scope.oldId
+              },
+              recordsToUpdate:{
+                city: $scope.activitiesController.city,
+                theme: theme,
+                location: location,
+                duration: $scope.activitiesController.duration,
+                openTime: $scope.activitiesController.openTime,
+                closeTime: $scope.activitiesController.closeTime,
+                name: $scope.activitiesController.activityName,
+                price: priceObject,
+                location_id: $scope.activitiesController.talocation
+              }
+            };
+            console.log(hotelDetails);
+
+            var responsePromise = UtilsFactory.doPostCall ('/hotel/update', hotelDetails);
+            responsePromise.then (function (response){
+              var data = response.data['response'];
+              //console.log(data);
+              if (response.status==200) {
+                $scope.toggleModal();
+                var message = data['message'];
+                $window.alert(message);
+              }
+
+            }, function(error){
+              $scope.toggleModal();
+              var message = error.data.response.message.name[0].message;
+              console.log(message);
+              $window.alert(message);
+            });
+          }
+        }; /* saveActivity ends here */
 
         /* statusContinent function activates or deactivates Continent information from database*/
-        $scope.statusActivity = function(id) {
-          if ($scope.activities[id - 1].status === '0')
-            $scope.stat = '1';
-          else
-            $scope.stat = '0';
-          var activitiesDetails = {
-            action: 'status',
-            id: $scope.activities[id - 1].id,
-            active: $scope.stat
-          };
-          console.log(activitiesDetails);
-          var responsePromise = UtilsFactory.doPostCall('/user/continent', activitiesDetails);
-          responsePromise.then(function(response) {
-            console.log(response);
-          });
-        };
+
         $scope.statusActivity = function(id) {
           console.log(id);
           var activitiesDetails = {
             findCriteria: {
-              city: $scope.activities[id - 1].cityId,
-              name: $scope.activities[id - 1].activity
+              id: $scope.activities[id - 1].id,
+              city:$scope.activities[id-1].cityId,
+              name: $scope.activities[id - 1].name
             },
             recordsToUpdate: {
-              city: $scope.activities[id - 1].cityId,
-              name: $scope.activities[id - 1].activity,
-              "active": !$scope.activities[id - 1].status
+              id: $scope.activities[id - 1].id,
+              city:$scope.activities[id-1].cityId,
+              name: $scope.activities[id - 1].name,
+              active: !$scope.activities[id - 1].status
             }
           };
 
-
-          console.log(countryDetails);
           var responsePromise = UtilsFactory.doPostCall('/activity/update', activitiesDetails);
           responsePromise.then(function(response) {
             var data = response.data['response'];
@@ -317,8 +364,12 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
         /* statusContinent ends here */
 
         $scope.loadMap = function() {
-          $scope.maplat = '27.175';
-          $scope.maplong = '78.042';
+          $scope.maplat = $scope.activitiesController.lat;
+          $scope.maplong = $scope.activitiesController.long;
+
+          $scope.activitiesController.markerLocation = $scope.maplat +", "+ $scope.maplong;
+          console.log($scope.activitiesController.markerLocation);
+
           var myLatlng = new google.maps.LatLng($scope.maplat, $scope.maplong);
           var myOptions = {
             zoom: 11,
@@ -341,18 +392,6 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
             }
           );
         };
-
-        // $scope.selects = {
-        //   'continent': ['Asia', 'America', 'Africa', 'Australia', 'Europe'],
-        //   'country': ['India', 'CA', 'Poland', 'Sydney'],
-        //   'city': ['Mumbai', 'Delhi', 'Bangalore']
-        // };
-
-        // $scope.selecteds = {};
-        // angular.forEach($scope.selects, function(value, key) {
-        //   $scope.selecteds[key] = value[0];
-        // });
-
 
 
       });

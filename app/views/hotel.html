@@ -4,10 +4,29 @@
 <button class="btn btn-success" ng-click="editHotel('new');toggleModal();">
   <span class="fa fa-bed"></span> Create New Hotel
 </button>
-<div class="input-group pull-right col-md-3 col-sm-4 col-xs-5">
-    <input type="text" class="form-control" name="search" ng-model="search" placeholder="Search by name, city, star">
-     <span class="input-group-addon search" ng-click="searchEmployee()"><span class="glyphicon glyphicon-search"></span> </span>
-</div>
+
+  <form class="form-inline pull-right" role="form">
+    <div class="form-group">
+      <select class="form-control" ng-model="hotelController.scountry"
+              ng-options="item.id as item.country for item in countries" ng-change="getActiveStatesByCountries(0)">
+        <option value="">Select Country</option>
+      </select>
+      <select class="form-control" ng-model="hotelController.sstate"
+              ng-options="item.id as item.state for item in sstates" ng-change="getActiveCitiesByStates(0)">
+        <option value="">Select State</option>
+      </select>
+      <select class="form-control" ng-model="hotelController.scity"
+              ng-options="item.id as item.city for item in scities" ng-change="getHotels(0)">
+        <option value="">Select City</option>
+      </select>
+    </div>
+  </form>
+
+
+<!--<div class="input-group pull-right col-md-3 col-sm-4 col-xs-5">-->
+    <!--<input type="text" class="form-control" name="search" ng-model="search" placeholder="Search by name, city, star">-->
+     <!--<span class="input-group-addon search" ng-click="searchEmployee()"><span class="glyphicon glyphicon-search"></span> </span>-->
+<!--</div>-->
 
 </br></br>
 <div class="table-responsive">
@@ -23,69 +42,146 @@
     <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="hotel in hotels">
-    <td>{{ hotel.id}}</td>
-    <td>{{ hotel.hotelName}}</td>
+    <td>{{ hotel.sequence}}</td>
+    <td>{{ hotel.name}}</td>
     <td>{{ hotel.address }}</td>
     <td>{{ hotel.city }}</td>
     <td>{{ hotel.star}}</td>
     <td>
-      <button class="btn btn-primary" ng-click="editHotel(hotel.id,'show');toggleModal();" >Show
+      <button class="btn btn-primary" ng-click="editHotel(hotel.sequence,'show');toggleModal();" >Show
       </button>
     </td>
     <td>
-      <button class="btn" ng-click="editHotel(hotel.id,'edit');toggleModal();" >
+      <button class="btn" ng-click="editHotel(hotel.sequence,'edit');toggleModal();" >
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="hotel.status" ng-click="statusHotel(hotel.id)" >
-      <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deactivate
+      <button class="btn btn-success btn-sm statusBtn" ng-show="hotel.status" ng-click="statusHotel(hotel.sequence)" >
+        Active
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="hotel.status" ng-click="statusHotel(hotel.id)" >
-      <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Activate
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="hotel.status" ng-click="statusHotel(hotel.sequence)" >
+        Deactive
       </button>
     </td>
   </tr></tbody>
 </table>
-</div>  
+</div>
+
+  <button class="btn btn-success" ng-click="getMoreHotels();">
+    <span class="glyphicon glyphicon-"></span> Get More
+  </button>
+
+
 
 <modal title="Hotel Form" visible="showModal">
 
 <form class="form-horizontal" name="myForm">
-<div class="form-group" ng-class="{ 'has-error' : myForm.hotelName.$invalid && !myForm.hotelName.$pristine }">
-  <label class="col-sm-3 control-label">Hotel Name:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" name="hotelName" ng-model="hotelController.hotelName" placeholder="Hotel Name" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Country:</label>
+    <div class="col-sm-4">
+      <!-- <input type="text" class="form-control" ng-model="activitiesController.country" placeholder="Country"> -->
+      <select class="form-control" ng-model="hotelController.country"
+              ng-options="item.id as item.country for item in countries" ng-change="getActiveStatesByCountries(1)">
+        <option value="">Select Country</option>
+      </select>
+    </div>
   </div>
-</div> 
-<div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
-  <label class="col-sm-3 control-label">City:</label>
-  <div class="col-sm-4">
-    <!-- <input type="text" class="form-control" name="city" ng-model="hotelController.city" placeholder="City" ng-disabled="info" required> -->
-    <select class="form-control" ng-model="hotelController.city" ng-options="item.id as item.city for item in hotels">
-      <option value="">Select City</option>
-    </select>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">State:</label>
+    <div class="col-sm-4">
+      <!-- <input type="text" class="form-control" ng-model="activitiesController.state" placeholder="State"> -->
+      <select class="form-control" ng-model="hotelController.state"
+              ng-options="item.id as item.state for item in states" ng-change="getActiveCitiesByStates(1)">
+        <option value="">Select State</option>
+      </select>
+    </div>
   </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Location:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="hotelController.lat" placeholder="Latitude" ng-disabled="info">
-    <input type="text" class="form-control" ng-model="hotelController.long" placeholder="Longitute" ng-disabled="info">
+  <div class="form-group">
+    <label class="col-sm-3 control-label">City:</label>
+    <div class="col-sm-4">
+      <!-- <input type="text" class="form-control" ng-model="activitiesController.city" placeholder="City"> -->
+      <select class="form-control" ng-model="hotelController.city"
+              ng-options="item.id as item.city for item in cities">
+        <option value="">Select City</option>
+      </select>
+    </div>
   </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Address:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="hotelController.address" placeholder="Address" ng-disabled="info">
+
+  <div class="form-group"> <!-- ng-class="{ 'has-error' : myForm.hotelName.$invalid && !myForm.hotelName.$pristine }"> -->
+    <label class="col-sm-3 control-label">Hotel Name:</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" name="hotelName" ng-model="hotelController.hotelName"
+             placeholder="Hotel Name" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
+    </div>
   </div>
-</div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Address:</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" ng-model="hotelController.address" placeholder="Address" ng-disabled="info">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Pincode:</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" ng-model="hotelController.pincode" placeholder="Pincode" ng-disabled="info">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Location:</label>
+    <div class="col-sm-4">
+      <select class="form-control" ng-model="hotelController.location"
+              ng-options="item as item.name for item in googleLocations"
+              ng-change="onLocationSelected(hotelController.location)">
+        <option value="">Select Option</option>
+      </select>
+
+      <input type="text" class="form-control" ng-model="hotelController.lat" placeholder="Latitude">
+      <input type="text" class="form-control" ng-model="hotelController.long" placeholder="longitute">
+
+    </div>
+    <button class="btn btn-success" ng-click="getGoogleLocation();">
+      <span class="glyphicon glyphicon-"></span> Get Location
+    </button>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Trip Advisor Location:</label>
+    <div class="col-sm-4">
+      <select class="form-control" ng-model="hotelController.talocation"
+              ng-options="item.location_id as item.name for item in taLocations"
+              ng-disabled="hotelController.hideTA">
+        <option value="">Select Option</option>
+      </select>
+    </div>
+  </div>
+
 <div class="form-group">
   <label class="col-sm-3 control-label">Star Rating:</label>
   <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="hotelController.star" placeholder="Star Rating" ng-disabled="info">
+    <input type="number" class="form-control" ng-model="hotelController.star" placeholder="Star Rating" ng-disabled="info">
   </div>
 </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Checkin time:</label>
+    <div class="col-sm-4">
+      <input type="time" class="form-control" ng-model="hotelController.checkin" placeholder="Checkin time" ng-disabled="info">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Checkout time:</label>
+    <div class="col-sm-4">
+      <input type="time" class="form-control" ng-model="hotelController.checkout" placeholder="Checkout time" ng-disabled="info">
+    </div>
+  </div>
+
+
 <div class="form-group">
   <label class="col-sm-3 control-label">Swimming Pool:</label>
   <div class="col-sm-4">
@@ -127,15 +223,25 @@
   </div>
 </div>
 <hr>
-<div ng-repeat="room in rooms">
+
   <div class="form-group">
-    <label class="col-sm-3 control-label">{{ room.type }}</label>
+    <label class="col-sm-3 control-label">Currency:</label>
     <div class="col-sm-4">
-    <input type="text" class="form-control" placeholder="Price" ng-disabled="info">
+      <input type="text" class="form-control" ng-model="hotelController.currency" placeholder="Currency" ng-disabled="info">
+    </div>
+  </div>
+
+  <label class="col-sm-3 control-label">Prices:</label>
+<div ng-repeat="room in roomTypes">
+  <div class="form-group">
+    <label class="col-sm-3 control-label">{{ room.name }}</label>
+    <div class="col-sm-4">
+    <input type="number" class="form-control" placeholder="Price" ng-disabled="info">
     </div>
   </div>
 </div>
 </form>
+
 <hr>
  <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveHotel()" ng-hide="info">
     <span class="glyphicon glyphicon-save"></span> Save Changes
@@ -143,5 +249,9 @@
   <button class="btn" ng-click="editHotel(hotel.id,'edit');toggleModal();" ng-show="info">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
+
+  <button class="btn btn-success" ng-click="toggleModal();redirect();">
+    <span class="glyphicon glyphicon-save"></span> Get Images
+  </button>
 </modal>
 </div>

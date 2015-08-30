@@ -2,7 +2,8 @@
  <h3 class="text-center">Activity Images</h3>
 
 <div class="leftthumbnails col-lg-7 col-md-5" id="links"></div> <!-- Flickr image container-->
-<div class="col-lg-5"> 
+
+<div class="col-lg-5">
     <div class="slider">
         <img ng-repeat="slide in slides" class="slide s slide-animation nonDraggableImage"
             ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()"
@@ -24,19 +25,19 @@
             </div>
         </nav> -->
 
-    </div><!--slider ends --> 
+    </div><!--slider ends -->
     <div class="well col-lg-12 col-md-7 col-sm-12 col-xs-12 pull-right">
         <form name="myForm" >
-            <input type="checkbox" ng-model="imgSliderController.isChecked" ng-checked= ""> Select 
+            <input type="checkbox" ng-model="imgSliderController.isChecked"> Select
              <br><br/>
-             <input type="text" class="form-control block-center" ng-model="imgSliderController.caption" placeholder="Enter Caption" ng-show="imgSliderController.isChecked"> 
+             <input type="text" class="form-control block-center" ng-model="imgSliderController.caption" placeholder="Enter Caption" ng-show="imgSliderController.isChecked">
             <br/>
 
-         
-          <button class="btn btn-success" ng-click="onImageSelected()">Submit</button>&nbsp;
+
+          <button class="btn btn-success" ng-click="onImageSubmitted()">Submit</button>&nbsp;
           <button class="btn" ng-click="">Cancel</button>
          </form>
     </div>
-</div> 
+</div>
 
 </div>

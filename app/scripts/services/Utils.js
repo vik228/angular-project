@@ -24,8 +24,6 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 					$window.location.href = '#/';
 					return;
 				} else {
-					console.log(data.response.token);
-					$localStorage.token = data.response.token;
 					defered.resolve(data);
 				}
 
@@ -36,7 +34,7 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 				if (rejection.response.message == "Session Expired.operation not permitted") {
 					delete $localStorage.token;
 					console.log(rejection.response.message);
-					//$window.location.href = '#/';
+					$window.location.href = '#/';
 				} else {
 					defered.resolve(rejection);
 				}
@@ -77,47 +75,8 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 				}
 			});
 			return dataPromise;
-			s
 
 		}
-
-		// utilsFactoryObj.getAllCities = function(limit, skip, numRows){
-		// 	  var cities = [];
-		// 	  var defered = $q.defer();
-
-		// 	    var getUrl = "/city/get/?limit="+limit+"&skip="+skip;
-		// 	    var responsePromise = utilsFactoryObj.doGetCall (getUrl);
-		// 	      responsePromise.then (function (response){              
-		// 	            if (response.status==200) {
-		// 	              var data = response.data.response.message;
-
-		// 	              for(var i=0; i<data.length; i++){
-		// 	                numRows++;
-		// 	                var row = {};
-		// 	                row['sequence']=numRows;
-		// 	                row['stateId']=data[i].stateId;
-		// 	                row['state']=data[i].state;
-		// 	                row['id']=data[i].id;
-		// 	                row['status']=data[i].status;
-		// 	                row['city']=data[i].name;
-		// 	                cities.push(row);
-		// 	              }
-
-		// 	              if(data.length==0){
-		// 	                $window.alert("No more continents available")
-		// 	              }
-		// 	              console.log(cities);
-		// 	              return cities;
-		// 	              //$scope.cities = $scope.cities.concat(cities);
-		// 	            }
-
-		// 	      }, function(error){
-		// 	                var message = error.data.response.message.name[0].message;
-		// 	                console.log(message);
-		// 	               // window.alert(message);
-		//        });
-
-		// 	}
 		return utilsFactoryObj;
 	}
 ]);

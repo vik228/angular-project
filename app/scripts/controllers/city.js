@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('cityController',function($scope, $http, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('cityController',function($scope, $http, $window, UtilsFactory, CommonMethods) {
 $scope.cityController = {};
 
 $scope.states = [];
@@ -27,10 +27,11 @@ $scope.getMoreCities = function(){
 
 $scope.edit = true;
 $scope.error = false;
-$scope.incomplete = false; 
+$scope.incomplete = false;
 
 $scope.getActiveStates = function(){
-  CommonMethods.getAllActiveStates($scope.states.length, "cities", function(data){
+  var criteria = "active=true";
+  CommonMethods.searchStates(100,0,criteria, $scope.states.length, "cities", function(data){
     $scope.states = $scope.states.concat(data);
   });
 };
@@ -48,7 +49,7 @@ $scope.editCity = function(id) {
     $scope.act ='update';
     $scope.oldCityName = $scope.cities[id-1].city;
     $scope.oldStateId = $scope.cities[id-1].stateId;
-    $scope.cityController.city = $scope.cities[id-1].city; 
+    $scope.cityController.city = $scope.cities[id-1].city;
     $scope.cityController.state = $scope.cities[id-1].state;
   }
 };
@@ -60,7 +61,7 @@ $scope.showModal = false;
 
 /* saveCity function inserts city information in the database*/
 $scope.saveCity = function() {
-  
+
     if($scope.act === 'add'){
       var cityDetails =[ {
         name:$scope.cityController.city,
@@ -94,7 +95,7 @@ $scope.saveCity = function() {
       findCriteria:{
         state:$scope.oldStateId,
         name:$scope.oldCityName
-      }, 
+      },
       recordsToUpdate:{
         state:$scope.cityController.state,
         name:$scope.cityController.city
@@ -121,16 +122,16 @@ $scope.saveCity = function() {
   }
 };/* saveCity ends here */
 
-/* statusCity function activates or deactivates city information from database*/ 
+/* statusCity function activates or deactivates city information from database*/
 
 $scope.statusCity = function(id) {
     var cityDetails ={
       findCriteria:{
-        state:$scope.cities[id-1].stateId,
+        id:$scope.cities[id-1].id,
         name:$scope.cities[id-1].city
-      }, 
+      },
       recordsToUpdate:{
-        state:$scope.cities[id-1].stateId,
+        state:$scope.cities[id-1].id,
         name:$scope.cities[id-1].city,
         "active": !$scope.cities[id-1].status
       }

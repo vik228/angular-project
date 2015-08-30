@@ -26,8 +26,10 @@ zopkyFrontendApp.controller('countryController', function($scope, $http, UtilsFa
   };
 
   $scope.getActiveContinents = function() {
-    CommonMethods.getActiveContinents($scope.continents.length, "continents", function(data) {
+    var criteria = "active=true";
+    CommonMethods.searchContinents(100, 0,criteria, $scope.continents.length, "continents", function(data) {
       $scope.continents = $scope.continents.concat(data);
+      console.log($scope.continents);
     });
   };
 
@@ -37,7 +39,7 @@ zopkyFrontendApp.controller('countryController', function($scope, $http, UtilsFa
   $scope.error = false;
   $scope.incomplete = false;
 
-  $scope.editActivity = function(id) {
+  $scope.editCountry = function(id) {
     if (id == 'new') {
       $scope.formTitle = 'Create New Country';
       $scope.act = 'add';

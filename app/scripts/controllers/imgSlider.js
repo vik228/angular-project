@@ -1,92 +1,61 @@
 'use strict';
 
-zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStorage, $window) {
+zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStorage, $window, CommonMethods) {
         $scope.slides = [];
         $scope.selectedImages = [];
         $scope.imgSliderController = {};
         $scope.imgSliderController.caption = '';
         $scope.imgSliderController.isChecked = false;
+        $scope.limit = 50;
+        $scope.page=1;
+
+  //TODO: get the details from local storage
+        $scope.tags='Taj Mahal';
+        $scope.latitude='27.1750151';
+        $scope.longitude='78.0421552';
+
+        var links = [];
 
         $scope.getFlickrImages = function() {
             //TODO: define $scope.criteria
-            CommonMethods.getFlickrImages($scope.tags, $scope.latitude, $scope.longitude, function(data) {
-                $scope.activities = $scope.activities.concat(data);
-
+            CommonMethods.getAllFlickrImages($scope.limit, $scope.page, $scope.tags, $scope.latitude, $scope.longitude, function(data) {
+                //$scope.slides = $scope.slides.concat(data);
+              $('#links').empty();
                 $.each(data.photos.photo, function(index, photo) {
                     var baseUrl = 'http://farm' + photo.farm + '.static.flickr.com/' +
                         photo.server + '/' + photo.id + '_' + photo.secret;
 
                     var image = {};
-                    image.url = baseUrl + '_b.jpg';
+                    image.image = baseUrl + '_b.jpg';
                     image.index = index;
                     image.ownerId = photo.owner;
                     image.photoId = photo.id;
                     image.flickrTitle = photo.title;
 
-                    $scope.slides.push(image);
+                    links.push(image);
+                  //console.log(image);
 
                     $('<img>')
                         .prop('src', baseUrl + '_s.jpg')
                         .prop('title', photo.title)
                         .attr('id', index)
-                        .appendTo(linksContainer);
+                        .appendTo($('#links'));
                 });
+              //console.log(links);
+              $scope.slides=links;
             });
         };
 
-//TODO: replace withabove get method
-        var links = [];
-        $.ajax({
-            url: 'https://api.flickr.com/services/rest/',
-            data: {
-                format: 'json',
-                method: 'flickr.photos.search',
-                api_key: '7617adae70159d09ba78cfec73c13be3',
-                tags: 'Taj Mahal',
-                privacy_filter: 1
-            },
-            dataType: 'jsonp',
-            jsonp: 'jsoncallback'
-        }).done(function(result) {
-            var linksContainer = $('#links'),
-                baseUrl;
-            // Add the demo images as links with thumbnails to the page:
-            $.each(result.photos.photo, function(index, photo) {
-                baseUrl = 'http://farm' + photo.farm + '.static.flickr.com/' +
-                    photo.server + '/' + photo.id + '_' + photo.secret;
-
-                var imageDes = 'Image';
-                if (index < 10) {
-                    imageDes = imageDes + ' 0' + index;
-                } else {
-                    imageDes = imageDes + ' ' + index;
-                }
-
-                var imgObject = {
-                    image: baseUrl + '_b.jpg',
-                    description: imageDes
-                };
-                links.push(imgObject);
-
-                $('<img>')
-                    .prop('src', baseUrl + '_s.jpg')
-                    .prop('title', photo.title)
-                    .attr('id', index)
-                    .appendTo(linksContainer);
-            });
-        });
-        $scope.slides = links;
+      $scope.getFlickrImages();
 
         $('#links').bind('click', function(event) {
             if ($scope.imgSliderController.isChecked) {
                 if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
-                    //TODO: change image
-                    //$('*[id=' + $scope.currentIndex + ']').prop('src') = 'favicon.ico';
 
                     var data = $scope.slides[$scope.currentIndex];
                     data.caption = $scope.imgSliderController.caption;
                     $scope.selectedImages.push(data);
-                    $scope.imgSliderController.isChecked = !$scope.imgSliderController.isChecked;
+                    $scope.imgSliderController.isChecked = false;
 
                     var index = event.target.id;
                     $scope.imgSliderController.caption = event.target.title;
@@ -106,8 +75,7 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
         $scope.direction = 'left';
         $scope.currentIndex = 0;
 
-        $scope.onImageSelected = function() {
-            $scope.selectedImage = "favicon.ico";
+        $scope.onImageSubmitted = function() {
 
             if ($scope.imgSliderController.isChecked) {
                 if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
@@ -115,8 +83,9 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
                     var data = $scope.slides[$scope.currentIndex];
                     data.caption = $scope.imgSliderController.caption;
                     $scope.selectedImages.push(data);
-                    $scope.imgSliderController.caption = "";
                     $scope.imgSliderController.isChecked = false;
+                    $scope.imgSliderController.caption = "";
+
                 } else {
                     $window.alert("please insert caption");
                 }
@@ -124,9 +93,9 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
 
             //TODO: save in local storage, go to activity page
             $localStorage.selectedImages = $scope.selectedImages;
-            console.log($scope.selectedImages);                     
+            console.log($scope.selectedImages);
 
-            //TODO:  go to activity and continue
+            //TODO:  go to activity and continue/ post activity to db
             $window.location.href = '#/navtab';
         };
 
@@ -137,12 +106,18 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
         $scope.prevSlide = function() {
             if ($scope.imgSliderController.isChecked) {
                 if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
-                    //TODO: change image
+
+                  var id = $scope.currentIndex+1;
+                  console.log(id);
+                  $('#links img:nth-child('+id+')').replaceWith( $('<img>')
+                    .prop('src','favicon.ico'));
+
                     console.log($scope.imgSliderController.caption);
                     var data = $scope.slides[$scope.currentIndex];
                     data.caption = $scope.imgSliderController.caption;
                     $scope.selectedImages.push(data);
 
+                    $scope.imgSliderController.isChecked=false;
                     $scope.imgSliderController.caption = "";
                     $scope.direction = 'right';
                     $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : 0;
@@ -159,12 +134,17 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
         $scope.nextSlide = function() {
             if ($scope.imgSliderController.isChecked) {
                 if ($scope.imgSliderController.caption != null && $scope.imgSliderController.caption.trim().length > 0) {
-                    //TODO: change image
-                    console.log($scope.imgSliderController.caption);
+
+                  var id = $scope.currentIndex+1;
+                  console.log(id);
+                  $('#links img:nth-child('+id+')').replaceWith( $('<img>')
+                    .prop('src','favicon.ico'));
+
                     var data = $scope.slides[$scope.currentIndex];
                     data.caption = $scope.imgSliderController.caption;
                     $scope.selectedImages.push(data);
 
+                    $scope.imgSliderController.isChecked=false;
                     $scope.imgSliderController.caption = "";
                     $scope.direction = 'left';
                     $scope.currentIndex = ($scope.currentIndex < $scope.slides.length - 1) ? ++$scope.currentIndex : $scope.slides.length - 1;

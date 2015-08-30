@@ -14,14 +14,14 @@
 <table class="table table-striped table-bordered">
   <thead><tr>
     <th>Id</th>
-    <th>Name of Room Type</th>
+    <th>Room Type</th>
     <th>Capacity</th>
     <th>Edit</th>
     <th>Status</th>
   </tr></thead>
-  <tbody><tr ng-repeat="room in rooms">
-    <td>{{ room.id}}</td>
-    <td>{{ room.roomType}}</td>
+  <tbody><tr ng-repeat="room in roomTypes">
+    <td>{{ room.sequence}}</td>
+    <td>{{ room.name}}</td>
     <td>{{ room.capacity }}</td>
     <td>
       <button class="btn" ng-click="editRoom(room.id,'edit');toggleModal();" >
@@ -29,16 +29,20 @@
       </button>
     </td>
     <td class="text-center">
-      <button class="btn btn-danger btn-sm statusBtn" ng-show="room.status" ng-click="statusRoom(room.id)" >
-        Deactivate
+      <button class="btn btn-success btn-sm statusBtn" ng-show="room.status" ng-click="statusRoom(room.sequence)" >
+        Active
       </button>
-      <button class="btn btn-success btn-sm statusBtn" ng-hide="room.status" ng-click="statusRoom(room.id)" >
-        Activate
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="room.status" ng-click="statusRoom(room.sequence)" >
+        Deactive
       </button>
     </td>
   </tr></tbody>
 </table>
-</div>  
+</div>
+
+  <button class="btn btn-success" ng-click="getMoreRoomtypes();">
+    <span class="glyphicon glyphicon-"></span> Get More
+  </button>
 
 <modal title="Room Form" visible="showModal">
 
@@ -46,19 +50,21 @@
 <div class="form-group" ng-class="{ 'has-error' : myForm.roomType.$invalid && !myForm.roomType.$pristine }">
   <label class="col-sm-4 control-label">Room Type:</label>
   <div class="col-sm-6">
-    <!-- <input type="text" class="form-control" name="roomType" ng-model="roomController.roomType" placeholder="Room Type Name" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required> -->
-    <select class="form-control" ng-model="roomController.roomType" ng-options="item.id as item.roomType for item in rooms">
-      <option value="">Select Room Type</option>
-    </select>
+     <input type="text" class="form-control" name="roomType" ng-model="roomController.roomType"
+            placeholder="Room Type" pattern="(/^[a-zA-Z ]*$/)" ng-minlength="3" ng-maxlength="20" ng-disabled="info" required>
+    <!--<select class="form-control" ng-model="roomController.roomType" ng-options="item.id as item.roomType for item in rooms">-->
+      <!--<option value="">Select Room Type</option>-->
+    <!--</select>-->
   </div>
-</div> 
+</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.capacity.$invalid && !myForm.capacity.$pristine }">
   <label class="col-sm-4 control-label">Capacity:</label>
   <div class="col-sm-6">
-    <!-- <input type="text" class="form-control" name="capacity" ng-model="roomController.capacity" placeholder="Capacity" ng-disabled="info" required> -->
-    <select class="form-control" ng-model="roomController.capacity" ng-options="item.id as item.capacity for item in rooms">
-      <option value="">Select Capacity</option>
-    </select>
+     <input type="number" class="form-control" name="capacity" ng-model="roomController.capacity"
+            placeholder="Capacity" ng-disabled="info" required>
+    <!--<select class="form-control" ng-model="roomController.capacity" ng-options="item.id as item.capacity for item in rooms">-->
+      <!--<option value="">Select Capacity</option>-->
+    <!--</select>-->
   </div>
 </div>
 </form>

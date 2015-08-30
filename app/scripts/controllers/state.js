@@ -25,10 +25,11 @@ $scope.getMoreStates = function(){
 
 $scope.edit = true;
 $scope.error = false;
-$scope.incomplete = false; 
+$scope.incomplete = false;
 
 $scope.getActiveCountries = function(){
-  CommonMethods.getActiveCountries($scope.countries.length, "countries", function(data){
+  var criteria ="active=true";
+  CommonMethods.searchCountries(100, 0, criteria, $scope.countries.length, "countries", function(data){
     $scope.countries = $scope.countries.concat(data);
   });
 };
@@ -48,8 +49,8 @@ $scope.editState = function(id) {
       // console.log($scope.states[id-1]);
       $scope.oldStateName = $scope.states[id-1].state;
       $scope.oldCountryId = $scope.states[id-1].countryId;
-      $scope.stateController.country = $scope.states[id-1].country; 
-      $scope.stateController.state = $scope.states[id-1].state; 
+      $scope.stateController.country = $scope.states[id-1].country;
+      $scope.stateController.state = $scope.states[id-1].state;
   }
 };
 
@@ -61,7 +62,7 @@ $scope.showModal = false;
 
 /* saveState function inserts state information in the database*/
 $scope.saveState = function() {
-  
+
     if($scope.act === 'add'){
       var stateDetails =[ {
         country:$scope.stateController.country,
@@ -95,7 +96,7 @@ $scope.saveState = function() {
       findCriteria:{
         country:$scope.oldCountryId,
         name:$scope.oldStateName
-      }, 
+      },
       recordsToUpdate:{
         country:$scope.stateController.country,
         name:$scope.stateController.state
@@ -129,7 +130,7 @@ $scope.statusState = function(id) {
       findCriteria:{
         country:$scope.states[id-1].countryId,
         name:$scope.states[id-1].state
-      }, 
+      },
       recordsToUpdate:{
         country:$scope.states[id-1].countryId,
         name:$scope.states[id-1].state,
@@ -165,27 +166,27 @@ $scope.states[id-1].status = !$scope.states[id-1].status ;
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     $scope.markers = [];
-    
+
     var infoWindow = new google.maps.InfoWindow();
-    
+
     var createMarker = function (info){
-        
+
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.lat, info.long),
             title: info.city
         });
         marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
-        
+
         google.maps.event.addListener(marker, 'click', function(){
             infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
             infoWindow.open($scope.map, marker);
         });
-        
+
         $scope.markers.push(marker);
-        
-    }  
-    
+
+    }
+
     for (i = 0; i < cities.length; i++){
         createMarker(cities[i]);
     }
