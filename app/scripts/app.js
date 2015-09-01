@@ -121,6 +121,16 @@ var zopkyFrontendApp = angular
         controller: 'itineraryController',
      //   requireLogin: true
       })
+      .when('/itineraryhome', {
+        templateUrl: 'views/itineraryhome.html',
+        controller: 'itineraryhomeController',
+     //   requireLogin: true
+      })
+      .when('/ihotel', {
+        templateUrl: 'views/ihotel.html',
+        controller: 'itineraryhotelController',
+     //   requireLogin: true
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -27,6 +27,8 @@
     $scope.agenturl = '/views/agent.html';
     $scope.agentprofileurl = '/views/agentProfile.html';
     $scope.itineraryurl = '/views/itinerary.html';
+    $scope.itineraryhomeurl = '/views/itineraryhome.html';
+    $scope.itineraryhomeurl = '/views/ihotel.html';
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

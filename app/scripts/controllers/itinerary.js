@@ -18,10 +18,13 @@ zopkyFrontendApp.controller("itineraryController", ['$scope', function ($scope) 
  
     $scope.workspaces =
     [
-        { id: 1, name: "Plan", active:true  },
-        { id: 2, name: "Day1", active:false },
-        { id: 3, name: "Workspace 2", active:false },
-        { id: 4, name: "Workspace 2", active:false }
+        { id: 1, name: "Day 1", active:true  },
+        { id: 2, name: "Day 2", active:false },
+        { id: 3, name: "Day 3", active:false },
+        { id: 4, name: "Day 4", active:false },
+        { id: 4, name: "Day 5", active:false },
+        { id: 4, name: "Hotel Booking", active:false },
+        { id: 4, name: "Description", active:false },
     ];
  
     $scope.addWorkspace = function () {
@@ -31,7 +34,20 @@ zopkyFrontendApp.controller("itineraryController", ['$scope', function ($scope) 
  
 }]);
 
-zopkyFrontendApp.controller("TabsChildController",['$scope', function ($scope){
+zopkyFrontendApp.controller("idaysController",['$scope', function ($scope){
+    $scope.workspace = { id: 1, name: "gfgfdggg 1", active:true  };
+    $scope.cities = [
+        {id:1, city:'Mumbai'},
+        {id:2, city:'Delhi'},
+        {id:3, city:'Bangalore' }
+        ]; 
+
+}]);
+zopkyFrontendApp.controller("ihotelController",['$scope', function ($scope){
+    $scope.workspace = { id: 1, name: "gfgfdggg 1", active:true  };
+
+}]);
+zopkyFrontendApp.controller("idescriptionController",['$scope', function ($scope){
     $scope.workspace1 = { id: 1, name: "gfgfdggg 1", active:true  };
 
 }]);
