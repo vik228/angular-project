@@ -55,6 +55,10 @@ zopkyFrontendApp.controller("itineraryController", ['$scope', function ($scope) 
         { id: 1, name: "intercityTransfers 1", active:true  }
     ];
 
+    $scope.redirect = function(){
+        window.location.href= "#/ihotel";
+    } 
+
     $scope.addWorkspace = function () {
         setAllInactive();
         addNewWorkspace();
