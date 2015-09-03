@@ -15,6 +15,26 @@ zopkyFrontendApp.controller("itineraryController", ['$scope', function ($scope) 
             active: true
         });
     };
+
+    $scope.addNewMiniTrip = function() {
+        var id = $scope.minitrips.length + 1;
+        // console.log("inside add minitrip");
+        $scope.minitrips.push({
+            id: id,
+            name: 'minitrip ' + id,
+            active: true
+        });
+    }
+
+     $scope.addNewIntercityTransfer = function() {
+        var id = $scope.intercityTransfers.length + 1;
+        // console.log("inside add minitrip");
+        $scope.intercityTransfers.push({
+            id: id,
+            name: 'intercityTransfers' + id,
+            active: true
+        });
+    }
  
     $scope.workspaces =
     [
@@ -23,14 +43,34 @@ zopkyFrontendApp.controller("itineraryController", ['$scope', function ($scope) 
         { id: 3, name: "Day 3", active:false },
         { id: 4, name: "Day 4", active:false },
         { id: 4, name: "Day 5", active:false },
-        { id: 4, name: "Hotel Booking", active:false },
-        { id: 4, name: "Description", active:false },
     ];
- 
+    
+    $scope.minitrips =
+    [
+        { id: 1, name: "minitrip 1", active:true  }
+    ];
+
+    $scope.intercityTransfers =
+    [
+        { id: 1, name: "intercityTransfers 1", active:true  }
+    ];
+
     $scope.addWorkspace = function () {
         setAllInactive();
         addNewWorkspace();
-    };       
+    };
+
+    
+    $scope.addWorkspace = function () {
+        setAllInactive();
+        addNewWorkspace();
+    }; 
+
+    $scope.setDay = function(id){
+        $scope.currentDay = id;
+
+        //TODO: save previous data and clear controller
+    }      
  
 }]);
 

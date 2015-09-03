@@ -9,13 +9,14 @@
         </li>     
     </ul>
 </div>
-<br><br><br>
-<div class="tab-content" ng-controller="idaysController" ng-hide="false">
+<br><br>
+<h3 class="text-center">Itinerary Day</h3>
+<div class="well col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2" style="margin-top:20px;" ng-controller="idaysController">
     <form class="form-horizontal" name="myForm">
         <div class="form-group">
             <label class="col-sm-3 control-label">City:</label>
             <div class="col-sm-4">
-                <select class="form-control" ng-model="idaysController.city" ng-options="item.id as item.city for item in cities" required>
+                <select class="form-control" ng-model="idaysController.city" ng-options="item.id as item.city for item in cities">
                 <option value="">Select City</option>
                 </select>
             </div>
@@ -25,69 +26,82 @@
             <div class="col-sm-6">
                 <input type="checkbox" ng-model="isAirportTransfer"> Yes 
             </div>
-            <div class="col-sm-6" ng-show="isAirportTransfer"><br>
-                <div class="col-sm-2">
+            <div class="col-sm-9" ng-show="isAirportTransfer"><br>
+                <div class="col-sm-3">
                     <input type="text" class="form-control" ng-model="idaysController.startTime" placeholder="Start time" required>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                   <input type="text" class="form-control" ng-model="idaysController.start" placeholder="Type" required>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <input type="text" class="form-control" ng-model="idaysController.price" placeholder="Price" required>
                 </div>
             </div>
         </div> 
         <div class="form-group">
             <label class="col-sm-3 control-label">Mini Trip:</label>
-            <div class="col-sm-6">
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.trip" placeholder="Trip" required>
+            <div class="col-sm-9">
+                <div ng-repeat="minitrip in minitrips">
+                    <label class="col-sm-12 pull-left">Trip {{minitrip.id}}</label>
+                    <br>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-model="idaysController.trip" placeholder="Trip" >
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-model="idaysController.startTime" placeholder="Start time" >
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" ng-model="idaysController.endtime" placeholder="End Time" >
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.startTime" placeholder="Start time" required>
-                </div>
-                <div class="col-sm-2">
-                  <input type="text" class="form-control" ng-model="idaysController.endtime" placeholder="End Time" required>
-                </div>
-                <div class="col-sm-2">
-                  <button class="btn btn-primary" ng-click="addMiniTour()"> Add Mini Trip </button>
+                <br><br>
+                <div class="col-sm-6">
+                  <button class="btn btn-primary" ng-click="addNewMiniTrip()"> Add Mini Trip </button>
                 </div>
             </div>
         </div> 
         <div class="form-group">
             <label class="col-sm-3 control-label">Intercity Transfer:</label>
-            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-md-6 col-sm-9">
                 <input type="checkbox" ng-model="isIntercityTransfer"> Yes 
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6" ng-show="isIntercityTransfer">
+            <div ng-repeat="intercityTransfer in intercityTransfers">
+                <label class="col-sm-12 pull-left">Transfer {{intercityTransfer.id}}</label>
                 <br>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.startCity" placeholder="Start City">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="intercityTransfer.startCity" placeholder="Start City">
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.startTime" placeholder="Start Time" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="intercityTransfer.startTime" placeholder="Start Time" required>
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.endCity" placeholder="End City" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="intercityTransfer.endCity" placeholder="End City" required>
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.endTime" placeholder="End Time" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="intercityTransfer.endTime" placeholder="End Time" required>
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.type" placeholder="Type of Transport" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="intercityTransfer.type" placeholder="Type of Transport" required>
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" ng-model="idaysController.price" placeholder="Price" required>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="intercityTransfer.price" placeholder="Price" required>
                 </div>
+            </div><br><br>
+            <div class="col-sm-12">
+                  <button class="btn btn-primary" ng-click="addNewIntercityTransfer()"> Add Intercity Transfer </button>
+            </div>
+            </div>
+        </div> 
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Food:</label>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <input type="checkbox" ng-model="itineraryController.breakfast"> &nbsp&nbsp Breakfast &nbsp&nbsp
+                <input type="checkbox" ng-model="itineraryController.lunch"> &nbsp&nbsp Lunch &nbsp&nbsp
+                <input type="checkbox" ng-model="itineraryController.dinner"> &nbsp&nbsp Dinner 
             </div>
         </div> 
         
         <button class="btn btn-success col-lg-offset-3 col-md-offset-3 col-sm-offset-3" ng-click="redirect();"> &nbsp Next &nbsp </button>
     </form>
-</div>
-<div class="tab-content" ng-controller="ihotelController" ng-hide="false">
-  huhuhuh
-</div>
-<div class="tab-content" ng-controller="idescriptionController" ng-hide="false">
-  huhuhuh
 </div>
