@@ -12,7 +12,8 @@
 	    <li><a href=".roomType" role="tab" data-toggle="tab">Room Type</a></li> 
 	    <li><a href=".minitour" role="tab" data-toggle="tab">Minitour</a></li>  
 	    <li><a href=".agent" role="tab" data-toggle="tab">Agent</a></li>  
-	    <li><a href=".agentProfile" role="tab" data-toggle="tab">Agent Profile</a></li>  
+	    <li><a href=".agentProfile" role="tab" data-toggle="tab">Agent Profile</a></li>  <!-- 
+	    <li><a href=".itineraryhome" role="tab" data-toggle="tab">Itinerary Home</a></li>   -->
 
 	</ul>
 	<div class="tab-content">
@@ -50,12 +51,15 @@
 		</div><!--End of tab-pane  room type -->
 		<div class="tab-pane minitour">
 			<div ng-include="minitoururl"></div>
-		</div><!--End of tab-pane  room type -->	
+		</div><!--End of tab-pane minitour -->	
 		<div class="tab-pane agent">
 			<div ng-include="agenturl"></div>
-		</div><!--End of tab-pane  room type -->
+		</div><!--End of tab-pane agent -->
 		<div class="tab-pane agentProfile">
 			<div ng-include="agentprofileurl"></div>
-		</div><!--End of tab-pane  room type -->
+		</div><!--End of tab-pane  agentprofile --><!-- 
+		<div class="tab-pane itineraryhome">
+			<div ng-include="itineraryhomeurl"></div>
+		</div><!--End of tab-pane itineraryhome --> -->
 	</div>
 </div>     		

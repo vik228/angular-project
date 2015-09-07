@@ -103,7 +103,7 @@ $scope.saveAgentProfile = function() {
 };
 
 /* statusagentProfile function activates or deactivates agentProfile information from database*/
-$scope.statusagentProfile = function(id) {
+$scope.statusAgentProfile = function(id) {
   
   $scope.agentProfiles[id-1].status = !$scope.agentProfiles[id-1].status ;
   

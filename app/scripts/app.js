@@ -124,6 +124,26 @@ var zopkyFrontendApp = angular
         controller: 'agentProfileController',
      //   requireLogin: true
       })
+      .when('/itinerary', {
+        templateUrl: 'views/itinerary.html',
+        controller: 'itineraryController',
+     //   requireLogin: true
+      })
+      .when('/itineraryhome', {
+        templateUrl: 'views/itineraryhome.html',
+        controller: 'itineraryhomeController',
+     //   requireLogin: true
+      })
+      .when('/ihotel', {
+        templateUrl: 'views/ihotel.html',
+        controller: 'itineraryhotelController',
+     //   requireLogin: true
+      })
+      .when('/idescription', {
+        templateUrl: 'views/idescription.html',
+        controller: 'itinerarydescController',
+     //   requireLogin: true
+      })
       .otherwise({
         redirectTo: '/'
       });

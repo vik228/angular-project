@@ -88,3 +88,7 @@ body {
 .statusBtn{
   width: 100px;
 }
+textarea {
+    resize: none;
+}
+
