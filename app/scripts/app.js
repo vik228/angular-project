@@ -10,7 +10,7 @@
  */
 
 
-var baseUrl = "http://api.zopky.com/api/v0";
+var baseUrl = "http://52.27.202.18/api/v0";
 var basePath = "http://localhost:9000/?";
 var zopkyFrontendApp = angular
   .module('zopkyFrontendApp', [
