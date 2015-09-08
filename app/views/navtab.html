@@ -1,0 +1,65 @@
+<div class="col-lg-12 col-md-12" ng-controller="navtabController">
+
+	<ul class="nav nav-pills nav-tabs nav-justified" >
+	    <li class="active"><a href=".employee" role="tab" data-toggle="tab">Employee</a></li>
+	    <li><a href=".activities" role="tab" data-toggle="tab">Activities</a></li>
+	    <li><a href=".continents" role="tab" data-toggle="tab">Continents</a></li> 
+	    <li><a href=".country" role="tab" data-toggle="tab">Country</a></li> 
+	    <li><a href=".state" role="tab" data-toggle="tab">State</a></li> 
+	    <li><a href=".city" role="tab" data-toggle="tab">City</a></li>   
+	    <li><a href=".airport" role="tab" data-toggle="tab">Airport</a></li> 
+	    <li><a href=".hotel" role="tab" data-toggle="tab">Hotel</a></li> 
+	    <li><a href=".roomType" role="tab" data-toggle="tab">Room Type</a></li> 
+	    <li><a href=".minitour" role="tab" data-toggle="tab">Minitour</a></li>  
+	    <li><a href=".agent" role="tab" data-toggle="tab">Agent</a></li>  
+	    <li><a href=".agentProfile" role="tab" data-toggle="tab">Agent Profile</a></li>  <!-- 
+	    <li><a href=".itineraryhome" role="tab" data-toggle="tab">Itinerary Home</a></li>   -->
+
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active employee">
+			<div ng-include="employeeurl"></div>
+		</div><!--End of tab-pane active employee -->
+			
+		<div class="tab-pane activities">
+			<div ng-include="activitiesurl"></div>
+		</div><!--End of tab-pane  activities -->
+			
+		<div class="tab-pane continents">
+			<div ng-include="continenturl"></div>
+		</div><!--End of tab-pane  continents -->
+			
+		<div class="tab-pane country">
+      		<div ng-include="countryurl"></div>
+		</div><!--End of tab-pane  country -->
+
+		<div class="tab-pane state">
+			<div ng-include="stateurl"></div>
+		</div><!--End of tab-pane  state -->
+			
+		<div class="tab-pane city">
+			<div ng-include="cityurl"></div>
+		</div><!--End of tab-pane  city -->	
+		<div class="tab-pane airport">
+			<div ng-include="airporturl"></div>
+		</div><!--End of tab-pane  airport -->	
+		<div class="tab-pane hotel">
+			<div ng-include="hotelurl"></div>
+		</div><!--End of tab-pane  hotel -->	
+		<div class="tab-pane roomType">
+			<div ng-include="roomtypeurl"></div>
+		</div><!--End of tab-pane  room type -->
+		<div class="tab-pane minitour">
+			<div ng-include="minitoururl"></div>
+		</div><!--End of tab-pane minitour -->	
+		<div class="tab-pane agent">
+			<div ng-include="agenturl"></div>
+		</div><!--End of tab-pane agent -->
+		<div class="tab-pane agentProfile">
+			<div ng-include="agentprofileurl"></div>
+		</div><!--End of tab-pane  agentprofile --><!-- 
+		<div class="tab-pane itineraryhome">
+			<div ng-include="itineraryhomeurl"></div>
+		</div><!--End of tab-pane itineraryhome --> -->
+	</div>
+</div>     		

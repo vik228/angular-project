@@ -1,0 +1,79 @@
+<div class="col-lg-12 col-md-12" ng-controller="cityController">
+<h3 class="text-center">Cities</h3>
+
+<button class="btn btn-success" ng-click="editRoom('new', 'show');toggleModal();">
+  <span class="glyphicon glyphicon-"></span> Create New City
+</button>
+</br></br>
+<div class="table-responsive">
+<table class="table table-striped table-bordered">
+  <thead><tr>
+    <th>Id</th>
+    <th>State</th>
+    <th>City</th>
+    <!-- <th>Location</th> -->
+    <th>Edit</th>
+    <th>Status</th>
+  </tr></thead>
+  <tbody><tr ng-repeat="city in cities">
+
+    <td>{{ city.sequence }}</td>
+    <td>{{ city.state }}</td>
+    <td>{{ city.city }}</td>
+    <!-- <td>{{ city.lat + ' ' + city.long }}</td> -->
+    <td>
+      <button class="btn" ng-click="editCity(city.sequence);toggleModal();">
+      <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+    <td class="text-center">
+      <button class="btn btn-success btn-sm statusBtn" ng-show="city.status" ng-click="statusCity(city.sequence)" >
+      Active
+      </button>
+      <button class="btn btn-danger btn-sm statusBtn" ng-hide="city.status" ng-click="statusCity(city.sequence)" >
+      Deactive
+      </button>
+    </td>
+  </tr></tbody>
+</table>
+</div>  <!-- End table-responsive -->
+
+<button class="btn btn-success" ng-click="getMoreCities();">
+  <span class="glyphicon glyphicon-"></span> Get More
+</button>
+
+<modal title="City Form" visible="showModal">
+
+<form class="form-horizontal">
+  <div class="form-group">
+  <label class="col-sm-3 control-label">State:</label>
+  <div class="col-sm-4">
+    <!-- <input type="text" class="form-control" ng-model="cityController.state" placeholder="State"> -->
+    <select class="form-control" ng-model="cityController.state" ng-options="item.id as item.state for item in states">
+      <option value="">Select State</option>
+    </select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-3 control-label">City:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" ng-model="cityController.city" placeholder="City">
+    <!-- <select class="form-control" ng-model="cityController.city" ng-options="item.id as item.city for item in cities">
+      <option value="">Select City</option>
+    </select>-->
+  </div>
+</div>
+<!-- <div class="form-group">
+  <label class="col-sm-3 control-label">Location:</label>
+  <div class="col-sm-4">
+    <input type="text" class="form-control" ng-model="cityController.lat" placeholder="Latitude">
+    <input type="text" class="form-control" ng-model="cityController.long" placeholder="longitute">
+  </div>
+</div> -->
+</form> <!-- End Form -->
+<hr>
+<button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveCity()">
+  <span class="glyphicon glyphicon-save"></span> Save Changes
+</button>
+</modal> <!-- End modal -->
+</div> <!-- End container -->

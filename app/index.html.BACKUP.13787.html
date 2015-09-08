@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/fontkit-lobster/styles/lobster.css" />
+    <link rel="stylesheet" href="bower_components/open-sans-fontface/open-sans.css" />
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/imgSlider.css">
+  </head>
+  <body ng-app="zopkyFrontendApp" ng-controller="MainCtrl">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+  <!--   <div class="container-fluid"> -->
+      <div class="header">
+        <!--
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a ng-href="#">Home</a></li>
+          <li><a ng-href="#/about">About</a></li>
+          <li><a ng-href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">zopkyFrontend</h3> 
+      -->
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#/">
+              <!--  <img src="img/logo/logo.png" alt="Logo"> -->
+                <p style="font-family: Lobster; font-size:24px;">Zopky</p>
+              </a>
+            </div><!-- /.navbar-header -->
+             <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navigate <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a ng-href="#/employee">Employees</a></li>
+                    <li><a ng-href="#/activities">Activities</a></li>
+                    <li><a ng-href="#/continent">Continent</a></li>
+                    <li><a ng-href="#/country">Country</a></li>
+                    <li><a ng-href="#/state">State</a></li>
+                    <li><a ng-href="#/city">City</a></li>
+                    <li><a ng-href="#/airport">Airport</a></li>
+                    <li><a ng-href="#/hotel">Hotel</a></li>
+                    <li><a ng-href="#/roomType">Room Type</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#/navtab">All</a></li>
+                  </ul>
+                </li>
+                <li><a ng-href="#/login">Login</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div><!-- header ends -->
+
+      <div ng-view></div>
+    <div class="container-fluid"> 
+      <div class="footer col-lg-12">
+        Site Map
+        <ul class="list-inline">
+          <li><a ng-href="#/">Home</a></li>
+          <li><a href="#/navtab">All</a></li>
+          <li><a ng-href="#/employee">Employees</a></li>
+          <li><a ng-href="#/activities">Activities</a></li>
+          <li><a ng-href="#/continent">Continent</a></li>
+          <li><a ng-href="#/country">Country</a></li>
+          <li><a ng-href="#/state">State</a></li>
+          <li><a ng-href="#/city">City</a></li>
+          <li><a ng-href="#/airport">Airport</a></li>
+          <li><a ng-href="#/hotel">Hotel</a></li>
+          <li><a ng-href="#/roomType">Room Type</a></li>
+        </ul>
+        <p class="pull-right">by team <span style="font-family: Lobster;">Zopky</span></p>
+      </div>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/select2/dist/js/select2.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="bower_components/angularjs-google-maps/dist/angularjs-google-maps.min.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/employee.js"></script>
+        <script src="scripts/controllers/activities.js"></script>
+        <script src="scripts/controllers/continent.js"></script>
+        <script src="scripts/controllers/country.js"></script>
+        <script src="scripts/controllers/state.js"></script>
+        <script src="scripts/controllers/city.js"></script>
+        <script src="scripts/controllers/navtab.js"></script>
+        <script src="scripts/controllers/airport.js"></script>
+        <script src="scripts/controllers/hotel.js"></script>
+        <script src="scripts/controllers/roomType.js"></script>
+        <script src="scripts/controllers/imgSlider.js"></script>
+
+        <script src="scripts/services/Utils.js"></script>
+        <!-- endbuild -->
+
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.3/TweenMax.min.js"></script>
+<<<<<<< HEAD
+        
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+=======
+
+>>>>>>> e061f867e20516471f2dc99f1714426b7df0cf71
+</body>
+</html>
