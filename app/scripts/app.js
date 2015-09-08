@@ -10,7 +10,7 @@
  */
 
 
-var baseUrl = "http://api.zopky.com/api/v0";
+var baseUrl = "http://localhost:1337/api/v0";
 var basePath = "http://localhost:9000/?";
 var zopkyFrontendApp = angular
   .module('zopkyFrontendApp', [
@@ -20,8 +20,7 @@ var zopkyFrontendApp = angular
     'ngRoute',
     'ngSanitize',
     'ngStorage',
-    'ngTouch',
-    'ngMap'
+    'ngTouch'
   ]);
 
 zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {

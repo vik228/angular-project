@@ -16,10 +16,8 @@
     "fontkit-lobster": "*",
     "bower": "*",
     "open-sans-fontface": "~1.4.0",
-    "angularjs-google-maps": "~0.4.0",
     "select2": "~4.0.0",
-    "ngstorage":"*",
-    "ngmap":"*"
+    "ngstorage":"*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
