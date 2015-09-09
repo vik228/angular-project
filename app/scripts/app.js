@@ -149,7 +149,7 @@ zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
     });
 });
 
-zopkyFrontendApp.directive('modal', function ($scope) {
+zopkyFrontendApp.directive('modal', function () {
   return {
     template: '<div class="modal fade">' +
     '<div class="modal-dialog" style="width:80%;">' +
