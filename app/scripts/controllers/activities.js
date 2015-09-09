@@ -230,6 +230,7 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
   $scope.showModal = false;
   $scope.toggleModal = function () {
     $scope.showModal = !$scope.showModal;
+    alert("hello");
   };
 
   /* saveActivities function inserts activities information in the database*/
