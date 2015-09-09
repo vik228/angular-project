@@ -170,15 +170,15 @@ zopkyFrontendApp.directive('modal', [function () {
       scope.title = attrs.title;
 
       scope.$watch(attrs.visible, function (value) {
+        window.alert(value);
         if (value == true) {
           window.alert("before show");
           $(element).modal('show');
           window.alert("after show");
         }
         else {
-          window.alert("before hide");
-          $(element).modal('show');
-          window.alert("after hide");
+          window.alert(value);
+          $(element).modal('hide');
         }
       });
 
