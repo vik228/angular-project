@@ -149,7 +149,7 @@ zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
     });
 });
 
-zopkyFrontendApp.directive('modal', [function () {
+zopkyFrontendApp.directive('modal', [ function () {
   return {
     template: '<div class="modal fade">' +
     '<div class="modal-dialog" style="width:80%;">' +
@@ -166,31 +166,31 @@ zopkyFrontendApp.directive('modal', [function () {
     transclude: true,
     replace: true,
     scope: true,
-    link: function postLink(scope, element, attrs) {
-      scope.title = attrs.title;
+    link: function postLink($scope, element, attrs) {
+      $scope.title = attrs.title;
 
-      scope.$watch(attrs.visible, function (value) {
-        window.alert(value);
+      $scope.$watch(attrs.visible, function (value) {
+        //window.alert(value);
         if (value == true) {
-          window.alert("before show");
+          //window.alert("before show");
           $(element).modal('show');
-          window.alert("after show");
+          //window.alert("after show");
         }
         else {
-          window.alert(value);
+          //window.alert(value);
           $(element).modal('hide');
         }
       }, true);
 
       $(element).on('shown.bs.modal', function () {
-        scope.$apply(function () {
-          scope.$parent[attrs.visible] = true;
+        $scope.$apply(function () {
+          $scope.$parent[attrs.visible] = true;
         });
       });
 
       $(element).on('hidden.bs.modal', function () {
-        scope.$apply(function () {
-          scope.$parent[attrs.visible] = false;
+        $scope.$apply(function () {
+          $scope.$parent[attrs.visible] = false;
         });
       });
     }
