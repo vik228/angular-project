@@ -24,7 +24,7 @@ var zopkyFrontendApp = angular
     'ngTouch'
   ]);
 
-zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
+zopkyFrontendApp.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
 
   $httpProvider.defaults.withCredentials = true;
 
@@ -147,7 +147,7 @@ zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
     .otherwise({
       redirectTo: '/'
     });
-});
+}]);
 
 zopkyFrontendApp.directive('modal', [function () {
   return {
