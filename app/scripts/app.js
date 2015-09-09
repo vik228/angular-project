@@ -177,7 +177,7 @@ zopkyFrontendApp.directive('modal', [function () {
         }
         else {
           window.alert("before hide");
-          $(element).modal('hide');
+          $(element).modal('show');
           window.alert("after hide");
         }
       });

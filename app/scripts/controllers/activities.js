@@ -227,7 +227,7 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
   };
 
 
-  $scope.showModal = true;
+  $scope.showModal = false;
   $scope.toggleModal = function () {
     $scope.showModal = !$scope.showModal;
     alert("hello");
