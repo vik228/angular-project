@@ -42,9 +42,9 @@
     </td>
   </tr></tbody>
 </table>
-</div>  
+</div>
 
-<modal title="agentProfile Form" visible="showModal">
+<!--<modal title="agentProfile Form" visible="showModal">-->
 <form class="form-horizontal" name="myForm">
 <div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
   <label class="col-sm-3 control-label">City:</label>
@@ -60,7 +60,7 @@
   <div class="col-sm-4">
     <input type="text" class="form-control" name="agencyName" ng-model="agentProfileController.agencyName" placeholder="Agency Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="20" required>
   </div>
-</div> 
+</div>
 <div class="form-group">
   <label class="col-sm-3 control-label">Address:</label>
   <div class="col-sm-4">
@@ -87,7 +87,7 @@
   <div class="col-sm-4">
     <input type="text" class="form-control" name="fName" ng-model="agentProfileController.fName" placeholder="First Name" pattern="(?-imsx:\b([A-Z][a-z]*))" ng-minlength="3" ng-maxlength="8" required>
   </div>
-</div> 
+</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
   <label class="col-sm-3 control-label">Last Name:</label>
   <div class="col-sm-4">
@@ -139,11 +139,11 @@
   <div class="col-sm-4">
     <label class="checkbox-inline"><input type="checkbox" value="">M</label>
     <label class="checkbox-inline"><input type="checkbox" value="">T</label>
-    <label class="checkbox-inline"><input type="checkbox" value="">W</label> 
+    <label class="checkbox-inline"><input type="checkbox" value="">W</label>
     <label class="checkbox-inline"><input type="checkbox" value="">T</label>
     <label class="checkbox-inline"><input type="checkbox" value="">F</label>
-    <label class="checkbox-inline"><input type="checkbox" value="">S</label>  
-    <label class="checkbox-inline"><input type="checkbox" value="">S</label>  
+    <label class="checkbox-inline"><input type="checkbox" value="">S</label>
+    <label class="checkbox-inline"><input type="checkbox" value="">S</label>
   </div>
 </div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.web.$invalid && !myForm.web.$pristine }">
@@ -163,5 +163,5 @@
  <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveAgentProfile()">
     <span class="glyphicon glyphicon-save"></span> Save Changes
   </button>
-</modal>
+<!--</modal>-->
 </div>

@@ -44,17 +44,17 @@
     </td>
   </tr></tbody>
 </table>
-</div>  
+</div>
 
-<modal title="Employee Form" visible="showModal">
+<!--<modal title="Employee Form" visible="showModal">-->
 
 
 <form class="form-horizontal" name="myForm">
 
   <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
     <div class="map_canvas" id="map_canvas"></div>
-    <div> 
-      <input type="text" class="form-control" id="lat" ng-model="maplat" placeholder="Latitude">  
+    <div>
+      <input type="text" class="form-control" id="lat" ng-model="maplat" placeholder="Latitude">
       <input type="text" class="form-control" id="lng" ng-model="maplong" placeholder="Longitude">
     </div>
 </div>
@@ -67,7 +67,7 @@
     <p ng-show="myForm.fName.$error.maxlength" class="help-block">First name is too long.</p>
     <p ng-show="myForm.fName.$error.pattern" class="help-block">First letter should be Capital.</p>
   </div>
-</div> 
+</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
   <label class="col-sm-3 control-label">Last Name:</label>
   <div class="col-sm-4">
@@ -120,5 +120,5 @@
  <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveEmployee()">
     <span class="glyphicon glyphicon-save"></span> Save Changes
   </button>
-</modal>
+<!--</modal>-->
 </div>

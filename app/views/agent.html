@@ -44,9 +44,9 @@
     </td>
   </tr></tbody>
 </table>
-</div>  
+</div>
 
-<modal title="agent Form" visible="showModal">
+<!--<modal title="agent Form" visible="showModal">-->
 <form class="form-horizontal" name="myForm">
 <div class="form-group" ng-class="{ 'has-error' : myForm.fName.$invalid && !myForm.fName.$pristine }">
   <label class="col-sm-3 control-label">First Name:</label>
@@ -56,7 +56,7 @@
     <p ng-show="myForm.fName.$error.maxlength" class="help-block">First name is too long.</p>
     <p ng-show="myForm.fName.$error.pattern" class="help-block">First letter should be Capital.</p>
   </div>
-</div> 
+</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.lName.$invalid && !myForm.lName.$pristine }">
   <label class="col-sm-3 control-label">Last Name:</label>
   <div class="col-sm-4">
@@ -97,5 +97,5 @@
  <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveAgent()">
     <span class="glyphicon glyphicon-save"></span> Save Changes
   </button>
-</modal>
+<!--</modal>-->
 </div>

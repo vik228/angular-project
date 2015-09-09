@@ -47,9 +47,9 @@
     </td>
   </tr></tbody>
 </table>
-</div>  
+</div>
 
-<modal title="Airport Form" visible="showModal">
+<!--<modal title="Airport Form" visible="showModal">-->
 
 <form class="form-horizontal" name="myForm">
 <div class="form-group" ng-class="{ 'has-error' : myForm.city.$invalid && !myForm.city.$pristine }">
@@ -60,7 +60,7 @@
       <option value="">Select City</option>
     </select>
   </div>
-</div> 
+</div>
 <div class="form-group" ng-class="{ 'has-error' : myForm.airportName.$invalid && !myForm.airportName.$pristine }">
   <label class="col-sm-3 control-label">Airport Name:</label>
   <div class="col-sm-4">
@@ -140,5 +140,5 @@
   <button class="btn" ng-click="editAirport(airport.id,'edit');toggleModal();" ng-show="info">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
       </button>
-</modal>
+<!--</modal>-->
 </div>
