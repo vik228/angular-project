@@ -14,6 +14,7 @@
     "angular-route": "~1.2.0",
     "fontawesome": "~4.3.0",
     "fontkit-lobster": "*",
+    "jquery-ui":"*",
     "bower": "*",
     "open-sans-fontface": "~1.4.0",
     "select2": "~4.0.0",

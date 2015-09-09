@@ -18,20 +18,20 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 				})
 			});
 			dataPromise.success(function(data) {
-				if (data.response.responseCode == 401) {
-					delete $localStorage.token;
-					console.log(data.response.message);
-					$window.location.href = '#/';
-					return;
-				} else {
+				//if (data.response.responseCode == 401) {
+				//	delete $localStorage.token;
+				//	console.log(data.response.message);
+				//	$window.location.href = '#/';
+				//	return;
+				//} else {
 					defered.resolve(data);
-				}
+				//}
 
 			});
 			dataPromise.error(function(rejection) {
 				console.log(rejection);
 				defered.resolve(rejection);
-				if (rejection.response.message == "Session Expired.operation not permitted") {
+				if (rejection.response.responseCode == 401) {
 					delete $localStorage.token;
 					console.log(rejection.response.message);
 					$window.location.href = '#/';
@@ -53,19 +53,19 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 				method: 'GET'
 			});
 			dataPromise.success(function(data) {
-				if (data.response.responseCode == 401) {
-					delete $localStorage.token;
-					console.log(data.response.message);
-					$window.location.href = '#/';
-					return;
-				} else {
+				//if (data.response.responseCode == 401) {
+				//	delete $localStorage.token;
+				//	console.log(data.response.message);
+				//	$window.location.href = '#/';
+				//	return;
+				//} else {
 					defered.resolve(data);
-				}
+				//}
 
 			});
 			dataPromise.error(function(rejection) {
 				// console.log(rejection.response.message);
-				if (rejection.response.message == "Session Expired.operation not permitted") {
+				if (rejection.response.responseCode == 401) {
 					delete $localStorage.token;
 					console.log(rejection.response.message);
 					$window.location.href = '#/';

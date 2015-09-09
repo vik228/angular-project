@@ -28,7 +28,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -66,7 +66,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -96,7 +96,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -133,7 +133,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -164,7 +164,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -200,7 +200,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -234,7 +234,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -269,7 +269,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -313,7 +313,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
       });
 
@@ -341,7 +341,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           return (callback(records));
         }
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
       });
     }
@@ -361,7 +361,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           return (callback(data));
         }
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
       });
     }
@@ -379,7 +379,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           return (callback(data));
         }
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
       });
     }
@@ -397,7 +397,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           return (callback(data));
         }
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
       });
     }
@@ -426,7 +426,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -475,7 +475,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });
@@ -520,7 +520,7 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
         }
 
       }, function(error) {
-        var message = error.data.response.message.name[0].message;
+        var message = error.data.response.message;
         console.log(message);
         // window.alert(message);
       });

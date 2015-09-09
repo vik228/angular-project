@@ -44,7 +44,7 @@
     height: 71px;
     outline: none;
     cursor: pointer;
-    background: url(../images/slider/blank.gif) no-repeat;
+    /*background: url(../images/slider/blank.gif) no-repeat;*/
 }
 
 .arrow.prev {
