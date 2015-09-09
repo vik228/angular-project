@@ -14,6 +14,8 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-jquerybuilder');
 
+  grunt.loadNpmTasks('grunt-ngmin');
+
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -28,6 +30,19 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    ngmin: {
+      controllers: {
+        src: ['test/src/controllers/one.js'],
+        dest: 'test/generated/controllers/one.js'
+      },
+      directives: {
+        expand: true,
+        cwd: 'test/src',
+        src: ['directives/**/*.js'],
+        dest: 'test/generated'
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
