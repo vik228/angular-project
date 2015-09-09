@@ -14,7 +14,7 @@
     <th>Status</th>
   </tr></thead>
   <tbody><tr ng-repeat="continent in continents">
-    
+
     <td>{{ continent.sequence }}</td>
     <td>{{ continent.continent }}</td>
     <td>
@@ -52,12 +52,12 @@
 <button class="btn btn-primary" ng-disabled="error || incomplete" ng-click="saveContinent()">
   <span class="glyphicon glyphicon-save"></span> Save Changes
 </button>
-</div>
-<div class="container">
-  <div class="row">   
-    <div id="map"></div>
-    <div id="class" ng-repeat="marker in markers | orderBy : 'title'"></div>
-  </div>
+<!--</div>-->
+<!--<div class="container">-->
+  <!--<div class="row">   -->
+    <!--<div id="map"></div>-->
+    <!--<div id="class" ng-repeat="marker in markers | orderBy : 'title'"></div>-->
+  <!--</div>-->
 </div>
 </modal> <!-- End modal -->
 </div>
