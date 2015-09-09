@@ -180,7 +180,7 @@ zopkyFrontendApp.directive('modal', [function () {
           window.alert(value);
           $(element).modal('hide');
         }
-      });
+      }, true);
 
       $(element).on('shown.bs.modal', function () {
         scope.$apply(function () {
