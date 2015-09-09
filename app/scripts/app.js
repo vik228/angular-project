@@ -24,7 +24,7 @@ var zopkyFrontendApp = angular
     'ngTouch'
   ]);
 
-zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
+zopkyFrontendApp.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
 
   $httpProvider.defaults.withCredentials = true;
 
@@ -147,7 +147,7 @@ zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
     .otherwise({
       redirectTo: '/'
     });
-});
+}]);
 
 zopkyFrontendApp.directive('modal', [ function () {
   return {
@@ -169,28 +169,24 @@ zopkyFrontendApp.directive('modal', [ function () {
     link: function postLink($scope, element, attrs) {
       $scope.title = attrs.title;
 
-      $scope.$watch(attrs.visible, function (value) {
-        //window.alert(value);
+      scope.$watch(attrs.dikhao, function (value) {
         if (value == true) {
-          //window.alert("before show");
           $(element).modal('show');
-          //window.alert("after show");
         }
         else {
-          //window.alert(value);
           $(element).modal('hide');
         }
       }, true);
 
       $(element).on('shown.bs.modal', function () {
-        $scope.$apply(function () {
-          $scope.$parent[attrs.visible] = true;
+        scope.$apply(function () {
+          scope.$parent[attrs.dikhao] = true;
         });
       });
 
       $(element).on('hidden.bs.modal', function () {
-        $scope.$apply(function () {
-          $scope.$parent[attrs.visible] = false;
+        scope.$apply(function () {
+          scope.$parent[attrs.dikhao] = false;
         });
       });
     }

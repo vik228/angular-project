@@ -1,76 +1,82 @@
-<div class="col-lg-12 col-md-12" ng-controller="activitiesController" >
-<h3 class="text-center">Activities</h3>
+<div class="col-lg-12 col-md-12" ng-controller="activitiesController">
+  <h3 class="text-center">Activities</h3>
 
-<button class="btn btn-success" ng-click="editActivity('new');toggleModal();">
-  <span class="glyphicon glyphicon-"></span> Create New Activity
-</button>
-<form class="form-inline pull-right" role="form">
-  <div class="form-group">
-    <!-- <select class="form-control"  ng-repeat="(name, values) in selects" ng-model="selecteds[name]" ng-options="v for v in values">
-    </select> -->
-    <select class="form-control" ng-model="activitiesController.scountry"
-            ng-options="item.id as item.country for item in countries" ng-change="getActiveStatesByCountries(0)">
-      <option value="">Select Country</option>
-    </select>
-    <select class="form-control" ng-model="activitiesController.sstate"
-            ng-options="item.id as item.state for item in sstates" ng-change="getActiveCitiesByStates(0)">
-      <option value="">Select State</option>
-    </select>
-    <select class="form-control" ng-model="activitiesController.scity"
-            ng-options="item.id as item.city for item in scities" ng-change="searchActivities(0)">
-      <option value="">Select City</option>
-    </select>
+  <button class="btn btn-success" ng-click="editActivity('new');toggleModal();">
+    <span class="glyphicon glyphicon-"></span> Create New Activity
+  </button>
+  <form class="form-inline pull-right" role="form">
+    <div class="form-group">
+      <!-- <select class="form-control"  ng-repeat="(name, values) in selects" ng-model="selecteds[name]" ng-options="v for v in values">
+      </select> -->
+      <select class="form-control" ng-model="activitiesController.scountry"
+              ng-options="item.id as item.country for item in countries" ng-change="getActiveStatesByCountries(0)">
+        <option value="">Select Country</option>
+      </select>
+      <select class="form-control" ng-model="activitiesController.sstate"
+              ng-options="item.id as item.state for item in sstates" ng-change="getActiveCitiesByStates(0)">
+        <option value="">Select State</option>
+      </select>
+      <select class="form-control" ng-model="activitiesController.scity"
+              ng-options="item.id as item.city for item in scities" ng-change="searchActivities(0)">
+        <option value="">Select City</option>
+      </select>
+    </div>
+  </form>
+  </br></br>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Activity Name</th>
+        <th>City</th>
+        <th>Theme</th>
+        <th>Edit</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="activity in activities">
+
+        <td>{{ activity.sequence }}</td>
+        <td>{{ activity.name }}</td>
+        <td>{{ activity.cityId }}</td>
+        <td>{{ activity.theme }}</td>
+        <td>
+          <button class="btn" ng-click="editActivity(activity.sequence);toggleModal();">
+            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+          </button>
+        </td>
+        <td class="text-center">
+          <button class="btn btn-success btn-sm statusBtn" ng-show="activity.status"
+                  ng-click="statusActivity(activity.sequence)">
+            Active
+          </button>
+          <button class="btn btn-danger btn-sm statusBtn" ng-hide="activity.status"
+                  ng-click="statusActivity(activity.sequence)">
+            Deactive
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-</form>
-</br></br>
-<div class="table-responsive">
-<table class="table table-striped table-bordered">
-  <thead><tr>
-    <th>Id</th>
-    <th>Activity Name</th>
-    <th>City</th>
-    <th>Theme</th>
-    <th>Edit</th>
-    <th>Status</th>
-  </tr></thead>
-  <tbody><tr ng-repeat="activity in activities">
+  <!-- End table-responsive -->
 
-    <td>{{ activity.sequence }}</td>
-    <td>{{ activity.name }}</td>
-    <td>{{ activity.cityId }}</td>
-    <td>{{ activity.theme }}</td>
-    <td>
-      <button class="btn" ng-click="editActivity(activity.sequence);toggleModal();">
-      <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
-      </button>
-    </td>
-    <td class="text-center">
-      <button class="btn btn-success btn-sm statusBtn" ng-show="activity.status" ng-click="statusActivity(activity.sequence)" >
-      Active
-      </button>
-      <button class="btn btn-danger btn-sm statusBtn" ng-hide="activity.status" ng-click="statusActivity(activity.sequence)" >
-      Deactive
-      </button>
-    </td>
-  </tr></tbody>
-</table>
-</div>  <!-- End table-responsive -->
-
-<button class="btn btn-success" ng-click="getMoreActivities();">
-  <span class="glyphicon glyphicon-"></span> Get More
-</button>
+  <button class="btn btn-success" ng-click="getMoreActivities();">
+    <span class="glyphicon glyphicon-"></span> Get More
+  </button>
 
 
+  <modal title="Activity Form" dikhao="showModal" class="container-fluid"> {{showModel}}
 
-<modal title="Activity Form" visible="showModal" class="container-fluid">
+    <form class="form-horizontal" name='activityForm'>
 
-<form class="form-horizontal" name='activityForm'>
+      <!--<div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">-->
+      <!-- <div class="map_canvas" id="map_canvas">
 
- <!--<div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">-->
-    <!-- <div class="map_canvas" id="map_canvas">
-
-      <!--<map zoom="4" center="activitiesController.markerLocation" on-center-changed="centerChanged()">-->
-        <!--<marker position="activitiesController.markerLocation" on-click="click()" title="Click to zoom"></marker>-->
+        <!--<map zoom="4" center="activitiesController.markerLocation" on-center-changed="centerChanged()">-->
+      <!--<marker position="activitiesController.markerLocation" on-click="click()" title="Click to zoom"></marker>-->
       <!--</map>-->
       <!-- <map center="activitiesController.markerLocation" zoom="11"
            on-center-changed="centerChanged()" disable-default-u-i="false"
@@ -97,136 +103,155 @@
 
       <!--<input type="text" class="form-control" id="latitude" ng-model="activitiesController.lat" placeholder="Latitude">-->
       <!--<input type="text" class="form-control" id="longitude" ng-model="activitiesController.long" placeholder="Longitude">-->
-    <!--</div>-->
-<!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
 
-  <!--<div class="form-group" ng-class="{ 'has-error' : activityForm.continent.$invalid && !activityForm.continent.$pristine }">-->
-  <!--<label class="col-sm-3 control-label">Continent:</label>-->
-  <!--<div class="col-sm-4">-->
-    <!--&lt;!&ndash; <input type="text" class="form-control" name='continent' ng-model="activitiesController.continent" placeholder="Continent" required> &ndash;&gt;-->
-    <!--<select class="form-control" ng-model="activitiesController.continent" ng-options="item.id as item.continent for item in continents" ng-change="getActiveCountriesByContinents()">-->
+      <!--<div class="form-group" ng-class="{ 'has-error' : activityForm.continent.$invalid && !activityForm.continent.$pristine }">-->
+      <!--<label class="col-sm-3 control-label">Continent:</label>-->
+      <!--<div class="col-sm-4">-->
+      <!--&lt;!&ndash; <input type="text" class="form-control" name='continent' ng-model="activitiesController.continent" placeholder="Continent" required> &ndash;&gt;-->
+      <!--<select class="form-control" ng-model="activitiesController.continent" ng-options="item.id as item.continent for item in continents" ng-change="getActiveCountriesByContinents()">-->
       <!--<option value="">Select Continent</option>-->
-    <!--</select>-->
-  <!--</div>-->
-<!--</div>-->
-<div class="form-group">
-  <label class="col-sm-3 control-label">Country:</label>
-  <div class="col-sm-4">
-    <!-- <input type="text" class="form-control" ng-model="activitiesController.country" placeholder="Country"> -->
-    <select class="form-control" ng-model="activitiesController.country"
-            ng-options="item.id as item.country for item in countries" ng-change="getActiveStatesByCountries(1)">
-      <option value="">Select Country</option>
-    </select>
-  </div>
-</div>
-  <div class="form-group">
-  <label class="col-sm-3 control-label">State:</label>
-  <div class="col-sm-4">
-    <!-- <input type="text" class="form-control" ng-model="activitiesController.state" placeholder="State"> -->
-    <select class="form-control" ng-model="activitiesController.state"
-            ng-options="item.id as item.state for item in states" ng-change="getActiveCitiesByStates(1)">
-      <option value="">Select State</option>
-    </select>
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">City:</label>
-  <div class="col-sm-4">
-    <!-- <input type="text" class="form-control" ng-model="activitiesController.city" placeholder="City"> -->
-    <select class="form-control" ng-model="activitiesController.city"
-            ng-options="item.id as item.city for item in cities">
-      <option value="">Select City</option>
-    </select>
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-sm-3 control-label">Activity Name:</label>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" ng-model="activitiesController.activityName" placeholder="Activity Name">
-  </div>
-</div>
+      <!--</select>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Country:</label>
 
-<div class="form-group">
-  <label class="col-sm-3 control-label">Location:</label>
-  <div class="col-sm-4">
-    <select class="form-control" ng-model="activitiesController.location" ng-options="item as item.name for item in googleLocations" ng-change="onLocationSelected(activitiesController.location)">
-      <option value="">Select Option</option>
-    </select>
+        <div class="col-sm-4">
+          <!-- <input type="text" class="form-control" ng-model="activitiesController.country" placeholder="Country"> -->
+          <select class="form-control" ng-model="activitiesController.country"
+                  ng-options="item.id as item.country for item in countries" ng-change="getActiveStatesByCountries(1)">
+            <option value="">Select Country</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">State:</label>
 
-    <input type="text" class="form-control" ng-model="activitiesController.lat" placeholder="Latitude">
-    <input type="text" class="form-control" ng-model="activitiesController.long" placeholder="longitute">
+        <div class="col-sm-4">
+          <!-- <input type="text" class="form-control" ng-model="activitiesController.state" placeholder="State"> -->
+          <select class="form-control" ng-model="activitiesController.state"
+                  ng-options="item.id as item.state for item in states" ng-change="getActiveCitiesByStates(1)">
+            <option value="">Select State</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">City:</label>
+
+        <div class="col-sm-4">
+          <!-- <input type="text" class="form-control" ng-model="activitiesController.city" placeholder="City"> -->
+          <select class="form-control" ng-model="activitiesController.city"
+                  ng-options="item.id as item.city for item in cities">
+            <option value="">Select City</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Activity Name:</label>
+
+        <div class="col-sm-4">
+          <input type="text" class="form-control" ng-model="activitiesController.activityName"
+                 placeholder="Activity Name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Location:</label>
+
+        <div class="col-sm-4">
+          <select class="form-control" ng-model="activitiesController.location"
+                  ng-options="item as item.name for item in googleLocations"
+                  ng-change="onLocationSelected(activitiesController.location)">
+            <option value="">Select Option</option>
+          </select>
+
+          <input type="text" class="form-control" ng-model="activitiesController.lat" placeholder="Latitude">
+          <input type="text" class="form-control" ng-model="activitiesController.long" placeholder="longitute">
+
+        </div>
+        <button class="btn btn-success" ng-click="getGoogleLocation();">
+          <span class="glyphicon glyphicon-"></span> Get Location
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Trip Advisor Location:</label>
+
+        <div class="col-sm-4">
+          <select class="form-control" ng-model="activitiesController.talocation"
+                  ng-options="item.location_id as item.name for item in taLocations"
+                  ng-disabled="activitiesController.hideTA">
+            <option value="">Select Option</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Price:</label>
+
+        <div class="col-sm-4">
+          <input type="number" class="form-control" ng-model="activitiesController.price" placeholder="Type">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Currency:</label>
+
+        <div class="col-sm-4">
+          <input type="text" class="form-control" ng-model="activitiesController.currency" placeholder="Type">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Theme:</label>
+
+        <div class="col-sm-4">
+          <!--<input type="text" class="form-control" ng-model="activitiesController.theme" placeholder="Theme">-->
+          <select class="form-control" ng-model="activitiesController.theme"
+                  ng-options="item.id as item.name for item in themes" multiple>
+            <option value="">Select Themes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Duration:</label>
+
+        <div class="col-sm-4">
+          <input type="number" class="form-control" ng-model="activitiesController.duration" placeholder="Type">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Open Time:</label>
+
+        <div class="col-sm-4">
+          <input type="time" class="form-control" ng-model="activitiesController.openTime" placeholder="Open Time">
+        </div>
+      </div>
+      <!-- End Open time -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Close Time:</label>
+
+        <div class="col-sm-4">
+          <input type="time" class="form-control" ng-model="activitiesController.closeTime" placeholder="Close Time">
+        </div>
+      </div>
+      <!-- End Close time -->
+    </form>
+    <!-- End Form -->
+    <hr>
+    <button class="btn btn-primary" ng-click="saveActivity()">
+      <span class="glyphicon glyphicon-save"></span> Save Changes
+    </button>
+    <button class="btn btn-success" ng-click="toggleModal();redirect();">
+      <span class="glyphicon glyphicon-save"></span> Get Images
+    </button>
+  </modal>
+  <!-- End modal -->
+  <div>
 
   </div>
-  <button class="btn btn-success" ng-click="getGoogleLocation();">
-  <span class="glyphicon glyphicon-"></span> Get Location
-  </button>
-</div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Trip Advisor Location:</label>
-    <div class="col-sm-4">
-      <select class="form-control" ng-model="activitiesController.talocation"
-              ng-options="item.location_id as item.name for item in taLocations"
-              ng-disabled="activitiesController.hideTA">
-        <option value="">Select Option</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Price:</label>
-    <div class="col-sm-4">
-      <input type="number" class="form-control" ng-model="activitiesController.price" placeholder="Type">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Currency:</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" ng-model="activitiesController.currency" placeholder="Type">
-    </div>
-  </div>
-
-<div class="form-group">
-  <label class="col-sm-3 control-label">Theme:</label>
-  <div class="col-sm-4">
-    <!--<input type="text" class="form-control" ng-model="activitiesController.theme" placeholder="Theme">-->
-    <select class="form-control" ng-model="activitiesController.theme"
-            ng-options="item.id as item.name for item in themes" multiple>
-      <option value="">Select Themes</option>
-    </select>
-  </div>
-</div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Duration:</label>
-    <div class="col-sm-4">
-      <input type="number" class="form-control" ng-model="activitiesController.duration" placeholder="Type">
-    </div>
-  </div>
-
-<div class="form-group">
-  <label class="col-sm-3 control-label">Open Time:</label>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" ng-model="activitiesController.openTime" placeholder="Open Time">
-  </div>
-</div> <!-- End Open time -->
-<div class="form-group">
-  <label class="col-sm-3 control-label">Close Time:</label>
-  <div class="col-sm-4">
-    <input type="time" class="form-control" ng-model="activitiesController.closeTime" placeholder="Close Time">
-  </div>
-</div> <!-- End Close time -->
-</form> <!-- End Form -->
-<hr>
-<button class="btn btn-primary"  ng-click="saveActivity()">
-  <span class="glyphicon glyphicon-save"></span> Save Changes
-</button>
-<button class="btn btn-success" ng-click="toggleModal();redirect();">
-  <span class="glyphicon glyphicon-save"></span> Get Images
-</button>
-</modal> <!-- End modal -->
-<div>
-
-</div>
 </div> <!-- End container -->
