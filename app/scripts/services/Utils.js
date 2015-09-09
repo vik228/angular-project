@@ -65,7 +65,7 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 			});
 			dataPromise.error(function(rejection) {
 				// console.log(rejection.response.message);
-				if (rejection.response.responseCode == 401) {
+				if (rejection.response.message == "Session Expired.operation not permitted") {
 					delete $localStorage.token;
 					console.log(rejection.response.message);
 					$window.location.href = '#/';
