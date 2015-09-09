@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('cityController',function($scope, $http, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('cityController',["$scope", "$http", "$window", "UtilsFactory", "CommonMethods", function($scope, $http, $window, UtilsFactory, CommonMethods) {
 $scope.cityController = {};
 
 $scope.states = [];
@@ -155,4 +155,4 @@ $scope.statusCity = function(id) {
         });
 };
 
-});
+}]);

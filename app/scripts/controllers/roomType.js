@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('roomController', function($scope,$http, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('roomController', ["$scope", "$http", "$window", "UtilsFactory", "CommonMethods", function($scope,$http, $window, UtilsFactory, CommonMethods) {
   $scope.roomController = {};
 
   $scope.roomTypes =[];
@@ -166,4 +166,4 @@ $scope.toggleEnabled = function(){
   $scope.info = !$scope.info;
 }
 
-});
+}]);

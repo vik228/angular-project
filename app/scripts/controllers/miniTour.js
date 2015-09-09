@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('minitourController', function($scope,$http,UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('minitourController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function($scope,$http,UtilsFactory, CommonMethods) {
   $scope.minitourController = {};
   $scope.searchString="";
   $scope.minitours =[];
@@ -346,4 +346,4 @@ $scope.toggleEnabled = function(){
   $scope.info = !$scope.info;
 }
 
-});
+}]);

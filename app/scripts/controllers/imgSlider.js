@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStorage, $window, CommonMethods) {
+zopkyFrontendApp.controller('imgSliderController', ["$scope", "$localStorage", "$window", "CommonMethods", function($scope,  $localStorage, $window, CommonMethods) {
         $scope.slides = [];
         $scope.selectedImages = [];
         $scope.imgSliderController = {};
@@ -158,7 +158,7 @@ zopkyFrontendApp.controller('imgSliderController', function($scope,  $localStora
             }
         };
 
-    })
+    }])
     .animation('.slide-animation', function() {
         return {
             beforeAddClass: function(element, className, done) {

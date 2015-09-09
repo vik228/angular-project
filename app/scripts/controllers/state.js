@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('stateController', function($scope, $http, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('stateController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function($scope, $http, UtilsFactory, CommonMethods) {
 $scope.stateController = {};
 $scope.states = [];
  $scope.countries = [];
@@ -197,4 +197,4 @@ $scope.states[id-1].status = !$scope.states[id-1].status ;
     }
 
 */
-});
+}]);

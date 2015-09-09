@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('agentProfileController', function($scope,$http, UtilsFactory) {
+zopkyFrontendApp.controller('agentProfileController', ["$scope", "$http", "UtilsFactory", function($scope,$http, UtilsFactory) {
 $scope.agentProfileController = {};
 
 $scope.agentProfiles = [
@@ -121,4 +121,4 @@ $scope.statusAgentProfile = function(id) {
 }; /* statusagentProfile ends here */
 
 
-});
+}]);

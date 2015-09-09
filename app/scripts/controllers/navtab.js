@@ -1,5 +1,5 @@
 'use strict';
 
-zopkyFrontendApp.controller('navtabController', function($scope) {
+zopkyFrontendApp.controller('navtabController', ["$scope", function($scope) {
 
-});
+}]);

@@ -8,7 +8,7 @@
  * Controller of the zopkyFrontendApp
  */
 
-  zopkyFrontendApp.controller('MainCtrl', function ($scope) {
+  zopkyFrontendApp.controller('MainCtrl', ["$scope", function ($scope) {
     $scope.topnavbarurl = '/views/topnavbar.html';
   	$scope.loginurl = '/views/login.html';
     $scope.navtaburl = '/views/navtab.html';
@@ -35,4 +35,4 @@
       'AngularJS',
       'Karma'
     ];
-  });
+  }]);

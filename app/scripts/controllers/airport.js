@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('airportController', function($scope,$http,UtilsFactory) {
+zopkyFrontendApp.controller('airportController', ["$scope", "$http", "UtilsFactory", function($scope,$http,UtilsFactory) {
 $scope.airportController = {};
 
 
@@ -133,4 +133,4 @@ $scope.toggleEnabled = function(){
   $scope.info = !$scope.info;
 }
 
-});
+}]);

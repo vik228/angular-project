@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('employeeController', function($scope, $http, UtilsFactory) {
+zopkyFrontendApp.controller('employeeController', ["$scope", "$http", "UtilsFactory", function($scope, $http, UtilsFactory) {
   $scope.employeeController = {};
 
   $scope.employees = [{
@@ -175,4 +175,4 @@ zopkyFrontendApp.controller('employeeController', function($scope, $http, UtilsF
     );
   };
 
-});
+}]);

@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('countryController', function($scope, $http, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('countryController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function($scope, $http, UtilsFactory, CommonMethods) {
   $scope.countryController = {};
 
   $scope.limit = 10;
@@ -160,4 +160,4 @@ zopkyFrontendApp.controller('countryController', function($scope, $http, UtilsFa
       window.alert(message);
     });
   }; /* statusContinent ends here */
-});
+}]);

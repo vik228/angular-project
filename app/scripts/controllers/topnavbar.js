@@ -1,7 +1,7 @@
 'use strict';
 
-zopkyFrontendApp.controller('topnavbarController', function($scope,$http) {
+zopkyFrontendApp.controller('topnavbarController', ["$scope", "$http", function($scope,$http) {
 
 	
 	
-});
+}]);

@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('itineraryhotelController', function($scope,$http, UtilsFactory) {
+zopkyFrontendApp.controller('itineraryhotelController', ["$scope", "$http", "UtilsFactory", function($scope,$http, UtilsFactory) {
 $scope.itineraryhotelController = {};
 $scope.itineraryhotelController.cities = [];
 
@@ -19,4 +19,4 @@ $scope.redirect = function(){
   window.location.href= "#/idescription";
 } 
 
-});
+}]);

@@ -1,6 +1,6 @@
 'use strict';
 
-zopkyFrontendApp.controller('activitiesController', function($scope, $http, $timeout, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('activitiesController', ["$scope", "$http", "$timeout", "$window", "UtilsFactory", "CommonMethods", function($scope, $http, $timeout, $window, UtilsFactory, CommonMethods) {
       $scope.activitiesController = {};
 
       $scope.activitiesController.lat = '19.1100753';
@@ -394,4 +394,4 @@ zopkyFrontendApp.controller('activitiesController', function($scope, $http, $tim
         };
 
 
-      });
+      }]);
