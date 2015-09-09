@@ -169,28 +169,24 @@ zopkyFrontendApp.directive('modal', [function () {
     link: function postLink(scope, element, attrs) {
       scope.title = attrs.title;
 
-      scope.$watch(attrs.visible, function (value) {
-        window.alert(value);
+      scope.$watch(attrs.dikhao, function (value) {
         if (value == true) {
-          window.alert("before show");
           $(element).modal('show');
-          window.alert("after show");
         }
         else {
-          window.alert(value);
           $(element).modal('hide');
         }
       }, true);
 
       $(element).on('shown.bs.modal', function () {
         scope.$apply(function () {
-          scope.$parent[attrs.visible] = true;
+          scope.$parent[attrs.dikhao] = true;
         });
       });
 
       $(element).on('hidden.bs.modal', function () {
         scope.$apply(function () {
-          scope.$parent[attrs.visible] = false;
+          scope.$parent[attrs.dikhao] = false;
         });
       });
     }
