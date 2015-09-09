@@ -149,7 +149,7 @@ zopkyFrontendApp.config(["$routeProvider", "$httpProvider", function ($routeProv
     });
 }]);
 
-zopkyFrontendApp.directive('modal', [function () {
+zopkyFrontendApp.directive('modal', [ function () {
   return {
     template: '<div class="modal fade">' +
     '<div class="modal-dialog" style="width:80%;">' +
@@ -166,8 +166,8 @@ zopkyFrontendApp.directive('modal', [function () {
     transclude: true,
     replace: true,
     scope: true,
-    link: function postLink(scope, element, attrs) {
-      scope.title = attrs.title;
+    link: function postLink($scope, element, attrs) {
+      $scope.title = attrs.title;
 
       scope.$watch(attrs.dikhao, function (value) {
         if (value == true) {
