@@ -149,7 +149,7 @@ zopkyFrontendApp.config(function ($routeProvider, $httpProvider) {
     });
 });
 
-zopkyFrontendApp.directive('modal', function () {
+zopkyFrontendApp.directive('modal', [function () {
   return {
     template: '<div class="modal fade">' +
     '<div class="modal-dialog" style="width:80%;">' +
@@ -189,4 +189,4 @@ zopkyFrontendApp.directive('modal', function () {
       });
     }
   };
-});
+}]);
