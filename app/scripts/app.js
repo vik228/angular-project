@@ -166,10 +166,10 @@ zopkyFrontendApp.directive('modal', function () {
     transclude: true,
     replace: true,
     scope: true,
-    link: function postLink($scope, element, attrs) {
-      $scope.title = attrs.title;
+    link: function postLink(scope, element, attrs) {
+      scope.title = attrs.title;
 
-      $scope.$watch(attrs.visible, function (value) {
+      scope.$watch(attrs.visible, function (value) {
         if (value == true)
           $(element).modal('show');
         else
@@ -177,14 +177,14 @@ zopkyFrontendApp.directive('modal', function () {
       });
 
       $(element).on('shown.bs.modal', function () {
-        $scope.$apply(function () {
-          $scope.$parent[attrs.visible] = true;
+        scope.$apply(function () {
+          scope.$parent[attrs.visible] = true;
         });
       });
 
       $(element).on('hidden.bs.modal', function () {
-        $scope.$apply(function () {
-          $scope.$parent[attrs.visible] = false;
+        scope.$apply(function () {
+          scope.$parent[attrs.visible] = false;
         });
       });
     }
