@@ -1,6 +1,16 @@
 'use strict';
 
-zopkyFrontendApp.controller('minitourController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function($scope,$http,UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('minitourController',
+  ["$scope", "$http", "UtilsFactory", "CommonMethods",'$rootScope','$timeout','dialogs',
+    function($scope,$http,UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
+
+      var _progress = 100;
+      var _fakeWaitProgress = function(duration){
+        $timeout(function(){
+          $rootScope.$broadcast('dialogs.wait.complete');
+        }, duration);
+      };
+
   $scope.minitourController = {};
   $scope.searchString="";
   $scope.minitours =[];
@@ -22,7 +32,9 @@ zopkyFrontendApp.controller('minitourController', ["$scope", "$http", "UtilsFact
     var criteria = "active=true&city="+$scope.minitourController.scity;
     CommonMethods.searchMinitours($scope.limit, $scope.page, criteria, $scope.minitours.length, "cities", function(data){
       if(data==[] && $scope.page>1){
-        $window.alert("No more minitours available");
+        //$window.alert("No more minitours available");
+        dialogs.wait("Get Minitours","No more minitours available",0);
+        _fakeWaitProgress(1000);
       }
       $scope.minitours = $scope.minitours.concat(data);
     });
@@ -251,14 +263,18 @@ $scope.showModal = false;
         if (response.status==200) {
           $scope.toggleModal();
           var message = data['message'];
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Add Minitour",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function(error){
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Add Minitour",message,0);
+        _fakeWaitProgress(2000);
       });
     }else if($scope.act === 'update'){
       var minitourDetails ={
@@ -294,14 +310,18 @@ $scope.showModal = false;
         if (response.status==200) {
           $scope.toggleModal();
           var message = data['message'];
-          $window.alert(message);
+          //$window.alert(message);
+          dialogs.wait("Update Minitour",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function(error){
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        $window.alert(message);
+        //$window.alert(message);
+        dialogs.wait("Update Minitour",message,0);
+        _fakeWaitProgress(2000);
       });
     }
   };
@@ -332,13 +352,17 @@ $scope.showModal = false;
       if (response.status == 200) {
         $scope.minitours[id - 1].status = !$scope.minitours[id - 1].status;
         var message = data['message'];
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Change minitour's status",message,_progress);
+        _fakeWaitProgress(1000);
       }
 
     }, function(error) {
       var message = error.data.response.message.name[0].message;
       console.log(message);
-      window.alert(message);
+      //window.alert(message);
+      dialogs.wait("Change minitour's status",message,0);
+      _fakeWaitProgress(1000);
     });
   };
 

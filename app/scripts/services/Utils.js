@@ -29,11 +29,11 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
 
       });
       dataPromise.error(function (rejection) {
-        console.log(rejection);
+        //console.log(rejection);
         defered.resolve(rejection);
         if (rejection.response.responseCode == 401) {
           delete $localStorage.token;
-          console.log(rejection.response.message);
+          //console.log(rejection.response.message);
           $window.location.href = '#/';
         } else {
           defered.resolve(rejection);
@@ -64,9 +64,9 @@ zopkyFrontendApp.factory('UtilsFactory', ['$http', '$q', '$localStorage', '$wind
       });
       dataPromise.error(function (rejection) {
         // console.log(rejection.response.message);
-        if (rejection.response.message == "Session Expired.operation not permitted") {
+        if (rejection.response.responseCode == 401) {
           delete $localStorage.token;
-          console.log(rejection.response.message);
+          //console.log(rejection.response.message);
           $window.location.href = '#/';
           return;
         } else {

@@ -1,5 +1,6 @@
 'use strict';
-zopkyFrontendApp.controller('loginController', ['$scope', '$http', 'UtilsFactory', '$localStorage', '$window',
+zopkyFrontendApp.controller('loginController',
+  ['$scope', '$http', 'UtilsFactory', '$localStorage', '$window',
     function($scope, $http, UtilsFactory, $localStorage, $window) {
 
         //$scope.$storage = $localStorage;

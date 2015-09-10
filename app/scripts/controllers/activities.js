@@ -1,7 +1,16 @@
 'use strict';
 
-zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeout', '$window', 'UtilsFactory', 'CommonMethods', function ($scope, $http, $timeout, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('activitiesController',
+  ['$scope',"$localStorage", '$http', '$timeout', '$window', 'UtilsFactory', 'CommonMethods', '$rootScope','dialogs',
+  function ($scope, $localStorage, $http, $timeout, $window, UtilsFactory, CommonMethods,$rootScope, dialogs) {
   $scope.activitiesController = {};
+
+    var _progress = 100;
+    var _fakeWaitProgress = function(duration){
+      $timeout(function(){
+        $rootScope.$broadcast('dialogs.wait.complete');
+      }, duration);
+    };
 
   $scope.activitiesController.lat = '19.1100753';
   $scope.activitiesController.long = '72.8940055';
@@ -10,6 +19,7 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
 
   $scope.limit = 10;
   $scope.page = 1;
+    $scope.currencies = [];
   $scope.continents = [];
   $scope.countries = [];
   $scope.states = [];
@@ -63,6 +73,15 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
   //    $scope.activitiesController.city = "";
   //  });
   //};
+
+    $scope.getActiveCurrencies = function () {
+      var criteria = "active=true";
+      CommonMethods.getAllcurrencyTypes(100, 1, criteria, 0, "currencies", function (data) {
+        $scope.currencies = data;
+      });
+    };
+
+    $scope.getActiveCurrencies();
 
   $scope.getActiveCountries = function () {
     var criteria = "active=true";
@@ -193,7 +212,9 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
       $scope.activitiesController.currency = '';
       $scope.activitiesController.duration = '';
       $scope.activitiesController.talocation = '';
+
     } else {
+
       $scope.formTitle = 'Edit Activity';
       $scope.act = 'update';
 
@@ -230,13 +251,8 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
   $scope.showModal = false;
   $scope.toggleModal = function () {
     $scope.showModal = !$scope.showModal;
-    alert("hello");
   };
 
-  /* saveActivities function inserts activities information in the database*/
-  $scope.saveDetails = function () {
-    //TODO: save form details in local storage or something similar
-  };
 
   $scope.redirect = function () {
     $window.location.href = "#/slider";
@@ -256,6 +272,13 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
       theme.push(themeObject);
     }
 
+    var openCloseTime=[];
+    var time = {
+      "open":$scope.activitiesController.openTime,
+      "close":$scope.activitiesController.closeTime
+    };
+    openCloseTime.push(time);
+
     if ($scope.act === 'add') {
       var activitiesDetails = [{
         //action: $scope.act,
@@ -263,14 +286,15 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
         theme: theme,
         location: location,
         duration: $scope.activitiesController.duration,
-        openTime: $scope.activitiesController.openTime,
-        closeTime: $scope.activitiesController.closeTime,
+        openCloseTime: openCloseTime,
         name: $scope.activitiesController.activityName,
         price: priceObject,
         location_id: $scope.activitiesController.talocation
       }];
 
       console.log(activitiesDetails);
+
+      $localStorage.activityAdded = activitiesDetails;
 
       var responsePromise = UtilsFactory.doPostCall('/activity/add', activitiesDetails);
       responsePromise.then(function (response) {
@@ -279,17 +303,32 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
         if (response.status == 200) {
           $scope.toggleModal();
           var message = data['message'];
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Add activities",message,_progress);
+          _fakeWaitProgress(2000);
+
+          //redirects to slider
+          $scope.redirect();
         }
 
       }, function (error) {
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Add activities",message,0);
+        _fakeWaitProgress(2000);
       });
     } else if ($scope.act === 'update') {
-      var hotelDetails = {
+
+      var openCloseTime=[];
+      var time = {
+        "open":$scope.activitiesController.openTime,
+        "close":$scope.activitiesController.closeTime
+      };
+      openCloseTime.push(time);
+
+      var activitiesDetails = {
         findCriteria: {
           name: $scope.oldname,
           city: $scope.oldcity,
@@ -300,30 +339,35 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
           theme: theme,
           location: location,
           duration: $scope.activitiesController.duration,
-          openTime: $scope.activitiesController.openTime,
-          closeTime: $scope.activitiesController.closeTime,
+          openCloseTime: openCloseTime,
           name: $scope.activitiesController.activityName,
           price: priceObject,
           location_id: $scope.activitiesController.talocation
         }
       };
-      console.log(hotelDetails);
+      console.log(activitiesDetails);
 
-      var responsePromise = UtilsFactory.doPostCall('/hotel/update', hotelDetails);
+      $localStorage.updatedActivity = activitiesDetails;
+
+      var responsePromise = UtilsFactory.doPostCall('/hotel/update', activitiesDetails);
       responsePromise.then(function (response) {
         var data = response.data['response'];
         //console.log(data);
         if (response.status == 200) {
           $scope.toggleModal();
           var message = data['message'];
-          $window.alert(message);
+          //$window.alert(message);
+          dialogs.wait("Update activities",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function (error) {
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        $window.alert(message);
+        //$window.alert(message);
+        dialogs.wait("Update activities",message,_progress);
+        _fakeWaitProgress(2000);
       });
     }
   };
@@ -354,46 +398,50 @@ zopkyFrontendApp.controller('activitiesController', ['$scope', '$http', '$timeou
       if (response.status == 200) {
         $scope.activities[id - 1].status = !$scope.activities[id - 1].status;
         var message = data['message'];
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Change activity status",message,_progress);
+        _fakeWaitProgress(1000);
       }
 
     }, function (error) {
       var message = error.data.response.message.name[0].message;
       console.log(message);
-      window.alert(message);
+      //window.alert(message);
+      dialogs.wait("Change activity status",message,0);
+      _fakeWaitProgress(1000);
     });
   };
   /* statusContinent ends here */
 
-  $scope.loadMap = function () {
-    $scope.maplat = $scope.activitiesController.lat;
-    $scope.maplong = $scope.activitiesController.long;
-
-    $scope.activitiesController.markerLocation = $scope.maplat + ", " + $scope.maplong;
-    console.log($scope.activitiesController.markerLocation);
-
-    var myLatlng = new google.maps.LatLng($scope.maplat, $scope.maplong);
-    var myOptions = {
-      zoom: 11,
-      center: myLatlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-    var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      draggable: true
-    });
-    google.maps.event.addListener(
-      marker,
-      'drag',
-      function () {
-        document.getElementById('lat').value = marker.position.lat();
-        document.getElementById('lng').value = marker.position.lng();
-      }
-    );
-  };
+  //$scope.loadMap = function () {
+  //  $scope.maplat = $scope.activitiesController.lat;
+  //  $scope.maplong = $scope.activitiesController.long;
+  //
+  //  $scope.activitiesController.markerLocation = $scope.maplat + ", " + $scope.maplong;
+  //  console.log($scope.activitiesController.markerLocation);
+  //
+  //  var myLatlng = new google.maps.LatLng($scope.maplat, $scope.maplong);
+  //  var myOptions = {
+  //    zoom: 11,
+  //    center: myLatlng,
+  //    mapTypeId: google.maps.MapTypeId.ROADMAP
+  //  }
+  //  var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+  //
+  //  var marker = new google.maps.Marker({
+  //    position: myLatlng,
+  //    map: map,
+  //    draggable: true
+  //  });
+  //  google.maps.event.addListener(
+  //    marker,
+  //    'drag',
+  //    function () {
+  //      document.getElementById('lat').value = marker.position.lat();
+  //      document.getElementById('lng').value = marker.position.lng();
+  //    }
+  //  );
+  //};
 
 
 }]);

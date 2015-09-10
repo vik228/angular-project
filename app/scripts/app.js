@@ -11,7 +11,7 @@
 
 
 
-var baseUrl = "http://52.27.202.18/api/v0";
+var baseUrl = "http://localhost:1337/api/v0";
 var basePath = "http://localhost:9000/?";
 var zopkyFrontendApp = angular
   .module('zopkyFrontendApp', [
@@ -21,7 +21,9 @@ var zopkyFrontendApp = angular
     'ngRoute',
     'ngSanitize',
     'ngStorage',
-    'ngTouch'
+    'ngTouch',
+    'ui.bootstrap',
+    'dialogs.main'
   ]);
 
 zopkyFrontendApp.config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
@@ -97,6 +99,11 @@ zopkyFrontendApp.config(["$routeProvider", "$httpProvider", function ($routeProv
     .when('/roomType', {
       templateUrl: 'views/roomType.html',
       controller: 'roomController',
+      //   requireLogin: true
+    })
+    .when('/currencyType', {
+      templateUrl: 'views/currencyType.html',
+      controller: 'currencyController',
       //   requireLogin: true
     })
     .when('/slider', {

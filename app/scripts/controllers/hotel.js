@@ -1,7 +1,17 @@
 'use strict';
 
-zopkyFrontendApp.controller('hotelController', ["$scope", "$http", "$window", "UtilsFactory", "CommonMethods", function($scope,$http, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('hotelController',
+  ["$scope", "$http", "$window", "UtilsFactory", "CommonMethods",  '$rootScope','$timeout','dialogs',
+    function($scope,$http, $window, UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
+
 $scope.hotelController = {};
+
+      var _progress = 100;
+      var _fakeWaitProgress = function(duration){
+        $timeout(function(){
+          $rootScope.$broadcast('dialogs.wait.complete');
+        }, duration);
+      };
 
   $scope.hotels =[];
   $scope.roomTypes = [];
@@ -34,7 +44,9 @@ $scope.hotelController = {};
     var criteria = "active=true&city="+$scope.hotelController.scity;
     CommonMethods.searchHotels($scope.limit, $scope.page, criteria, $scope.hotels.length, "cities", function(data){
       if(data==[] && $scope.page>1){
-        $window.alert("No more hotels available");
+        //$window.alert("No more hotels available");
+        dialogs.wait("Get hotels","No more hotels available",0);
+        _fakeWaitProgress(1000);
       }
       $scope.hotels = $scope.hotels.concat(data);
     });
@@ -98,7 +110,9 @@ $scope.hotelController = {};
     var criteria = "active=true";
     CommonMethods.getAllRoomTypes(100, 0, criteria, $scope.roomTypes.length, "cities", function(data){
       if(data==[] && $scope.page>1){
-        $window.alert("No more room type available");
+        //$window.alert("No more room type available");
+        dialogs.wait("Get roomtypes","No more roomtypes available",0);
+        _fakeWaitProgress(1000);
       }
       $scope.roomTypes = $scope.roomTypes.concat(data);
     });
@@ -273,14 +287,18 @@ $scope.showModal = false;
         if (response.status==200) {
           $scope.toggleModal();
           var message = data['message'];
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Add hotels",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function(error){
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Add hotels",message,0);
+        _fakeWaitProgress(2000);
       });
     }else if($scope.act === 'update'){
       var hotelDetails ={
@@ -313,14 +331,18 @@ $scope.showModal = false;
         if (response.status==200) {
           $scope.toggleModal();
           var message = data['message'];
-          $window.alert(message);
+          //$window.alert(message);
+          dialogs.wait("Update hotels",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function(error){
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        $window.alert(message);
+        //$window.alert(message);
+        dialogs.wait("Update hotels",message,0);
+        _fakeWaitProgress(2000);
       });
     }
   };
@@ -349,13 +371,17 @@ $scope.showModal = false;
       if (response.status == 200) {
         $scope.hotels[id - 1].status = !$scope.hotels[id - 1].status;
         var message = data['message'];
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Change hotel's status",message,_progress);
+        _fakeWaitProgress(1000);
       }
 
     }, function(error) {
       var message = error.data.response.message.name[0].message;
       console.log(message);
-      window.alert(message);
+      //window.alert(message);
+      dialogs.wait("Change hotel's status",message,0);
+      _fakeWaitProgress(1000);
     });
   };/* statusContinent ends here */
 

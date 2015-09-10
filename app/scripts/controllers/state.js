@@ -1,6 +1,16 @@
 'use strict';
 
-zopkyFrontendApp.controller('stateController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function($scope, $http, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('stateController',
+  ["$scope", "$http", "UtilsFactory", "CommonMethods", '$rootScope','$timeout','dialogs',
+    function($scope, $http, UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
+
+      var _progress = 100;
+      var _fakeWaitProgress = function(duration){
+        $timeout(function(){
+          $rootScope.$broadcast('dialogs.wait.complete');
+        }, duration);
+      };
+
 $scope.stateController = {};
 $scope.states = [];
  $scope.countries = [];
@@ -81,14 +91,18 @@ $scope.saveState = function() {
               if (response.status==200) {
                 $scope.toggleModal();
                 var message = data['message'];
-                window.alert(message);
+                //window.alert(message);
+                dialogs.wait("Add state",message,_progress);
+                _fakeWaitProgress(2000);
               }
 
         }, function(error){
           $scope.toggleModal();
                   var message = error.data.response.message.name[0].message;
-                  console.log(message);
-                  window.alert(message);
+                  //console.log(message);
+                  //window.alert(message);
+          dialogs.wait("Add state",message,0);
+          _fakeWaitProgress(2000);
           });
     }
   }else if($scope.act === 'update'){
@@ -111,14 +125,18 @@ $scope.saveState = function() {
             if (response.status==200) {
               $scope.toggleModal();
               var message = data['message'];
-              window.alert(message);
+              //window.alert(message);
+              dialogs.wait("Update state",message,_progress);
+              _fakeWaitProgress(2000);
             }
 
       }, function(error){
         $scope.toggleModal();
                 var message = error.data.response.message.name[0].message;
-                console.log(message);
-                window.alert(message);
+                //console.log(message);
+                //window.alert(message);
+        dialogs.wait("Update state",message,0);
+        _fakeWaitProgress(2000);
         });
   }
 };/* saveState ends here */
@@ -146,13 +164,17 @@ $scope.states[id-1].status = !$scope.states[id-1].status ;
                 //console.log(data);
             if (response.status==200) {
               var message = data['message'];
-              window.alert(message);
+              //window.alert(message);
+              dialogs.wait("Change state's status",message,_progress);
+              _fakeWaitProgress(1000);
             }
 
       }, function(error){
                 var message = error.data.response.message.name[0].message;
                 console.log(message);
-                window.alert(message);
+                //window.alert(message);
+        dialogs.wait("Change state's status",message,0);
+        _fakeWaitProgress(1000);
         });
 }; /* statusState ends here */
 /*

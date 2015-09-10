@@ -1,6 +1,13 @@
 'use strict';
-zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 'UtilsFactory',
-  function($http, $localStorage, $window, UtilsFactory) {
+zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 'UtilsFactory','$rootScope','$timeout','dialogs',
+  function($http, $localStorage, $window, UtilsFactory,$rootScope,$timeout, dialogs) {
+
+    var _progress = 100;
+    var _fakeWaitProgress = function(duration){
+      $timeout(function(){
+        $rootScope.$broadcast('dialogs.wait.complete');
+      }, duration);
+    };
 
     var commonMethodsObj = {};
 
@@ -56,7 +63,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
 
           if (data.length == 0) {
-            $window.alert("No more " + type + " available")
+            //$window.alert("No more " + type + " available")
+            dialogs.wait("Get cities","No more " + type + " available",0);
+            _fakeWaitProgress(1000);
           }
           console.log(cities);
           // $scope.cities=$scope.cities.concat(cities);
@@ -125,7 +134,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
 
           if (data.length == 0) {
-            window.alert("No more " + type + " available")
+            //window.alert("No more " + type + " available")
+            dialogs.wait("Get states","No more " + type + " available",0);
+            _fakeWaitProgress(1000);
           }
           console.log(states);
           // $scope.states = $scope.states.concat(states);
@@ -192,7 +203,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
 
           if (data.length == 0) {
-            window.alert("No more " + type + " available")
+            //window.alert("No more " + type + " available")
+            dialogs.wait("Get countries","No more " + type + " available",0);
+            _fakeWaitProgress(1000);
           }
           console.log(countries);
           // $scope.countries = $scope.countries.concat(countries);
@@ -226,7 +239,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
 
           if (data.length == 0) {
-            window.alert("No more continents available")
+            //window.alert("No more continents available")
+            dialogs.wait("Get continents","No more " + type + " available",0);
+            _fakeWaitProgress(1000);
           }
 
           // $scope.continents = $scope.continents.concat(continents);
@@ -261,7 +276,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
 
           if (data.length == 0) {
-            window.alert("No more continents available")
+            //window.alert("No more continents available")
+            dialogs.wait("Get continents","No more " + type + " available",0);
+            _fakeWaitProgress(1000);
           }
           console.log(continents);
           // $scope.continents = $scope.continents.concat(continents);
@@ -295,8 +312,14 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
             row['theme'] = data[i].category.name;
             row['lat'] = data[i].location.lat;
             row['lon'] = data[i].location.long;
-            row['openTime'] = data[i].openTime;
-            row['closeTime'] = data[i].closeTime;
+
+            try {
+              row['openTime'] = data[i].openCloseTime[0].open;
+              row['closeTime'] = data[i].openCloseTime[0].close;
+            }catch(err){
+              console.log(err);
+            }
+
             row['duration'] = data[i].duration;
             row['status'] = data[i].active;
             row['price']=data[i].price.price;
@@ -306,7 +329,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
 
           if (data.length == 0) {
-            window.alert("No more activities available")
+            //window.alert("No more activities available")
+            dialogs.wait("Get activities","No more activities available",0);
+            _fakeWaitProgress(1000);
           }
           console.log(activities);
           return (callback(activities));
@@ -335,7 +360,9 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
             records.push(row);
           }
           if (data.length == 0) {
-            window.alert("No more data available")
+            //window.alert("No more data available")
+            dialogs.wait("Get Records","No more records available",0);
+            _fakeWaitProgress(1000);
           }
           console.log(records);
           return (callback(records));
@@ -356,6 +383,8 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
 
           if (data.length == 0) {
             window.alert("Can't fetch google location")
+            dialogs.wait("Get location","Can't fetch google location",0);
+            _fakeWaitProgress(1000);
           }
           console.log(data);
           return (callback(data));
@@ -423,6 +452,36 @@ zopkyFrontendApp.factory('CommonMethods', ['$http', '$localStorage', '$window', 
           }
           console.log(roomtypes);
           return (callback(roomtypes));
+        }
+
+      }, function(error) {
+        var message = error.data.response.message;
+        console.log(message);
+        // window.alert(message);
+      });
+
+    }
+
+    commonMethodsObj.getAllcurrencyTypes = function(limit, page, criteria, numRows, type, callback)  {
+      var currencytypes = [];
+      var getUrl = "/currencytype/search?limit=" + limit + "&page=" + page+"&"+criteria;
+      var responsePromise = UtilsFactory.doGetCall(getUrl);
+      responsePromise.then(function(response) {
+
+        if (response.status == 200) {
+          var data = response.data.response.message;
+
+          for (var i = 0; i < data.length; i++) {
+            numRows++;
+            var row = {};
+            row['sequence'] = numRows;
+            row['id'] = data[i].id;
+            row['name'] = data[i].name;
+            row['status']=data[i].active;
+            currencytypes.push(row);
+          }
+          console.log(currencytypes);
+          return (callback(currencytypes));
         }
 
       }, function(error) {

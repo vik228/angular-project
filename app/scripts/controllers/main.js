@@ -22,6 +22,7 @@
     $scope.hotelurl = '/views/hotel.html';
     $scope.sliderurl = '/views/imgSlider.html';
     $scope.roomtypeurl = '/views/roomType.html';
+    $scope.currencytypeurl = '/views/currencyType.html';
     $scope.minitoururl = '/views/miniTour.html';
     $scope.airporturl = '/views/airportTransfer.html';
     $scope.agenturl = '/views/agent.html';

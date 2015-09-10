@@ -1,7 +1,15 @@
 'use strict';
 
-zopkyFrontendApp.controller('cityController',["$scope", "$http", "$window", "UtilsFactory", "CommonMethods", function($scope, $http, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('cityController',["$scope", "$http", "$window", "UtilsFactory", "CommonMethods",'$rootScope', '$timeout','dialogs',
+  function($scope, $http, $window, UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
 $scope.cityController = {};
+
+    var _progress = 100;
+    var _fakeWaitProgress = function(duration){
+      $timeout(function(){
+        $rootScope.$broadcast('dialogs.wait.complete');
+      }, duration);
+    };
 
 $scope.states = [];
 $scope.cities = [];
@@ -44,13 +52,14 @@ $scope.editCity = function(id) {
     $scope.act ='add';
     $scope.cityController.city = '';
     $scope.cityController.state = '';
+
     } else {
     $scope.formTitle = 'Edit City';
     $scope.act ='update';
     $scope.oldCityName = $scope.cities[id-1].city;
     $scope.oldStateId = $scope.cities[id-1].stateId;
     $scope.cityController.city = $scope.cities[id-1].city;
-    $scope.cityController.state = $scope.cities[id-1].state;
+    $scope.cityController.state = $scope.cities[id-1].stateId;
   }
 };
 
@@ -63,7 +72,7 @@ $scope.showModal = false;
 $scope.saveCity = function() {
 
     if($scope.act === 'add'){
-      var cityDetails =[ {
+      var cityDetails =[{
         name:$scope.cityController.city,
         state:$scope.cityController.state
       }];
@@ -80,14 +89,18 @@ $scope.saveCity = function() {
               if (response.status==200) {
                 $scope.toggleModal();
                 var message = data['message'];
-                window.alert(message);
+                //window.alert(message);
+                dialogs.wait("Add city",message,_progress);
+                _fakeWaitProgress(2000);
               }
 
         }, function(error){
           $scope.toggleModal();
                   var message = error.data.response.message.name[0].message;
                   console.log(message);
-                  window.alert(message);
+                  //window.alert(message);
+          dialogs.wait("Add city",message,0);
+          _fakeWaitProgress(2000);
           });
     }
   }else if($scope.act === 'update'){
@@ -110,14 +123,18 @@ $scope.saveCity = function() {
             if (response.status==200) {
               $scope.toggleModal();
               var message = data['message'];
-              $window.alert(message);
+              //$window.alert(message);
+              dialogs.wait("Update city",message,_progress);
+              _fakeWaitProgress(2000);
             }
 
       }, function(error){
                 $scope.toggleModal();
                 var message = error.data.response.message.name[0].message;
                 console.log(message);
-                $window.alert(message);
+                //$window.alert(message);
+        dialogs.wait("Update city",message,0);
+        _fakeWaitProgress(2000);
         });
   }
 };/* saveCity ends here */
@@ -145,13 +162,17 @@ $scope.statusCity = function(id) {
             if (response.status==200) {
               $scope.cities[id-1].status = !$scope.cities[id-1].status ;
               var message = data['message'];
-              $window.alert(message);
+              //$window.alert(message);
+              dialogs.wait("Change city status",message,_progress);
+              _fakeWaitProgress(1000);
             }
 
       }, function(error){
                 var message = error.data.response.message.name[0].message;
                 console.log(message);
-                $window.alert(message);
+                //$window.alert(message);
+        dialogs.wait("Change city status",message,0);
+        _fakeWaitProgress(1000);
         });
 };
 

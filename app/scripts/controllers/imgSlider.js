@@ -1,6 +1,16 @@
 'use strict';
 
-zopkyFrontendApp.controller('imgSliderController', ["$scope", "$localStorage", "$window", "CommonMethods", function($scope,  $localStorage, $window, CommonMethods) {
+zopkyFrontendApp.controller('imgSliderController',
+  ["$scope", "$localStorage", "$window", "CommonMethods", '$timeout', '$rootScope','dialogs',
+  function($scope,  $localStorage, $window, CommonMethods, $timeout, $rootScope, dialogs) {
+
+    var _progress = 100;
+    var _fakeWaitProgress = function(duration){
+      $timeout(function(){
+        $rootScope.$broadcast('dialogs.wait.complete');
+      }, duration);
+    };
+
         $scope.slides = [];
         $scope.selectedImages = [];
         $scope.imgSliderController = {};
@@ -9,10 +19,15 @@ zopkyFrontendApp.controller('imgSliderController', ["$scope", "$localStorage", "
         $scope.limit = 50;
         $scope.page=1;
 
-  //TODO: get the details from local storage
-        $scope.tags='Taj Mahal';
-        $scope.latitude='27.1750151';
-        $scope.longitude='78.0421552';
+  //get the details from local storage
+  //$scope.tags='Taj Mahal';
+  //$scope.latitude='27.1750151';
+  //$scope.longitude='78.0421552';
+
+        if($localStorage.activityAdded != null){
+            $scope.tags = $localStorage.activityAdded[0].name;
+            $scope.latitude=$localStorage.activityAdded[0].location.lat;
+            $scope.longitude=$localStorage.activityAdded[0].location.long;
 
         var links = [];
 
@@ -158,7 +173,11 @@ zopkyFrontendApp.controller('imgSliderController', ["$scope", "$localStorage", "
             }
         };
 
-    }])
+        }else{
+          dialogs.wait("Data not found","Please add details first",0);
+          _fakeWaitProgress(2000);
+        }
+  }])
     .animation('.slide-animation', function() {
         return {
             beforeAddClass: function(element, className, done) {

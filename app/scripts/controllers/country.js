@@ -1,7 +1,16 @@
 'use strict';
 
-zopkyFrontendApp.controller('countryController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function($scope, $http, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('countryController',
+  ["$scope", "$http", "UtilsFactory", "CommonMethods", '$rootScope','$timeout','dialogs',
+  function($scope, $http, UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
   $scope.countryController = {};
+
+    var _progress = 100;
+    var _fakeWaitProgress = function(duration){
+      $timeout(function(){
+        $rootScope.$broadcast('dialogs.wait.complete');
+      }, duration);
+    };
 
   $scope.limit = 10;
   $scope.skip = 0;
@@ -84,14 +93,18 @@ zopkyFrontendApp.controller('countryController', ["$scope", "$http", "UtilsFacto
           if (response.status == 200) {
             $scope.toggleModal();
             var message = data['message'];
-            window.alert(message);
+            //window.alert(message);
+            dialogs.wait("Add country",message,_progress);
+            _fakeWaitProgress(2000);
           }
 
         }, function(error) {
           $scope.toggleModal();
           var message = error.data.response.message.name[0].message;
           console.log(message);
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Add country",message,0);
+          _fakeWaitProgress(2000);
         });
       }
     } else if ($scope.act === 'update') {
@@ -114,14 +127,18 @@ zopkyFrontendApp.controller('countryController', ["$scope", "$http", "UtilsFacto
         if (response.status == 200) {
           $scope.toggleModal();
           var message = data['message'];
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Update country",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function(error) {
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Update country",message,0);
+        _fakeWaitProgress(2000);
       });
     }
   }; /* saveCountry ends here */
@@ -151,13 +168,17 @@ zopkyFrontendApp.controller('countryController', ["$scope", "$http", "UtilsFacto
       //console.log(data);
       if (response.status == 200) {
         var message = data['message'];
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Change country's status",message,_progress);
+        _fakeWaitProgress(1000);
       }
 
     }, function(error) {
       var message = error.data.response.message.name[0].message;
       console.log(message);
-      window.alert(message);
+      //window.alert(message);
+      dialogs.wait("Change country's status",message,0);
+      _fakeWaitProgress(2000);
     });
   }; /* statusContinent ends here */
 }]);

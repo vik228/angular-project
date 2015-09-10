@@ -1,6 +1,8 @@
 'use strict';
 
-zopkyFrontendApp.controller('continentController', ["$scope", "$http", "UtilsFactory", "CommonMethods", function ($scope, $http, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('continentController',
+  ["$scope", "$http", "UtilsFactory", "CommonMethods", '$rootScope','$timeout','dialogs',
+  function ($scope, $http, UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
   $scope.continentController = {};
   $scope.continents = [];
 
@@ -21,7 +23,15 @@ zopkyFrontendApp.controller('continentController', ["$scope", "$http", "UtilsFac
 
   $scope.getContinents();
 
+  var _progress = 100;
+  var _fakeWaitProgress = function(duration){
+    $timeout(function(){
+        $rootScope.$broadcast('dialogs.wait.complete');
+    }, duration);
+  };
+
   $scope.getMoreContinents = function () {
+
     $scope.skip = $scope.continents.length;
     $scope.getContinents();
   };
@@ -62,14 +72,18 @@ zopkyFrontendApp.controller('continentController', ["$scope", "$http", "UtilsFac
         if (response.status == 200) {
           $scope.toggleModal();
           var message = data['message'];
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Add continents",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function (error) {
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Add continents",message,_progress);
+        _fakeWaitProgress(2000);
       });
     } else if ($scope.act === 'update') {
 
@@ -90,14 +104,18 @@ zopkyFrontendApp.controller('continentController', ["$scope", "$http", "UtilsFac
         if (response.status == 200) {
           $scope.toggleModal();
           var message = data['message'];
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Update continent",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function (error) {
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Update continents",message,_progress);
+        _fakeWaitProgress(2000);
       });
     }
   };
@@ -127,13 +145,17 @@ zopkyFrontendApp.controller('continentController', ["$scope", "$http", "UtilsFac
       if (response.status == 200) {
         $scope.continents[id - 1].status = !$scope.continents[id - 1].status;
         var message = data['message'];
-        window.alert(message);
+        //window.alert(message);
+        dialogs.wait("Change continent's status",message,_progress);
+        _fakeWaitProgress(1000);
       }
 
     }, function (error) {
       var message = error.data.response.message.name[0].message;
       console.log(message);
-      window.alert(message);
+      //window.alert(message);
+      dialogs.wait("Change continent's status",message,_progress);
+      _fakeWaitProgress(1000);
     });
   };
 

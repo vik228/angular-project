@@ -1,6 +1,16 @@
 'use strict';
 
-zopkyFrontendApp.controller('roomController', ["$scope", "$http", "$window", "UtilsFactory", "CommonMethods", function($scope,$http, $window, UtilsFactory, CommonMethods) {
+zopkyFrontendApp.controller('roomController',
+  ["$scope", "$http", "$window", "UtilsFactory", "CommonMethods", '$rootScope','$timeout','dialogs',
+    function($scope,$http, $window, UtilsFactory, CommonMethods,$rootScope,$timeout, dialogs) {
+
+      var _progress = 100;
+      var _fakeWaitProgress = function(duration){
+        $timeout(function(){
+          $rootScope.$broadcast('dialogs.wait.complete');
+        }, duration);
+      };
+
   $scope.roomController = {};
 
   $scope.roomTypes =[];
@@ -10,8 +20,11 @@ zopkyFrontendApp.controller('roomController', ["$scope", "$http", "$window", "Ut
   $scope.getRoomtypes = function(){
     var criteria = "active=true";
     CommonMethods.getAllRoomTypes($scope.limit, $scope.page, criteria, $scope.roomTypes.length, "cities", function(data){
-      if(data==[] && $scope.page>1){
-        $window.alert("No more room type available");
+      //$window.alert(data);
+      if((data==null || data ==[] || data=='') && $scope.page>1){
+        //$window.alert("No more room type available");
+        dialogs.wait("Get roomtypes","No more room type available",0);
+        _fakeWaitProgress(1000);
       }
       $scope.roomTypes = $scope.roomTypes.concat(data);
     });
@@ -85,14 +98,18 @@ $scope.showModal = false;
           if (response.status==200) {
             $scope.toggleModal();
             var message = data['message'];
-            window.alert(message);
+            //window.alert(message);
+            dialogs.wait("Add roomtypes",message,_progress);
+            _fakeWaitProgress(2000);
           }
 
         }, function(error){
           $scope.toggleModal();
           var message = error.data.response.message.name[0].message;
           console.log(message);
-          window.alert(message);
+          //window.alert(message);
+          dialogs.wait("Add roomtypes",message,0);
+          _fakeWaitProgress(2000);
         });
       }
     }else if($scope.act === 'update'){
@@ -115,14 +132,18 @@ $scope.showModal = false;
         if (response.status==200) {
           $scope.toggleModal();
           var message = data['message'];
-          $window.alert(message);
+          //$window.alert(message);
+          dialogs.wait("Update roomtypes",message,_progress);
+          _fakeWaitProgress(2000);
         }
 
       }, function(error){
         $scope.toggleModal();
         var message = error.data.response.message.name[0].message;
         console.log(message);
-        $window.alert(message);
+        //$window.alert(message);
+        dialogs.wait("Update roomtypes",message,0);
+        _fakeWaitProgress(2000);
       });
     }
   };/* saveRoom ends here */
@@ -152,13 +173,17 @@ $scope.showModal = false;
       if (response.status==200) {
         $scope.roomTypes[id-1].status = !$scope.roomTypes[id-1].status ;
         var message = data['message'];
-        $window.alert(message);
+        //$window.alert(message);
+        dialogs.wait("Change roomtype's status",message,_progress);
+        _fakeWaitProgress(1000);
       }
 
     }, function(error){
       var message = error.data.response.message.name[0].message;
       console.log(message);
-      $window.alert(message);
+      //$window.alert(message);
+      dialogs.wait("Change roomtype's status",message,0);
+      _fakeWaitProgress(1000);
     });
   };/* statusContinent ends here */
 
